@@ -123,7 +123,7 @@ reducing communication costs, energy may be drastically saved, consequently
 increasing the WSN's lifetime. An effective strategy to reduce energy
 consumption is thus to reduce the number of messages (sensed data) sent across
 the network. Nevertheless, the less the number of sensed data is transmitted,
-the lower the accuracy of results provided by a WSN is. Thus higher accuracy in
+the lower the accuracy of results provided by a WSN. Thus higher accuracy in
 WSNs comes at a higher energy cost.
 
 By now, it is well-known that data collected by WSN are strongly temporally
@@ -201,10 +201,10 @@ Section \ref{conclusion} concludes the paper.
 \section{Related Work}
 \label{related-work}
 
-In \cite{Vuran2004}, proposes a strategy to cluster sensors in WSNs. The idea is
-the following: given a set of N sensors, M nodes, with $M < N$, are chosen to
-send data. The M representative nodes are defined based on the application of a
-distortion function ($D(M)$) on sensed data.
+In \cite{Vuran2004}, the authors propose a strategy to cluster sensors in WSNs.
+The idea is the following: given a set of N sensors, M nodes, with $M < N$, are
+chosen to send data. The M representative nodes are defined based on the
+application of a distortion function ($D(M)$) on sensed data.
 The spatial distance between the nodes (representative) directly influences the
 computation of the distortion function by means of a correlation coefficient.
 That work does not take into account the energy capacity of each node as a
@@ -418,11 +418,12 @@ second method, called Cluster Heads (CHs), on the other hand, one sensor node
 activity carried out by all nodes in $C_{i}$.
 
 After a node receives the coefficients, it enters into reading/prediction loop. 
-Whenever a sensor node senses a a given value v, it verifies if  $v$ is not
+Whenever a sensor node senses a given value $v$, it verifies if  $v$ is not
 within a ``tolerable difference'' $t$, i.e., $v \not \in [p-t,p+t], t \geq 0$,
 where $p$ is the predicted value by applying the regression equation. Data
 outside the tolerable difference are treated as novelty for the model. The
-``tolerable difference'' is a parameter, set by the application expert.
+``tolerable difference'' is a parameter, set by the application expert (e.g.
+$5\%$ or $10\%$).
 
 In RN mode, only the representative nodes (one for cluster)  receive the
 coefficients and execute the reading/prediction loop. Whenever a representative
@@ -512,9 +513,9 @@ reference to the naive approach filtered values.
 \label{results-and-discussion}
 
 
-Tables \ref{tab:rmse}, \ref{tab:num-msg} and \ref{tab:sens-read} present the
-average, standard deviation, max and min value for the three metrics (RMSE,
-number of messages and number of sensed data) evaluated during the experiments.
+Table \ref{tab:rmse} presents the average (AVG), standard deviation (STD),
+maximum (MAX) and minimum (MIN) value for the RMSE of the four approaches
+evaluated during the experiments.
 
 \begin{table}[h!]
 \caption{RMSE per Round (1000 cycles)}
@@ -574,9 +575,13 @@ In Table \ref{tab:num-msg}, the values for column MIN for Adaga-P*, BCWSN-RN and
 BCWSN-CH are equal to zero because in several rounds the predict value is equal
 to the sensed value. In this case, the sensor does not need to forward the
 sensed value. In Table \ref{tab:sens-read}, the values for column MIN for
-BCWSN-RN and BCWSN-CH due to the cluster split or merge process, during which
-the sensors stop to sense.
-
+BCWSN-RN and BCWSN-CH are equal to 0(zero) due to the cluster split or merge
+process, during which the sensors stop to sense. The average of sensor readings
+in BCWSN-RN approach is lower than in BCWSN-CH because, in first, the only
+sensors that constantly sensing are the representative nodes, but, in some
+situations, all the representative nodes are sensing, while in others, none of
+them is active because everyone are waiting for new coefficients from sink node.
+So, the STD of sensor reading is greater than in BCWSN-CH.
 
 
 \begin{table}[h!]
@@ -630,8 +635,10 @@ sensors send sensed data to the sink.
 It is important to observe that, in average, BCWSN-CH and BCWSN-RN transmit less
 messages than Adaga-P* (see Table \ref{tab:num-msg}). However, there are some
 peaks in both curves (BCWSN-CH and BCWSN-RN), which represents periods in time
-when clusters are being restructured (splitting or merging). This can be proved
-by the high standard deviation for both approaches in Table \ref{tab:num-msg}.
+when clusters are being restructured (splitting or merging), since the clusters
+are always undergoing division and, at times, go through the merge process. This
+can be proved by the high standard deviation for both approaches in Table
+\ref{tab:num-msg}.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -647,7 +654,7 @@ sensed data for the four evaluated approaches.
 Naive and Adaga-P* approaches, as one can observe, have the same number of
 sensed data (53 per round), because all sensors in those approaches sense data
 during all cycles. In BCWSN-CH, sensors do not sense while they are waiting to
-receive new coefficients after sending novelties to sink. In the case of
+receive new coefficients after sending new data to sink. In the case of
 BCWSN-RN, only representative nodes (one per cluster) sense data per round.
 
 \begin{figure}[!htb]
