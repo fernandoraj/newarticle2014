@@ -11,7 +11,7 @@
 %
 \usepackage{graphicx}
 
-
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
 
 
 
@@ -147,9 +147,9 @@ correlated.
 Several works have been proposed in order to use that technique, with different
 approaches \cite{Chu2006, Villas2012, Singh2010, Liu2007, Shah2007}.
 
-Nonetheless, in several scenarios sensors, which are not spatially close to each
-other, may have similar data reading patterns. In order to illustrate such a
-claim consider a dense WSN deployed to monitor forest fires. 
+Nonetheless, in several scenarios, sensors which are not spatially close to each
+other may have similar data reading patterns. In order to illustrate such a
+claim, consider a dense WSN deployed to monitor forest fires. 
 Now, suppose a scenario in which the monitored region is affected by dozens of
 small forest fires. Figure \ref{fig:contour_lines} depicts a possible temperature
 contour lines graph for this hypothetical situation. Observe that the contour
@@ -176,17 +176,28 @@ sensors.
     \label{fig:contour_lines}
 \end{figure}
 
-In this sense, in this paper, we present a new approach for clustering sensors in
+Furthermore, to make the maintenance of clusters, we have developed a technique
+based on Fractal Clustering \cite{Barbara1999}, which uses the Minimum
+Difference Fractal Dimension (MDFD), where sensors that send new data
+(novelties) are allocated by the sink node in cluster where the smallest change
+in value of Fractal Dimension occurs, making the choice of the new most
+appropriate node's cluster (with new data readings received by sink node) the
+most accurate possible.
+
+In this sense, this paper presents a new approach for clustering sensors in
 WSNs. The main features of the proposed approach are: {\it (i)} Cluster
 formation based on the \textit{Behavioral Correlation} of the sensors, which, in
 turn, is computed from the time series of sensor readings by applying a
-\textit{Similarity Measure}, and; {\it (ii)} the use of a linear regression
-model for the temporal suppression of sensed data through the maximum error
-level (threshold) desired by the user used to control the data to be sent to the
-sink. Hence, special sensor nodes only transmit data which are novelties for the
-regression model applied by our proposal. Furthermore, two different approaches
-to select of active nodes (scheduling) in each cluster have been implemented:
-Representative Nodes (RNs) and Cluster Heads (CHs).
+\textit{Similarity Measure}; {\it (ii)} Maintenance of clusters through a
+technique called Fractal Clustering, where the values ​​of Fractal Dimension of
+each cluster are used to maintain the structure of the clusters, and; {\it
+(iii)} the use of a linear regression model for the temporal suppression of
+sensed data, through the maximum error level (threshold) desired by the user, is
+used to control the data to be sent to the sink. Hence, special sensor nodes
+only transmit data which are novelties for the regression model applied by our
+proposal. Furthermore, two different approaches to select of active nodes
+(scheduling) in each cluster have been implemented: Representative Nodes (RNs)
+and Cluster Heads (CHs).
 
 
 The remainder of this document is organized as follows. Section
@@ -249,7 +260,7 @@ simultaneously, the equitable scheduling - round robin - along with the random
 choice of representatives nodes).
 
 The spatial correlation through the formation of clusters is addressed in
-\cite{Pham2010} in the form a flooding algorithm where the sink node starts to
+\cite{Pham2010} as a flooding algorithm where the sink node starts to
 send messages to the other nodes of the network, inviting them to form groups
 from criteria such as a dissimilarity measure, in addition to the physical
 proximity between nodes, since, of course, the message forwarding in a WSN
@@ -327,13 +338,15 @@ coefficients of the linear regression equation (see Section \ref
 nodes of the network, requesting the following data from sensors:
 battery level, spatial location and sensed values. The amount of data used by the
 learning stage is a parameter, denoted initial slot time, which should be
-defined by the application expert.
+defined by the application expert (e.g: 70). Each sensor answers the broadcast
+message from sink in a batch mode, i.e., it makes all sensing tasks required and
+sends only one message response to sink node with all reading data.
 
 
 \subsubsection{Clustering Sensor Nodes}
 \label{clustering-sensors}
 
-As already mentioned, the CCWSN mechanism clusters sensor nodes by means of
+As already mentioned, the BCWSN mechanism clusters sensor nodes by means of
 behavioral correlation. In order to compute behavioral correlation, a
 \textit{similarity measure} \cite{Liu2007} is used. Thus, sensors with similar
 data reading pattern are grouped into a single cluster. The similarity measure
@@ -417,7 +430,7 @@ second method, called Cluster Heads (CHs), on the other hand, one sensor node
 (the CH) in each cluster $C_{i}$ is selected to coordinate the data sensing
 activity carried out by all nodes in $C_{i}$.
 
-After a node receives the coefficients, it enters into reading/prediction loop. 
+After a node receives the coefficients, it starts reading / prediction loop. 
 Whenever a sensor node senses a given value $v$, it verifies if  $v$ is not
 within a ``tolerable difference'' $t$, i.e., $v \not \in [p-t,p+t], t \geq 0$,
 where $p$ is the predicted value by applying the regression equation. Data
@@ -440,15 +453,68 @@ limit (limit per cluster), the CH sends a message to the sink for computing new
 regression coefficients for that cluster.
 
 
-\subsubsection{Cluster Rebuilding}
+\subsubsection{Cluster Maintenance}
 
-In the proposed approach, the sink has the ability to automatically
-and autonomously rebuild the clusters. There are two strategies
-implemented by BCWSN to recompute  clusters. One strategy is to split
-clusters and the other to merge clusters.
+In the proposed approach, the sink has the ability to automatically and
+autonomously maintain the clusters. There are two strategies implemented by
+BCWSN to recompute clusters. One strategy is to keep the sensors clusters
+according Minimum Difference Fractal Dimension (MDFD), based on \textit{Fractal
+Clustering} algorithm, - only merge approach - and the other is split and merge
+clusters, according \textit{Similarity Measures} of data readings.
+
+The Minimum Difference Fractal Dimension (MDFD) strategy is as the following:
+Whenever the sink receives "novelties" (new data $N$) from a RN or CH on a
+given cluster $C_j$, it calculates which cluster $C'_i$ has the minimal
+\textit{fractal impact}, i.e. the minimum absolute difference between the old Fractal
+Dimension value (without the new data received) ($F_{d}(C_i)$) and the new one
+($F_{d}(C'_i$)), where: $C'_i = C_i \cup N$.
+So, if the cluster $C'_i$ is the same $C_j$($i=j$), the sink just add the new
+data($N$) to the corresponding sensor in old cluster. Otherwise, the sink must
+remove the sensor node (with new data $N$) from its old cluster $C_j$ and add
+the corresponding sensor (with new data($N$)) to the new cluster $(C_i)$.
+The Algorithm \ref{alg:MDFD} outlines this strategy.
+
+% \begin{equation}
+% 	a = \frac{1}{N}\left(\sum S_{i} - b\sum t_{i} \right) = \bar{S} - b\bar{t},
+% \end{equation}
+% \vspace*{-.3cm}
+% \begin{equation}
+% 	b = \frac{\sum \left(t_{i} - \bar{t}\right)\left(S_{i} - \bar{S}\right)}{\sum \left(t_{i} - \bar{t}\right)^{2}}.
+% \end{equation}
+
+\begin{algorithm}
+ \SetAlgoLined
+ \LinesNumbered
+ \KwData{input parameters: set of all K current sensor clusters (\{$C_i \vert 1 \leq i \leq K$\}), values of Fractal Dimension of all current sensor clusters ($F_d(C_i)$), sensor node($S_N$) with new data ($N$)}
+ \KwResult{processes Fractal Clustering}
+ Sink Node receives new data ($N$) from sensor ($S_N$) of cluster $C_j$\;
+ \For{i = 1,\ldots,K}{
+	  Let $C'_i = C_i \cup N$\;
+	  Compute $F_d(C'_i)$\;
+	  Find $\hat{i} = min(|F_d(C'_i) - F_d(C_i)|)$\;
+	  \eIf{$|F_d(C'_{\hat{i}}) - F_d(C_{\hat{i}})| > \tau$}{
+	  	Discard $N$ as noise\;
+	  }{
+	  	\eIf{$j \neq \hat{i}$}{
+	  		Remove $S_N$ from cluster $C_j$\;
+	  		Place $S_N$ in cluster $C_\hat{i}$\;
+	  	}{
+	    	Replace $S_N$ in cluster $C_\hat{i}$\;
+	    }
+	  }
+  }
+ \caption{Fractal Clustering Algorithm - MDFD Strategy}
+ \label{alg:MDFD}
+\end{algorithm}
+
+% the sensor nodes in $c$ are not
+% meeting the minimum similarity requirements M-magnitude and T-trend anymore. In
+% that case, the sink disjoins $c$ in two or more new clusters, selecting new
+% representative nodes or cluster heads (one for each of the new clusters) based
+% on the criteria described in Section \ref{clustering-sensors}.
 
 The strategy for splitting nodes is the following: Whenever the sink receives
-"novelties" from a RN or CH on a given cluster $c$, it checks if the sensor nodes
+"novelties" (new data) from a RN or CH on a given cluster $c$, it checks if the sensor nodes
 in $c$ are not meeting the minimum similarity requirements M-magnitude and
 T-trend anymore. In that case, the sink disjoins $c$ in two or more new
 clusters, selecting new representative nodes or cluster heads (one for each of
