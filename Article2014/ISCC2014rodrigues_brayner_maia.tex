@@ -55,7 +55,10 @@ Behavioral Correlation in WSN (BCWSN), based on the behave of recent historical
 data collected by sensors. Instead of using the spatial distance among sensors
 for clustering them, the proposed approach uses the concept of behavioral
 correlation to group sensors, that takes into account the concepts of difference
-in magnitude and trend of sensed data.
+in magnitude and trend of sensed data. For clusters maintenance, we propose
+an alternative approach based on Fractal Clustering, where this technique use
+the concept of Fractal Dimensions to find the best configuration for clusters
+based on the Minimal Difference of Fractal Dimension.
 Furthermore, two scheduling intra-clustering methods are presented:
 Representative Nodes and Cluster Heads.
 In order to validate our approach, simulations with a prototype have been
@@ -457,21 +460,25 @@ regression coefficients for that cluster.
 
 In the proposed approach, the sink has the ability to automatically and
 autonomously maintain the clusters. There are two strategies implemented by
-BCWSN to recompute clusters. One strategy is to keep the sensors clusters
-according Minimum Difference Fractal Dimension (MDFD), based on \textit{Fractal
-Clustering} algorithm, - only merge approach - and the other is split and merge
-clusters, according \textit{Similarity Measures} of data readings.
+BCWSN to recompute clusters. One strategy is to maintain the sensor clusters
+according to the Minimum Difference Fractal Dimension (MDFD), based on the
+\textit{Fractal Clustering} algorithm that allows only merge operations. The
+other strategy is according to the \textit{Similarity Measures} algorithm that
+allows split and merge operations.
 
-The Minimum Difference Fractal Dimension (MDFD) strategy is as the following:
-Whenever the sink receives "novelties" (new data $N$) from a RN or CH on a
+The Minimum Difference Fractal Dimension (MDFD) strategy is as follows:
+whenever the sink receives "novelties", i.e. new data ($N$), from a RN or CH on a
 given cluster $C_j$, it calculates which cluster $C'_i$ has the minimal
 \textit{fractal impact}, i.e. the minimum absolute difference between the old Fractal
-Dimension value (without the new data received) ($F_{d}(C_i)$) and the new one
-($F_{d}(C'_i$)), where: $C'_i = C_i \cup N$.
+Dimension value (without the new data received / before the new data)
+($F_{d}(C_i)$) and the new one ($F_{d}(C'_i$)), where: $C'_i = C_i \cup N$.
+If this minimal difference ($|F_d(C'_{\hat{i}}) - F_d(C_{\hat{i}})|$) is greater
+than a certain threshold ($\tau$) - defined by the application expert (e.g.
+$\tau = 0.03$), then this new data ($N$) is simply rejected as noise.
 So, if the cluster $C'_i$ is the same $C_j$($i=j$), the sink just add the new
 data($N$) to the corresponding sensor in old cluster. Otherwise, the sink must
 remove the sensor node (with new data $N$) from its old cluster $C_j$ and add
-the corresponding sensor (with new data($N$)) to the new cluster $(C_i)$.
+the corresponding sensor (with new data - $N$) to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
 
 % \begin{equation}
@@ -513,13 +520,14 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 % representative nodes or cluster heads (one for each of the new clusters) based
 % on the criteria described in Section \ref{clustering-sensors}.
 
-The strategy for splitting nodes is the following: Whenever the sink receives
-"novelties" (new data) from a RN or CH on a given cluster $c$, it checks if the sensor nodes
-in $c$ are not meeting the minimum similarity requirements M-magnitude and
-T-trend anymore. In that case, the sink disjoins $c$ in two or more new
-clusters, selecting new representative nodes or cluster heads (one for each of
-the new clusters) based on the criteria described in Section
-\ref{clustering-sensors}.
+The strategy using \textit{Similarity Measures} can be subdivided into two
+phases: splitting and merging clusters. Splitting cluster is the following:
+Whenever the sink receives "novelties" (new data) from a RN or CH on a given
+cluster $C$, it checks if the sensor nodes in $C$ are not meeting the minimum
+similarity requirements M-magnitude and T-trend anymore. In that case, the sink
+disjoins $C$ in two or more new clusters, selecting new representative nodes or
+cluster heads (one for each of the new clusters) based on the criteria described
+in Section \ref{clustering-sensors}.
 
 For merging clusters, the sink monitors the number of sensors in each cluster of
 the network. This way, whenever there are a large number of cluster splits and
