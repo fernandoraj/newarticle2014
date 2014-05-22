@@ -466,19 +466,32 @@ according to the Minimum Difference Fractal Dimension (MDFD), based on the
 other strategy is according to the \textit{Similarity Measures} algorithm that
 allows split and merge operations.
 
+Let $R_{new}$ be the new reading data to be treated by the sink; let $S_{N}$ be
+the sensor which report that novelties (i.e. new reading - $R_{new}$) to the
+sink node; let $C_i$ be the sensor cluster on $i-th$ position, formed by a RN or
+CH and other sensor members (0 or more); let $SD(C_i)$ be the sensor data of
+cluster $C_i$; and let $F_{d}(SD(C_i))$ be the value of Fractal Dimension of the
+sensor data of cluster $C_i$.
+
+When MDFD is chosen, in clustering sensor nodes phase (Section
+\ref{clustering-sensors}), the fractal dimension is calculated and stored for
+each initial cluster. The idea is to find out which cluster $C_i$ the inclusion
+of new sensor data $S_{ND}$ will take the slightest change in its Fractal
+Dimension. 
+
 The Minimum Difference Fractal Dimension (MDFD) strategy is as follows:
-whenever the sink receives "novelties", i.e. new data ($N$), from a RN or CH on a
-given cluster $C_j$, it calculates which cluster $C'_i$ has the minimal
-\textit{fractal impact}, i.e. the minimum absolute difference between the old Fractal
-Dimension value (without the new data received / before the new data)
+whenever the sink receives "novelties", i.e. new data ($N$), from a RN or CH on
+a given cluster $C_j$, it calculates which cluster $C'_i$ has the minimal
+\textit{fractal impact}, i.e. the minimum absolute difference between the
+previous Fractal Dimension value (calculated before the new data arrives)
 ($F_{d}(C_i)$) and the new one ($F_{d}(C'_i$)), where: $C'_i = C_i \cup N$.
-If this minimal difference ($|F_d(C'_{\hat{i}}) - F_d(C_{\hat{i}})|$) is greater
-than a certain threshold ($\tau$) - defined by the application expert (e.g.
-$\tau = 0.03$), then this new data ($N$) is simply rejected as noise.
-So, if the cluster $C'_i$ is the same $C_j$($i=j$), the sink just add the new
-data($N$) to the corresponding sensor in old cluster. Otherwise, the sink must
-remove the sensor node (with new data $N$) from its old cluster $C_j$ and add
-the corresponding sensor (with new data - $N$) to the new cluster $(C_i)$.
+If this minimal difference, min($|F_d(C'_{\hat{i}}) - F_d(C_{\hat{i}})|$), is
+greater than a certain threshold ($\tau$) - defined by the application expert
+(e.g. $\tau = 0.03$), then this new data $N$ is simply rejected as noise.
+On the other hand, if the cluster $C'_i$ is the same $C_j$ (i.e. $i=j$), the
+sink just add the new data $N$ to the corresponding sensor in this cluster.
+Otherwise, the sink must remove this sensor node (with new data $N$) from its
+old cluster $C_j$ and add it to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
 
 % \begin{equation}
