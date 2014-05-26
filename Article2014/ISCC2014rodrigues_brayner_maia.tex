@@ -11,7 +11,7 @@
 %
 \usepackage{graphicx}
 \usepackage[lined,boxed,commentsnumbered]{algorithm2e}
-
+\usepackage{draftwatermark}
 
 
 % correct bad hyphenation here
@@ -325,13 +325,13 @@ smaller than other approaches.
 
 In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
 \textit{Fractal Dimension} to cluster datasets, from an initialization step
-based on the nearest neighbor, that create the initial clusters. Then they
-present the algorithm of the incremental step, which uses \textit{Fractal
+based on the nearest neighbor strategy, that create the initial clusters. Then
+they present the algorithm of the incremental step, which uses \textit{Fractal
 Dimension} calculation based on an implementation of Box Counting algorithm,
 called FD3 \cite{Liebovitch1989}. In our proposal, we use an adapted version of
 this algorithm (Fractal Clustering) for the maintenance of clusters each time a
 change in the sensed environment is detected and reported to the sink node by
-one sensor in the network.
+some sensor in the network.
 
 \section{Implementing Behavioral Correlation in WSNs}
 \label{implementing-bcwsn}
@@ -348,7 +348,7 @@ Two different approaches for intra-cluster sensor node scheduling have been
 implemented in order to uniformly distribute the sensing activity for the
 sensor nodes of a cluster. In the first one, called Representative Nodes (RNs),
 only one node in each cluster $C_{i}$ is chosen at each time to represent that
-cluster. In other words, a representative node is responsible for sensing and
+cluster. In other words, a Representative Node is responsible for sensing and
 predicting data in $C_{i}$ for given time interval. In this case, we have a
 greater energy economy in the network as a trade-off from a little
 general precision, because changes in fenomena sensed at network positions where
@@ -374,7 +374,7 @@ coefficients of the linear regression equation (see Section \ref
 nodes of the network, requesting the following data from sensors:
 battery level, spatial location and sensed values. The amount of data used by the
 learning stage is a parameter, denoted initial slot time, which should be
-defined by the application expert (e.g: 70). Each sensor answers the broadcast
+defined by the application expert (e.g. 70). Each sensor answers the broadcast
 message from sink in a batch mode, i.e., it makes all sensing tasks required and
 sends only one message response to sink node with all reading data.
 
@@ -446,13 +446,14 @@ as follows:
 \end{equation}
 
 The idea behind this method is that both the sink and the sensor node know the
-regression equation to predict the sensed values Thus, a   sensor node does not
+regression equation to predict the sensed values. Thus, a sensor node does not
 need to send data to sink, since it is able to predict data sensed by the
 sensors. Thus, the network is saving power of sensors \cite{MaiaACR2013}.
 
-During the Learning Stage, the sink node compute the initial coefficients $a$
-and $b$ for each sensor node. For that, the time series sent by sensors.
-Thereafter, the sink node sends them to sensors.
+During the Learning Stage, the sink node computes the initial coefficients $a$
+and $b$ for each sensor node, based on the time series received from them.
+Thereafter, the sink node sends the calculated coefficients to the respective
+sensors.
 
  
 \subsubsection{Sensing}
@@ -474,19 +475,20 @@ outside the tolerable difference are treated as novelty for the model. The
 ``tolerable difference'' is a parameter, set by the application expert (e.g.
 $5\%$ or $10\%$).
 
-In RN mode, only the representative nodes (one for cluster)  receive the
-coefficients and execute the reading/prediction loop. Whenever a representative
-node detects a given amount of novelties $n$ (defined by the user), it should
-send the novelties to the sink for updating the predicting model by computing
-new regression coefficients.
+In RN mode, only the representative nodes (one for cluster) receive the
+coefficients and execute the reading / prediction loop. Whenever a representative
+node detects a given amount of novelties $n$ (defined by the application
+expert), it should send the novelties to the sink for updating the predicting
+model by computing new regression coefficients.
 
 In CH mode, all sensors in a cluster receive their respective coefficients and
-execute the reading/prediction loop. Case a sensor node $s$ detects a given
-amount of novelties, it sends the novelties to the cluster head of the cluster
-to which $s$ belongs. The cluster head in turn logs the number of novelties, in
-such way that when the number of received novelties is greater than  a preset
-limit (limit per cluster), the CH sends a message to the sink for computing new
-regression coefficients for that cluster.
+execute the reading / prediction loop. Case a sensor node $s$ detects a given
+amount of novelties $n$, it sends the novelties as a notification to the cluster
+head of the cluster to which $s$ belongs. The cluster head in turn logs the
+number of notifications, in such way that when the number of received
+notifications is greater than a preset limit $m$ (limit per cluster, also
+defined by the application expert), the CH sends a message to the sink for
+computing new regression coefficients for that cluster.
 
 
 \subsubsection{Cluster Maintenance}
@@ -509,7 +511,7 @@ R_{new}$) and let $F_{d}(D(C_i))$ be the value of Fractal Dimension of the data
 of cluster $C_i$.
 
 When MDFD is chosen, in clustering sensor nodes phase (Section
-\ref{clustering-sensors}), the fractal dimension is calculated and stored for
+\ref{clustering-sensors}), the Fractal Dimension is calculated and stored for
 each initial cluster ($F_{d}(D(C_i)), \forall i$). The idea is to find out which
 cluster $C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take the
 slightest change in its Fractal Dimension.
