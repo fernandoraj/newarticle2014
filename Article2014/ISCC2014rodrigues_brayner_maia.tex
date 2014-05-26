@@ -56,12 +56,21 @@ for clustering them, the proposed approach uses the concept of behavioral
 correlation to group sensors, that takes into account the concepts of difference
 in magnitude and trend of sensed data. For clusters maintenance, we propose
 an alternative approach based on Fractal Clustering, where this technique use
-the concept of Fractal Dimensions to find the best configuration for clusters
-based on the Minimal Difference of Fractal Dimension.
+the concept of Fractal Dimension to find the best configuration for clusters
+based on the Minimum Difference of Fractal Dimension strategy.
 Furthermore, two scheduling intra-clustering methods are presented:
-Representative Nodes and Cluster Heads.
+Representative Nodes (RNs) and Cluster Heads (CHs). We develop a framework to
+address several important technical challenges, including how to partition the sensors
+into clusters (using Behavioral Correlation), how to dynamically maintain the
+clusters in response to environmental changes (using Fractal Clustering),
+how to schedule the sensors in a cluster (RN or CH) and how to explore temporal
+correlation for restore the data in the sink with high fidelity (using Linear
+Regression with threshold error), apart from dealing with multiple types of
+sensed data at the same time. To the best of our knowledge, there is no other
+paper that uses Fractal Clustering to maintain clusters while making predictions
+about multiple types of data simultaneously sensed in a WSN.
 In order to validate our approach, simulations with a prototype have been
-conducted over real temperature data. The results show that, with 5\% error
+conducted over real data. The results show that, with 5\% error
 threshold in temporal prediction, BCWSN can save the communication overhead up
 to 97.72\% over naive strategy and 69.02\% over a temporal correlation approach,
 while the RMSE remains roughly stable.
@@ -237,14 +246,17 @@ be represented, one by one, by a "Representative node" because a single reading
 within this region is enough to represent it.
 The size of the correlation region (c) can be decremented or incremented by the
 sink according to the application and the characteristics of the event, to
-maintain the accuracy of the data collected.
+maintain the accuracy of the data collected. However, in this approach, clusters
+are formed exclusively by spatial criterion, i.e. the Euclidean distance between
+sensors.
 
 Another way to group sensor nodes into clusters is through measures of
 dissimilarity.
 In EEDC \cite{Liu2007}, such measures of dissimilarity are calculated by the
-sink node for all pairs of nodes of the network, regardless of their location.
-The measure of dissimilarity between two nodes is calculated based on up to $3$
-parameters, namely:
+sink node for pairs of nodes of the network, according to the maximum distance
+between them.
+So, the measure of dissimilarity between two nodes is calculated based on up to
+$3$ parameters, namely:
 the differences in magnitude (\textit{M}) and trend (\textit{T}) of the data
 values and the geographical/euclidean distance between nodes ($g_{max}dist$).
 The criterion of formation of clusters is based on the maximum threshold of
@@ -259,7 +271,10 @@ divides the nodes into clusters.
 That work does not takes into account the energy reserve of each node as a
 criterion for choosing representative nodes (it is used an algorithm that makes,
 simultaneously, the equitable scheduling - round robin - along with the random
-choice of representatives nodes).
+choice of representatives nodes). In this work, we choose Representative Nodes /
+Cluster Heads according to the remaining energy level and the minimum distance
+to the sink. Moreover, unlike \cite{Liu2007}, we took into account readings from
+multiple different data types by sensors.
 
 The spatial correlation through the formation of clusters is addressed in
 \cite{Pham2010} as a flooding algorithm where the sink node starts to
@@ -296,8 +311,27 @@ in each time slot, where this configuration is only changed when one of the
 active nodes has its energy level below the threshold established.
 That work does not describe how the energy threshold is calculated neither how
 this reconfiguration of the sizes of the rectangles are done and not even gives
-examples of the that.
+examples of that.
 
+Carvalho \textit{et al.} \cite{Carvalho2011} proposed applying Multivariate
+Spatio-Temporal Correlation to improving prediction accuracy in a WSN. But the
+major drawback of this work is that it do not reduces the energy consumption of
+the network compared to other existing approaches. In fact, it even increases
+the energy consumption of the network in many situations. In our work, using
+multiple linear regression together with fractal clustering, we achieved reduce
+the overall energy consumption of the network, obtaining results with a Root
+Mean Squared Error (RMSE) for the prediction data (w.r.t. the sensed data) even
+smaller than other approaches.
+
+In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
+\textit{Fractal Dimension} to cluster datasets, from an initialization step
+based on the nearest neighbor, that create the initial clusters. Then they
+present the algorithm of the incremental step, which uses \textit{Fractal
+Dimension} calculation based on an implementation of Box Counting algorithm,
+called FD3 \cite{Liebovitch1989}. In our proposal, we use an adapted version of
+this algorithm (Fractal Clustering) for the maintenance of clusters each time a
+change in the sensed environment is detected and reported to the sink node by
+one sensor in the network.
 
 \section{Implementing Behavioral Correlation in WSNs}
 \label{implementing-bcwsn}
@@ -460,7 +494,7 @@ regression coefficients for that cluster.
 In the proposed approach, the sink has the ability to automatically and
 autonomously maintain the clusters. There are two strategies implemented by
 BCWSN to recompute clusters. One strategy is to maintain the sensor clusters
-according to the Minimum Difference Fractal Dimension (MDFD), based on the
+according to the Minimum Difference of Fractal Dimension (MDFD), based on the
 \textit{Fractal Clustering} algorithm that allows only merge operations. The
 other strategy is according to the \textit{Similarity Measures} algorithm that
 allows split and merge operations.
@@ -480,7 +514,7 @@ each initial cluster ($F_{d}(D(C_i)), \forall i$). The idea is to find out which
 cluster $C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take the
 slightest change in its Fractal Dimension.
 
-The Minimum Difference Fractal Dimension (MDFD) strategy is as follows:
+The Minimum Difference of Fractal Dimension (MDFD) strategy is as follows:
 whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a RN or CH on
 a given cluster $C_j$, it calculates which cluster $C_i$ has the minimal
 \textit{fractal impact}, i.e. the minimum absolute difference between the
