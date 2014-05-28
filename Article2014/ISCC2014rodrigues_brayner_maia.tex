@@ -461,7 +461,7 @@ sensors.
 As already mentioned, two different approaches for intra-cluster sensor node
 scheduling have been implemented in order to uniformly distribute the sensing
 activity for the sensor nodes of a cluster. In the first one, called
-Representative Nodes (RNs), only one node in a cluster $C_{i}$ is responsible
+Representative Node (RN), only one node in a cluster $C_{i}$ is responsible
 for sensing and predicting data in $C_{i}$ for given time interval. In the
 second method, called Cluster Heads (CHs), on the other hand, one sensor node
 (the CH) in each cluster $C_{i}$ is selected to coordinate the data sensing
@@ -483,8 +483,8 @@ model by computing new regression coefficients.
 
 In CH mode, all sensors in a cluster receive their respective coefficients and
 execute the reading / prediction loop. Case a sensor node $s$ detects a given
-amount of novelties $n$, it sends the novelties as a notification to the cluster
-head of the cluster to which $s$ belongs. The cluster head in turn logs the
+amount of novelties $n$ (sensor delay, defined by the application expert), it
+sends the novelties as a notification to the cluster head of the cluster to which $s$ belongs. The cluster head in turn logs the
 number of notifications, in such way that when the number of received
 notifications is greater than a preset limit $m$ (limit per cluster, also
 defined by the application expert), the CH sends a message to the sink for
@@ -497,9 +497,9 @@ In the proposed approach, the sink has the ability to automatically and
 autonomously maintain the clusters. There are two strategies implemented by
 BCWSN to recompute clusters. One strategy is to maintain the sensor clusters
 according to the Minimum Difference of Fractal Dimension (MDFD), based on the
-\textit{Fractal Clustering} algorithm that allows only merge operations. The
-other strategy is according to the \textit{Similarity Measures} algorithm that
-allows split and merge operations.
+Fractal Clustering algorithm (\textit{FC} for short) that allows only
+merge operations. The other strategy is according to the Similarity
+Measures algorithm (\textit{SM}) that allows split and merge operations.
 
 Let $R_{new}$ be the new reading data to be treated by the sink; let $S_{R}$ be
 the sensor which report that ``novelties'' (i.e. new reading - $R_{new}$) to the
@@ -510,7 +510,7 @@ cluster $C_i$ with the new reading data $R_{new}$ (i.e. $D'(C_i) = D(C_i) \cup
 R_{new}$) and let $F_{d}(D(C_i))$ be the value of Fractal Dimension of the data
 of cluster $C_i$.
 
-When MDFD is chosen, in clustering sensor nodes phase (Section
+When \textit{FC} is chosen, in clustering sensor nodes phase (Section
 \ref{clustering-sensors}), the Fractal Dimension is calculated and stored for
 each initial cluster ($F_{d}(D(C_i)), \forall i$). The idea is to find out which
 cluster $C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take the
@@ -531,14 +531,6 @@ sink just add the new data $R_{new}$ to the corresponding sensor in this cluster
 Otherwise, the sink must remove this sensor node ($S_{R}$ with new data
 $R_{new}$) from its old cluster $C_j$ and add it to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
-
-% \begin{equation}
-% 	a = \frac{1}{N}\left(\sum S_{i} - b\sum t_{i} \right) = \bar{S} - b\bar{t},
-% \end{equation}
-% \vspace*{-.3cm}
-% \begin{equation}
-% 	b = \frac{\sum \left(t_{i} - \bar{t}\right)\left(S_{i} - \bar{S}\right)}{\sum \left(t_{i} - \bar{t}\right)^{2}}.
-% \end{equation}
 
 \begin{algorithm}
  \SetAlgoLined
@@ -575,8 +567,9 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 % representative nodes or cluster heads (one for each of the new clusters) based
 % on the criteria described in Section \ref{clustering-sensors}.
 
-The strategy using \textit{Similarity Measures} can be subdivided into two
-phases: splitting and merging clusters. Splitting cluster is the following:
+On the other hand, the strategy using \textit{SM} for Cluster Maintenance can be
+subdivided into two phases: splitting and merging clusters. Splitting cluster is
+the following:
 Whenever the sink receives "novelties" (new data) from a RN or CH on a given
 cluster $C$, it checks if the sensor nodes in $C$ are not meeting the minimum
 similarity requirements M-magnitude and T-trend anymore. In that case, the sink
@@ -606,29 +599,32 @@ quantitatively presented and qualitatively discussed.
 
 A simulation prototype was implemented in Java, exploiting the facilities
 provided by Sinalgo \cite{Sinalgo2007}, a well-known framework for testing and
-validating network algorithms. The simulations have been execute on i7 computer
+validating network algorithms. The simulations have been executed on i7 computer
 with 8 GB RAM and Mac OS X as operating system.
 One of the main reasons for choosing Sinalgo is because it is very scalable in
 nature, allowing that simulations with up to several thousands of sensor nodes
 be executed in a reasonable time. The data used for the simulation were
 extracted from the real data of experiment Intel Lab Data \cite{Intel2004}. The
-selected kind of sensed data was ``temperature''. M-magnitude parameter has been
-configured with the value of $1.5$ and T-trend was $5\%$, the same as the error
-threshold. The amount of initial data sensing (initial slot time) was 70
-readings, used for the learning stage.
+selected kinds of sensed data were ``temperature'' and ``humidity'', according
+to the type of test. M-magnitude parameter has been configured with the value of
+$1.5$ and T-trend was $5\%$, the same as the error threshold. The amount of
+initial data sensing (initial slot time) was 70 readings, used for the learning
+stage.
 
 In the experiments, we have executed the following approaches: {\it
-  (i)} Naive approach \cite{Madden2005}, where all sensors sense data
-and send them to the sink;  {\it
+  (i)} Naive approach \cite{Madden2005}, where all nodes send their sensed
+information to the sink node;  {\it
   (ii)} Adaga-P* approach \cite{MaiaACR2013} \cite{MaiaSAC2013}, which
 implicitly implements spatial correlation to cluster sensors and exploits the
-benefits of using a linear  regression model to reduce the number of messages
+benefits of using a linear regression model to reduce the number of messages
 injected into the network;  {\it
-  (iii)} BCWSN-RN, where, after the formation of the clusters based on the
-\textit{Behavioral Correlation}, only the Representative Nodes (RNs) of each
-cluster senses data, and;  {\it
-  (iv)} BCWSN-CH, which implements the BCWSN, with the scheduling
-policy  of  Cluster Heads (CHs).
+  (iii)} BCWSN-SM-RN, where, after the formation of the clusters based on the
+\textit{Behavioral Correlation}, only the Representative Node (RN) of each
+cluster senses data and the clusters are maintained by \textit{SM}
+strategy, and;  {\it 
+  (iv)} BCWSN-FC-CH, which implements the BCWSN, with the scheduling
+policy of Cluster Heads (CH) and the maintenance of clusters through the
+\textit{FC} strategy.
 
 In order to compare the aforementioned approaches, three metrics have been
 deployed: 1) The Root Mean Square Error (RMSE)  to verify the accuracy of
@@ -640,6 +636,8 @@ reference to the naive approach filtered values.
 
 \subsection{Results and Discussion}
 \label{results-and-discussion}
+
+
 
 
 Table \ref{tab:rmse} presents the average (AVG), standard deviation (STD),
