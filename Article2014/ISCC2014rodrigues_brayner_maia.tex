@@ -72,7 +72,7 @@ about multiple types of data simultaneously sensed in a WSN.
 In order to validate our approach, simulations with a prototype have been
 conducted over real data. The results show that, with 5\% error
 threshold in temporal prediction, BCWSN can save the communication overhead up
-to 97.72\% over naive strategy and 69.02\% over a temporal correlation approach,
+to XX.XX\% over naive strategy and YY.YY\% over a temporal correlation approach,
 while the RMSE remains roughly stable.
 
 % The results point to gains of up to 97.72\% over naive strategy in terms of
@@ -525,7 +525,8 @@ previous Fractal Dimension value (calculated before the new data arrives)
 R_{new}, \forall i$.
 If this minimal difference ($|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))|$,
 where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|), \forall i$), is greater than
-a certain threshold ($\tau$) - defined by the application expert (e.g. $\tau = 0.03$), then this new data $R_{new}$ is simply rejected as noise.
+a certain threshold ($\tau$) - defined by the application expert (e.g. $\tau =
+0.03$), then this new data $R_{new}$ is simply rejected as noise.
 On the other hand, if the cluster $C_i$ is the same $C_j$ (i.e. $i=j$), the
 sink just add the new data $R_{new}$ to the corresponding sensor in this cluster.
 Otherwise, the sink must remove this sensor node ($S_{R}$ with new data
@@ -557,7 +558,7 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
     }
   }
  
- \caption{Fractal Clustering Algorithm - MDFD Strategy}
+ \caption{Fractal Clustering Algorithm - FC Strategy}
  \label{alg:MDFD}
 \end{algorithm}
 
@@ -594,8 +595,8 @@ discussed in this section. Thus, in this section, we first describe how the
 simulation prototype has been set up. Thereafter, the empirical results are
 quantitatively presented and qualitatively discussed.
 
-\subsection{Simulation Setup}
-\label{data-and-experiments}
+\subsection{Implementation}
+\label{implementation}
 
 A simulation prototype was implemented in Java, exploiting the facilities
 provided by Sinalgo \cite{Sinalgo2007}, a well-known framework for testing and
@@ -604,13 +605,21 @@ with 8 GB RAM and Mac OS X as operating system.
 One of the main reasons for choosing Sinalgo is because it is very scalable in
 nature, allowing that simulations with up to several thousands of sensor nodes
 be executed in a reasonable time. The data used for the simulation were
-extracted from the real data of experiment Intel Lab Data \cite{Intel2004}. The
-selected kinds of sensed data were ``temperature'' and ``humidity'', according
-to the type of test. M-magnitude parameter has been configured with the value of
-$1.5$ and T-trend was $5\%$, the same as the error threshold. The amount of
-initial data sensing (initial slot time) was 70 readings, used for the learning
-stage.
+extracted from the real data of experiment Intel Lab Data \cite{Intel2004}. 
 
+\subsection{Simulation Setup}
+\label{data-and-experiments}
+
+M-magnitude parameter has been configured with the value of $1.5$ and T-trend
+was $5\%$, the same as the error threshold (t). The amount of initial data sensing
+(initial slot time) was 70 readings, used for the learning stage.
+
+The performance evaluation was done through four application versions, which we
+used to simulate and compare multiple linear regression to simple linear
+regression and to the original version of a monitoring application. This
+monitoring application simulates the gathering of two variables from the
+environment: ``temperature'' and/or ``humidity'', according to kind of test.
+%[The application versions to achieve the simulations are]
 In the experiments, we have executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, where all nodes send their sensed
 information to the sink node;  {\it
@@ -618,24 +627,150 @@ information to the sink node;  {\it
 implicitly implements spatial correlation to cluster sensors and exploits the
 benefits of using a linear regression model to reduce the number of messages
 injected into the network;  {\it
-  (iii)} BCWSN-SM-RN, where, after the formation of the clusters based on the
+  (iii)} BCWSN-SM-RN approach, where, after the formation of the clusters based on the
 \textit{Behavioral Correlation}, only the Representative Node (RN) of each
 cluster senses data and the clusters are maintained by \textit{SM}
 strategy, and;  {\it 
-  (iv)} BCWSN-FC-CH, which implements the BCWSN, with the scheduling
+  (iv)} BCWSN-FC-CH approach, which implements the BCWSN, with the scheduling
 policy of Cluster Heads (CH) and the maintenance of clusters through the
 \textit{FC} strategy.
 
 In order to compare the aforementioned approaches, three metrics have been
-deployed: 1) The Root Mean Square Error (RMSE)  to verify the accuracy of
+deployed: 1) The Root Mean Square Error (RMSE) to verify the accuracy of
 approach; 2) The Number of Messages injected into the network, which is a
 critical factor to measure energy consumption of the network, and; 3) The
 Number of Sensed Data, which impacts in the network energy consumption and in
 the accuracy of the result provided by each approach. The RMSE is calculated by
 reference to the naive approach filtered values.
 
+It is important to note that the BCWSN-SM-CH and BCWSN-FC-RN approaches were
+disregarded because unsatisfactory results were found. That is due to the fact
+that: {\it
+  (i)} BCWSN-SM-CH approach, the \textit{SM} strategy was less effective than
+  \textit{FC} strategy when all sensors are sensing (CH), causing the [worst]
+  sensor clustering increases the RMS Error, while it increases the total number of
+  messages and sensor readings too, and; {\it
+  (ii)} BCWSN-FC-RN approach, the \textit{FC} strategy makes the total number of
+  clusters decrease over time, decreasing the RN (sensors that make readings)
+  too. So, the RMS Error increases as well.
+
+The simulation parameters are presented in Table \ref{tab:parameters}.
+
+\begin{table}[h!]
+\caption{Simulation parameters}
+\label{tab:parameters}
+\begin{center}
+\begin{tabular}{|l||l|}
+\hline
+Parameters &Values\\
+\hline\hline
+Sink node &1 (center) \\
+\hline
+\# of nodes &54 \\
+\hline
+\# of cycles executed &10000 \\
+\hline
+Notification rate (per second) &31 \\
+\hline
+Data type sensed &Temp. / Hum. \\
+\hline
+Initial slot time (\# learning stage) &70 \\
+\hline
+M-magnitude &1.5 \\
+\hline
+T-trend &0.05 \\
+\hline
+Tolerable difference {\it(t)} &0.05 \\
+\hline
+Sensor delay {\it(n)} &(1, 5) \\
+\hline
+Limit per cluster {\it(m)} &(1, 5) \\
+\hline
+FC threshold ($\tau$) &0.03 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
 \subsection{Results and Discussion}
 \label{results-and-discussion}
+
+Table \ref{tab:rmseVsRounds} presents the RMSE values of the four approaches
+evaluated during the experiments, in the following cycles (rounds): 100, 500,
+1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
+cluster {\it(m)} = 1.
+
+\begin{table}[h!]
+\caption{RMSE vs. Rounds}
+\label{tab:rmseVsRounds}
+\begin{center}
+\begin{tabular}{|l||l|l|l|l|}
+\hline
+RMSE &100 &500 &1000 &10000 \\
+\hline\hline
+Naive &0 &0 &0 &0 \\
+\hline
+Adaga-P* &0.299 &0.414 &0.465 &0.502 \\
+\hline
+BCWSN-SM-RN &0.897 &0.499 &0.51 &0.534 \\
+\hline
+BCWSN-FC-CH &0.235 &0.4 &0.369 &0.378 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+In Table \ref{tab:numMsgVsRounds}, we present the total Number of Messages (Num Msg)
+of the four approaches evaluated, in the following cycles (rounds): 100, 500,
+1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
+cluster {\it(m)} = 1.
+
+\begin{table}[h!]
+\caption{Number of Messages vs. Rounds}
+\label{tab:numMsgVsRounds}
+\begin{center}
+\begin{tabular}{|l||l|l|l|l|}
+\hline
+Num Msg &100 &500 &1000 &10000 \\
+\hline\hline
+Naive &20417 &110017 &222017 &2182038 \\
+\hline
+Adaga-P* &4089 &14146 &25918 &266250 \\
+\hline
+BCWSN-SM-RN &509 &3640 &7928 &96197 \\
+\hline
+BCWSN-FC-CH &605 &2205 &2891 &8361 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Table \ref{tab:sensReadVsRounds} shows, for cycles (rounds): 100, 500, 1000 and
+10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per cluster
+{\it(m)} = 1, the total Number of Sensed Data (Sensor Reading) from all sensors
+of the network.
+
+\begin{table}[h!]
+\caption{Number of Sensed Data vs. Rounds}
+\label{tab:sensReadVsRounds}
+\begin{center}
+\begin{tabular}{|l||l|l|l|l|}
+\hline
+Sensor Reading &100 &500 &1000 &10000 \\
+\hline\hline
+Naive &5112 &26312 &52812 &521809 \\
+\hline
+Adaga-P* &5114 &26314 &52814 &521811 \\
+\hline
+BCWSN-SM-RN &3785 &14554 &27533 &271617 \\
+\hline
+BCWSN-FC-CH &3795 &11927 &16147 &46503 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
 
 
 
