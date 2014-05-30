@@ -772,9 +772,6 @@ BCWSN-FC-CH &3795 &11927 &16147 &46503 \\
 \end{table}
 
 
-
-
-
 Table \ref{tab:rmse} presents the average (AVG), standard deviation (STD),
 maximum (MAX) and minimum (MIN) value for the RMSE of the four approaches
 evaluated during the experiments.
@@ -789,19 +786,24 @@ RMSE &AVG &STD &MAX &MIN \\
 \hline\hline
 Naive &0 &0 &0 &0 \\
 \hline
-Adaga-P* &0.4344 &0.0393 &0.485 &0.285 \\
+Adaga-P* &0.4251 &0.0328 &0.47 &0.299 \\
 \hline
-BCWSN-RN &0.5283 &0.0851 &1.538 &0.492 \\
+BCWSN-SM-RN &0.5387 &0.0649 &0.897 &0.499 \\
 \hline
-BCWSN-CH &0.3365 &0.0217 &0.366 &0.229 \\
+BCWSN-FC-CH &0.3963 &0.0386 &0.69 &0.229 \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
-Looking more closely to Table \ref{tab:rmse}, one can observe that BCWSN-RN
-presented a RMSE of $0.5$ (with average $0.5283$ and standard deviation $0.085$),
-while the average of transmitted messages  is $96.5\%$ smaller than the Naive
+
+Looking more closely to Table \ref{tab:rmse}, one can observe that BCWSN-SM-RN
+presented a RMSE of $0.5$ (with average $0.5387$ and standard deviation $0.0649$),
+
+
+
+
+while the average of transmitted messages is $96.5\%$ smaller than the Naive
 approach. Compared to Adaga-P*, the average of messages exchanged in BCWSN-RN is
  $52.51\%$ lower and the average of sensed data is $45.12\%$ lower. The RMSE
 produced by BCWSN-RN is $21.6\%$ higher in average than the RMSE presented by
@@ -812,6 +814,8 @@ Regarding BCWSN-CH approach, the average RMSE is $0.337$ smaller than the Naive
 approach, while the average of number of messages is $97.72\%$ smaller. When
 compared to Adaga-P*, BCWSN-CH presented a RMSE $22.53\%$ smaller, and the
 number of exchanged messages $69.02\%$ smaller in average.
+
+
 
 \begin{table}[h!]
 \caption{Number of Messages per Round (1000 cycles)}
