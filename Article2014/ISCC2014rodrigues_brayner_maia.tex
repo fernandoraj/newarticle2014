@@ -72,7 +72,7 @@ about multiple types of data simultaneously sensed in a WSN.
 In order to validate our approach, simulations with a prototype have been
 conducted over real data. The results show that, with 5\% error
 threshold in temporal prediction, BCWSN can save the communication overhead up
-to XX.XX\% over naive strategy and YY.YY\% over a temporal correlation approach,
+to 98.95\% over naive strategy and 90.4\% over a temporal correlation approach,
 while the RMSE remains roughly stable.
 
 % The results point to gains of up to 97.72\% over naive strategy in terms of
@@ -810,16 +810,18 @@ average than the RMSE presented by Adaga-P*.
 % $26.72\%$ = ((0.5387 - 0.4251)*100)/0.4251
 
 Regarding BCWSN-FC-CH approach, although the average RMSE is $0.3963$ (whereas
-in Naive approach it is virtually $0$), the average of number of messages is
-$98.95\%$ smaller and the number of exchanged messages $75.85\%$ smaller in
-average, compared to Naive. When compared to Adaga-P*, the average RMSE
-of BCWSN-FC-CH approach is $6.77\%$ ($0.0288$) smaller, while the average of
-number of messages is $90.4\%$ smaller.
+in Naive approach it is virtually $0$), the average of number of exchanged
+messages is $98.95\%$ lower than Naive, besides the number of data readings
+$75.85\%$ lower in average. When compared to Adaga-P*, the average RMSE of
+BCWSN-FC-CH approach is $6.77\%$ ($0.0288$) smaller, while the average of number
+of messages is $90.4\%$ smaller. It is worthwhile to note that we have
+considered the both directions of transmission, i.e. from and into sensor nodes,
+for computing communication cost.
 % and the number of exchanged messages $75.85\%$ smaller in average.
 
+% $0.0288$ = 0.4251 - 0.3963
 % $98.95\%$ = ((224 - 2.34)*100)/224
 % $75.85\%$ = ((53 - 12.8)*100)/53
-% $0.0288$ = 0.4251 - 0.3963
 
 
 \begin{table}[h!]
@@ -883,46 +885,47 @@ BCWSN-FC-CH &12.80 &10.30 &53 &0 \\
 \end{table}
 
 
-
-
 Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in the
-BCWSN-RN and Adaga-P* approaches tend to get very close to $0.5$ at about $900$
-cycles, while the BCWSN-CH stabilizes at about $0.4$ in the same point. Thus,
-BCWSN-CH provides a good compromise between accuracy and reduction in energy
-consumption, since it reduces the communication activity (see Table
-\ref{tab:num-msg}). It is important to note that in the Naive approach, the RMSE
-is always 0 (zero), because all sensors send all sensed data to the sink.
+BCWSN-SM-RN and Adaga-P* approaches tend to get very close to $0.5$ at about $1000$
+cycles, while the BCWSN-FC-CH stabilizes at about $0.37$ in the same point. Thus,
+BCWSN-FC-CH provides a good compromise between accuracy and reduction in energy
+consumption, since it reduces the communication activity and data readings (see
+Tables \ref{tab:num-msg} and \ref{tab:sens-read}). It is important to note that
+in the Naive approach, the RMSE is always 0 (zero), because all sensors send all
+sensed data to the sink.
 
 \begin{figure}[!htb]
 \centering
-	\includegraphics[scale=0.11]{RMSEGRAPHIC_.png}
+	\includegraphics[scale=0.33]{WsneeFD_RMSE.png}
     \caption{RMSE per Round}
     \label{fig:rmse}
 \end{figure}
 
-One can identify a peak in Figure \ref{fig:rmse} for the BCWSN-RN curve. The
-reason for that is the following. After the initial cluster formation there is a
-small number of clusters and in the BCWSN-RN just the representative nodes are
-responsible for sensing data. Since there is only one representative node per
-cluster, the number of sensed data is small as well. Thus the BCWSN-RN accuracy
-is jeopardized at the beginning. Nonetheless, the BCWSN-RN approach is able to
-dynamically adjust the accuracy by reducing the RMSE.
+One can identify a peak in Figure \ref{fig:rmse} for the BCWSN-SM-RN and
+BCWSN-FC-CH curves. The reason for this is due to the fact that the initial
+cluster formation is only an initialization step for the two approaches.
+Since all sensors stay sensing in the BCWSN-FC-CH approach, the RMSE peak is
+lower than in BCWSN-SM-RN, where only representative nodes are responsible for
+sensing data and there is only one representative node per cluster.
+%the number of sensed data is small as well.
+Thus the BCWSN accuracy is jeopardized at the beginning. Nonetheless, the
+BCWSN-SM-RN and BCWSN-FC-CH approaches are able to dynamically adjust the
+accuracy by reducing the RMSE.
 
 In Figure \ref{fig:num-msg}, one can observe the number of transmitted messages
-per round.
-In the Naive approach, the number of messages is steady, since in each round all
-sensors send sensed data to the sink.
-It is important to observe that, in average, BCWSN-CH and BCWSN-RN transmit less
-messages than Adaga-P* (see Table \ref{tab:num-msg}). However, there are some
-peaks in both curves (BCWSN-CH and BCWSN-RN), which represents periods in time
-when clusters are being restructured (splitting or merging), since the clusters
-are always undergoing division and, at times, go through the merge process. This
-can be proved by the high standard deviation for both approaches in Table
+per round. In the Naive approach, the number of messages is steady, since in
+each round all sensors send sensed data to the sink. It is important to observe
+that, in average, BCWSN-FC-CH and BCWSN-SM-RN transmit less messages than Adaga-P*
+(see Table \ref{tab:num-msg}). However, there are some peaks in BCWSN-SM-RN
+curve, which represent periods in time when clusters are being restructured
+(splitting or merging), since the clusters, in this approach, are always
+undergoing division and, at times, go through the merge process. This can be
+proved by the high standard deviation for this approach in Table
 \ref{tab:num-msg}.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.11]{NumMsgGRAPHIC_.png}
+	\includegraphics[scale=0.35]{WsneeFD_NumMsgPerRound.png}
     \caption{Number of Messages per Round}
     \label{fig:num-msg}
 \end{center}
@@ -933,13 +936,15 @@ Finally, Figure \ref{fig:sens-reading} shows the evolution of the amount of
 sensed data for the four evaluated approaches.
 Naive and Adaga-P* approaches, as one can observe, have the same number of
 sensed data (53 per round), because all sensors in those approaches sense data
-during all cycles. In BCWSN-CH, sensors do not sense while they are waiting to
-receive new coefficients after sending new data to sink. In the case of
-BCWSN-RN, only representative nodes (one per cluster) sense data per round.
+during all cycles. In BCWSN-FC-CH, sensors do not sense while they are waiting to
+receive new coefficients after sending new data to sink (during Fractal
+Clustering process). In the case of BCWSN-SM-RN, only representative nodes (one
+per cluster) make data reading continuously, but during merge process, all sensors
+must sense data, leading reading data peaks.
 
 \begin{figure}[!htb]
 \centering
-	\includegraphics[scale=0.11]{SReadGRAPHIC_.png}
+	\includegraphics[scale=0.35]{WsneeFD_SReadPerRound.png}
     \caption{Number of Sensed Data per Round}
     \label{fig:sens-reading}
 \end{figure}
@@ -950,19 +955,24 @@ BCWSN-RN, only representative nodes (one per cluster) sense data per round.
 
 In this paper, we have described a new approach for clustering sensors in WSNs
 based on the notion of behavioral correlation. Behavioral correlation identifies
-sensors with similar data reading patterns. Moreover, two different approaches
-to select of active nodes in each cluster have been proposed:
-Representative Nodes (RNs) and Cluster Heads (CHs).
+sensors with similar data reading patterns, between one or more (different) data
+type readings. Moreover, two different approaches to select of active nodes in
+each cluster have been proposed: Representative Nodes (RNs) and Cluster Heads
+(CHs), besides two strategies for cluster maintenance: Similarity
+Measures and Fractal Clustering.
 
 The results presented in Section \ref{results-and-discussion} show that the use
-of data behavioral correlation associated with a temporal correlation technique
-may significantly increase energy economy in WSNs, while assuring a low RMS
-Error.
+of data behavioral correlation associated with a temporal correlation technique,
+associated with a correct strategy for cluster maintenance may significantly
+decrease energy consumption in WSNs, while assuring a low RMS Error.
 
 In this work, the similarity among time series behavior has been measured by
 applying similarity in magnitude and trend. Now, we are working on evaluating
 measures of distance between prediction models to assess the dissimilarity in
-sensed data behavior.
+sensed data behavior. Moreover, we are evaluation the use of traditional
+techniques of data mining, such as K-Means, to perform the initial grouping of
+sensors into clusters, overriding the use of similarity measures for such
+purpose.
 
 
 % conference papers do not normally have an appendix
