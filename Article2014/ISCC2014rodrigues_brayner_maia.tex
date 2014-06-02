@@ -696,80 +696,80 @@ FC threshold ($\tau$) &0.03 \\
 \subsection{Results and Discussion}
 \label{results-and-discussion}
 
-Table \ref{tab:rmseVsRounds} presents the RMSE values of the four approaches
-evaluated during the experiments, in the following cycles (rounds): 100, 500,
-1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
-cluster {\it(m)} = 1.
+% Table \ref{tab:rmseVsRounds} presents the RMSE values of the four approaches
+% evaluated during the experiments, in the following cycles (rounds): 100, 500,
+% 1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
+% cluster {\it(m)} = 1.
 
-\begin{table}[h!]
-\caption{RMSE vs. Rounds}
-\label{tab:rmseVsRounds}
-\begin{center}
-\begin{tabular}{|l||l|l|l|l|}
-\hline
-RMSE &100 &500 &1000 &10000 \\
-\hline\hline
-Naive &0 &0 &0 &0 \\
-\hline
-Adaga-P* &0.299 &0.414 &0.465 &0.502 \\
-\hline
-BCWSN-SM-RN &0.897 &0.499 &0.51 &0.534 \\
-\hline
-BCWSN-FC-CH &0.235 &0.4 &0.369 &0.378 \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+% \begin{table}[h!]
+% \caption{RMSE vs. Rounds}
+% \label{tab:rmseVsRounds}
+% \begin{center}
+% \begin{tabular}{|l||l|l|l|l|}
+% \hline
+% RMSE &100 &500 &1000 &10000 \\
+% \hline\hline
+% Naive &0 &0 &0 &0 \\
+% \hline
+% Adaga-P* &0.299 &0.414 &0.465 &0.502 \\
+% \hline
+% BCWSN-SM-RN &0.897 &0.499 &0.51 &0.534 \\
+% \hline
+% BCWSN-FC-CH &0.235 &0.4 &0.369 &0.378 \\
+% \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
 
-In Table \ref{tab:numMsgVsRounds}, we present the total Number of Messages (Num Msg)
-of the four approaches evaluated, in the following cycles (rounds): 100, 500,
-1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
-cluster {\it(m)} = 1.
+% In Table \ref{tab:numMsgVsRounds}, we present the total Number of Messages (Num Msg)
+% of the four approaches evaluated, in the following cycles (rounds): 100, 500,
+% 1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
+% cluster {\it(m)} = 1.
+% 
+% \begin{table}[h!]
+% \caption{Number of Messages vs. Rounds}
+% \label{tab:numMsgVsRounds}
+% \begin{center}
+% \begin{tabular}{|l||l|l|l|l|}
+% \hline
+% Num Msg &100 &500 &1000 &10000 \\
+% \hline\hline
+% Naive &20417 &110017 &222017 &2182038 \\
+% \hline
+% Adaga-P* &4089 &14146 &25918 &266250 \\
+% \hline
+% BCWSN-SM-RN &509 &3640 &7928 &96197 \\
+% \hline
+% BCWSN-FC-CH &605 &2205 &2891 &8361 \\
+% \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
 
-\begin{table}[h!]
-\caption{Number of Messages vs. Rounds}
-\label{tab:numMsgVsRounds}
-\begin{center}
-\begin{tabular}{|l||l|l|l|l|}
-\hline
-Num Msg &100 &500 &1000 &10000 \\
-\hline\hline
-Naive &20417 &110017 &222017 &2182038 \\
-\hline
-Adaga-P* &4089 &14146 &25918 &266250 \\
-\hline
-BCWSN-SM-RN &509 &3640 &7928 &96197 \\
-\hline
-BCWSN-FC-CH &605 &2205 &2891 &8361 \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
-
-Table \ref{tab:sensReadVsRounds} shows, for cycles (rounds): 100, 500, 1000 and
-10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per cluster
-{\it(m)} = 1, the total Number of Sensed Data (Sensor Reading) from all sensors
-of the network.
-
-\begin{table}[h!]
-\caption{Number of Sensed Data vs. Rounds}
-\label{tab:sensReadVsRounds}
-\begin{center}
-\begin{tabular}{|l||l|l|l|l|}
-\hline
-Sensor Reading &100 &500 &1000 &10000 \\
-\hline\hline
-Naive &5112 &26312 &52812 &521809 \\
-\hline
-Adaga-P* &5114 &26314 &52814 &521811 \\
-\hline
-BCWSN-SM-RN &3785 &14554 &27533 &271617 \\
-\hline
-BCWSN-FC-CH &3795 &11927 &16147 &46503 \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+% Table \ref{tab:sensReadVsRounds} shows, for cycles (rounds): 100, 500, 1000 and
+% 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per cluster
+% {\it(m)} = 1, the total Number of Sensed Data (Sensor Reading) from all sensors
+% of the network.
+% 
+% \begin{table}[h!]
+% \caption{Number of Sensed Data vs. Rounds}
+% \label{tab:sensReadVsRounds}
+% \begin{center}
+% \begin{tabular}{|l||l|l|l|l|}
+% \hline
+% Sensor Reading &100 &500 &1000 &10000 \\
+% \hline\hline
+% Naive &5112 &26312 &52812 &521809 \\
+% \hline
+% Adaga-P* &5114 &26314 &52814 &521811 \\
+% \hline
+% BCWSN-SM-RN &3785 &14554 &27533 &271617 \\
+% \hline
+% BCWSN-FC-CH &3795 &11927 &16147 &46503 \\
+% \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
 
 
 Table \ref{tab:rmse} presents the average (AVG), standard deviation (STD),
@@ -799,22 +799,27 @@ BCWSN-FC-CH &0.3963 &0.0386 &0.69 &0.229 \\
 
 Looking more closely to Table \ref{tab:rmse}, one can observe that BCWSN-SM-RN
 presented a RMSE of $0.5$ (with average $0.5387$ and standard deviation $0.0649$),
+while the average of transmitted messages is $96.25\%$ smaller than the Naive
+approach (Table \ref{tab:num-msg}). Compared to Adaga-P*, the average of
+messages exchanged in BCWSN-SM-RN is $65.61\%$ lower and the average of sensed
+data is $49.94\%$ lower. The RMSE produced by BCWSN-SM-RN is $26.72\%$ higher in
+average than the RMSE presented by Adaga-P*.
+% $96.25\%$ = ((224 - 8.39)*100)/224
+% $65.61\%$ = ((24.4 - 8.39)*100)/24.4
+% $49.94\%$ = ((53 - 26.53)*100)/53
+% $26.72\%$ = ((0.5387 - 0.4251)*100)/0.4251
 
+Regarding BCWSN-FC-CH approach, although the average RMSE is $0.3963$ (whereas
+in Naive approach it is virtually $0$), the average of number of messages is
+$98.95\%$ smaller and the number of exchanged messages $75.85\%$ smaller in
+average, compared to Naive. When compared to Adaga-P*, the average RMSE
+of BCWSN-FC-CH approach is $6.77\%$ ($0.0288$) smaller, while the average of
+number of messages is $90.4\%$ smaller.
+% and the number of exchanged messages $75.85\%$ smaller in average.
 
-
-
-while the average of transmitted messages is $96.5\%$ smaller than the Naive
-approach. Compared to Adaga-P*, the average of messages exchanged in BCWSN-RN is
- $52.51\%$ lower and the average of sensed data is $45.12\%$ lower. The RMSE
-produced by BCWSN-RN is $21.6\%$ higher in average than the RMSE presented by
-Adaga-P*.
-
-
-Regarding BCWSN-CH approach, the average RMSE is $0.337$ smaller than the Naive
-approach, while the average of number of messages is $97.72\%$ smaller. When
-compared to Adaga-P*, BCWSN-CH presented a RMSE $22.53\%$ smaller, and the
-number of exchanged messages $69.02\%$ smaller in average.
-
+% $98.95\%$ = ((224 - 2.34)*100)/224
+% $75.85\%$ = ((53 - 12.8)*100)/53
+% $0.0288$ = 0.4251 - 0.3963
 
 
 \begin{table}[h!]
@@ -827,27 +832,34 @@ Num Msg &AVG &STD &MAX &MIN \\
 \hline\hline
 Naive &224 &0 &224 &224 \\
 \hline
-Adaga-P* &10.93 &10.89 &142 &0 \\
+Adaga-P* &24.40 &14.09 &109 &0 \\
 \hline
-BCWSN-RN &8.48 &10.10 &55 &0 \\
+BCWSN-SM-RN &8.39 &9.45 &55 &0 \\
 \hline
-BCWSN-CH &5.14 &9.30 &55 &0 \\
+BCWSN-FC-CH &2.34 &4.15 &33 &0 \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
-In Table \ref{tab:num-msg}, the values for column MIN for Adaga-P*, BCWSN-RN and
-BCWSN-CH are equal to zero because in several rounds the predict value is equal
-to the sensed value. In this case, the sensor does not need to forward the
+In Table \ref{tab:num-msg}, the values for column MIN for Adaga-P*, BCWSN-SM-RN
+and BCWSN-FC-CH are equal to zero because in several rounds the predict value is
+equal to the sensed value. In this case, the sensor does not need to forward the
 sensed value. In Table \ref{tab:sens-read}, the values for column MIN for
-BCWSN-RN and BCWSN-CH are equal to 0(zero) due to the cluster split or merge
-process, during which the sensors stop to sense. The average of sensor readings
-in BCWSN-RN approach is lower than in BCWSN-CH because, in first, the only
-sensors that constantly sensing are the representative nodes, but, in some
-situations, all the representative nodes are sensing, while in others, none of
-them is active because everyone are waiting for new coefficients from sink node.
-So, the STD of sensor reading is greater than in BCWSN-CH.
+BCWSN-SM-RN and BCWSN-FC-CH are equal to 0(zero) due to the cluster split or
+merge process, during which the sensors stop to sense. 
+The average of number of messages and sensor readings in BCWSN-FC-CH approach is
+lower than in BCWSN-SM-RN, because the number of clusters decreases over time in
+Fractal Clustering strategy, while in Similarity Measures, there are constantly
+cluster splits, only with a merge process when the number of clusters exceeds a
+threshold.
+
+In BCWSN-SM-RN, the only sensors that constantly sensing are the representative
+nodes, but, in some situations as during a merge process, all the nodes are
+sensing, while in others, none of them is active because everyone are waiting
+for new coefficients from sink node.
+So, the Standard Deviation of number of message and sensor reading is greater
+than in BCWSN-FC-CH.
 
 
 \begin{table}[h!]
@@ -862,13 +874,15 @@ Naive &53 &0 &53 &53 \\
 \hline
 Adaga-P* &53 &0 &53 &53 \\
 \hline
-BCWSN-RN &26.27 &51.24 &53 &0 \\
+BCWSN-SM-RN &26.53 &19.20 &53 &0 \\
 \hline
-BCWSN-CH &41.95 &36.14 &53 &0 \\
+BCWSN-FC-CH &12.80 &10.30 &53 &0 \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
+
+
 
 
 Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in the
