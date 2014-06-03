@@ -340,9 +340,10 @@ In this section, we present the proposed approach for clustering sensors in a
 WSN based on the notion of {\it Behavioral Correlation}. Our approach, called
 Behavioral Correlation in Wireless Sensor Networks (\textit{BCWSN} for short),
 is based on clustering sensors by means of behavioral correlation (descrived in
-\ref{clustering-sensors}), which is in turn computed from the time series of
-sensor readings, and on using a linear regression model for the temporal
-suppression of data to be sent to the sink node.
+\ref{clustering-sensors}) between gathered variables (such as temperature,
+humidity and light), which in turn is computed from the time series of sensor
+readings, and on using a linear regression model for the temporal
+suppression (prediction) of data to be sent to the sink node.
 
 Two different approaches for intra-cluster sensor node scheduling have been
 implemented in order to uniformly distribute the sensing activity for the
@@ -418,7 +419,8 @@ s'_{i} = s'_{i} - s'_{i-1}$ and $1 < i \leq n$.
 
 Thus, sensors which are magnitude-M and trend-T similar, they are grouped in the
 same cluster. After all time series of all sensors in a WSN have been processed
-during the learning phase, the initial WSN cluster configuration is defined.
+during the learning phase, the initial WSN cluster configuration is defined by
+the sink.
 
 Once the sensors are initially grouped into clusters, representative node or
 cluster head of each cluster is defined by applying the energy level criterion.
@@ -432,7 +434,8 @@ level, the node with the shortest distance to the sink node is choose.
 
 
 The in-network prediction implemented by BCWSN relies on the
-following linear regression equation: $\hat{S}(t) = a + bt$.
+following linear regression equation, applied for each data type sensed:
+$\hat{S}(t) = a + bt$.
 The time $t$ is an independent variable. $\hat{S}(t)$ represents the estimated
 value of $S(t)$ and is variable with $t$. Parameter $a$ is the interceptor-t
 (value of $\hat{S}(t)$ for $t=0$) and $b$ is the stretch slope, and are computed
@@ -446,12 +449,13 @@ as follows:
 \end{equation}
 
 The idea behind this method is that both the sink and the sensor node know the
-regression equation to predict the sensed values. Thus, a sensor node does not
-need to send data to sink, since it is able to predict data sensed by the
+regression equations to predict the sensed values. Thus, a sensor node does not
+need to send data to sink, since it is able to predict all data sensed by the
 sensors. Thus, the network is saving power of sensors \cite{MaiaACR2013}.
 
 During the Learning Stage, the sink node computes the initial coefficients $a$
-and $b$ for each sensor node, based on the time series received from them.
+and $b$ for each data type sensed, for each sensor node, based on the time
+series received from them.
 Thereafter, the sink node sends the calculated coefficients to the respective
 sensors.
 
@@ -468,12 +472,12 @@ second method, called Cluster Heads (CHs), on the other hand, one sensor node
 activity carried out by all nodes in $C_{i}$.
 
 After a node receives the coefficients, it starts reading / prediction loop. 
-Whenever a sensor node senses a given value $v$, it verifies if  $v$ is not
-within a ``tolerable difference'' $t$, i.e., $v \not \in [p-t,p+t], t \geq 0$,
-where $p$ is the predicted value by applying the regression equation. Data
-outside the tolerable difference are treated as novelty for the model. The
-``tolerable difference'' is a parameter, set by the application expert (e.g.
-$5\%$ or $10\%$).
+Whenever a sensor node senses a given value $v$ of a certain data type $d$, it
+verifies if $v$ is not within a ``tolerable difference'' $t$, i.e., $v \not \in
+[p-t,p+t], t \geq 0$, where $p$ is the predicted value by applying the
+regression equation corresponding to data type $d$. Data outside the tolerable
+difference are treated as novelty for the model. The ``tolerable difference'' is
+a parameter, set by the application expert (e.g. $5\%$ or $10\%$).
 
 In RN mode, only the representative nodes (one for cluster) receive the
 coefficients and execute the reading / prediction loop. Whenever a representative
