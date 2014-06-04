@@ -68,7 +68,7 @@ correlation for restore the data in the sink with high fidelity (using Linear
 Regression with threshold error), apart from dealing with multiple types of
 sensed data at the same time. To the best of our knowledge, there is no other
 paper that uses Fractal Clustering to maintain clusters while making predictions
-about multiple types of data simultaneously sensed in a WSN.
+about multiple types of sensed data simultaneously in a WSN.
 In order to validate our approach, simulations with a prototype have been
 conducted over real data. The results show that, with 5\% error
 threshold in temporal prediction, BCWSN can save the communication overhead up
@@ -262,7 +262,7 @@ values and the geographical/euclidean distance between nodes ($g_{max}dist$).
 The criterion of formation of clusters is based on the maximum threshold of
 dissimilarity (max\_dst) defined by a tuple (\textit{M}, \textit{T},
 $g_{max}dist$), based on the measure of dissimilarity between the nodes. It
-works as follows: $1)$ Initially, the data sensed by each node are sent in the
+works as follows: $1)$ Initially, the sensed data by each node are sent in the
 form of a temporal series for the sink. $2)$ The sink then stores all the data
 from the sensors and then calculates the measure of dissimilarity (previously
 mentioned) for each pair of nodes of the network. $3)$ With the measures
@@ -320,7 +320,7 @@ the network compared to other existing approaches. In fact, it even increases
 the energy consumption of the network in many situations. In our work, using
 multiple linear regression together with fractal clustering, we achieved reduce
 the overall energy consumption of the network, obtaining results with a Root
-Mean Squared Error (RMSE) for the prediction data (w.r.t. the sensed data) even
+Mean Square Error (RMSE) for the prediction data (w.r.t. the sensed data) even
 smaller than other approaches.
 
 In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
@@ -352,7 +352,7 @@ only one node in each cluster $C_{i}$ is chosen at each time to represent that
 cluster. In other words, a Representative Node is responsible for sensing and
 predicting data in $C_{i}$ for given time interval. In this case, we have a
 greater energy economy in the network as a trade-off from a little
-general precision, because changes in fenomena sensed at network positions where
+general precision, because changes in sensed fenomena at network positions where
 the sensors are in stand-by mode (non-Representative Nodes) would not be
 captured. To stand up to this weakness, we have a second method, called
 Cluster Heads (CHs). In this other approach, on the other hand, one sensor node
@@ -386,9 +386,9 @@ sends only one message response to sink node with all reading data.
 As already mentioned, the BCWSN mechanism clusters sensor nodes by means of
 behavioral correlation. In order to compute behavioral correlation, a
 \textit{similarity measure} \cite{Liu2007} is used. Thus, sensors with similar
-data reading pattern are grouped into a single cluster. The similarity measure
-among sensed data of two different sensors is defined by  similarity of
-magnitude and similarity of trend, defined next.
+data reading pattern for all sensed data type are grouped into a single cluster.
+The similarity measure among sensed data of two different sensors is defined by 
+similarity of magnitude and similarity of trend, defined next.
 
 \newtheorem{defini}{Definition}
 
@@ -417,16 +417,16 @@ s'_{i} \geq 0$, where $\nabla s_{i} = s_{i} - s_{i-1}$, $\nabla
 s'_{i} = s'_{i} - s'_{i-1}$ and $1 < i \leq n$.
 \end{defini}
 
-Thus, sensors which are magnitude-M and trend-T similar, they are grouped in the
-same cluster. After all time series of all sensors in a WSN have been processed
-during the learning phase, the initial WSN cluster configuration is defined by
-the sink.
+Thus, sensors which are magnitude-M and trend-T similar for all sensed data
+type, they are grouped in the same cluster. After all time series of all sensors
+in a WSN have been processed during the learning phase, the initial WSN cluster
+configuration is defined by the sink.
 
-Once the sensors are initially grouped into clusters, representative node or
-cluster head of each cluster is defined by applying the energy level criterion.
+Once the sensors are initially grouped into clusters, the representative node or
+the cluster head of each cluster is defined by applying the energy level criterion.
 In other words, for each cluster, the representative node or the cluster head
 is the node with the highest energy level. In the case of nodes with same energy
-level, the node with the shortest distance to the sink node is choose.
+level, the node with the shortest distance to the sink node is chosen.
 
 
 \subsubsection{In-Network Data Prediction}
@@ -434,7 +434,7 @@ level, the node with the shortest distance to the sink node is choose.
 
 
 The in-network prediction implemented by BCWSN relies on the
-following linear regression equation, applied for each data type sensed:
+following linear regression equation, applied for each sensed data type:
 $\hat{S}(t) = a + bt$.
 The time $t$ is an independent variable. $\hat{S}(t)$ represents the estimated
 value of $S(t)$ and is variable with $t$. Parameter $a$ is the interceptor-t
@@ -449,15 +449,15 @@ as follows:
 \end{equation}
 
 The idea behind this method is that both the sink and the sensor node know the
-regression equations to predict the sensed values. Thus, a sensor node does not
-need to send data to sink, since it is able to predict all data sensed by the
-sensors. Thus, the network is saving power of sensors \cite{MaiaACR2013}.
+regression equations to predict the sensed values for all sensed data. Thus, a
+sensor node does not need to send any data to sink, since it is able to predict
+all sensed data by the sensors. Thus, the network is saving power of sensors
+\cite{MaiaACR2013}.
 
 During the Learning Stage, the sink node computes the initial coefficients $a$
-and $b$ for each data type sensed, for each sensor node, based on the time
-series received from them.
-Thereafter, the sink node sends the calculated coefficients to the respective
-sensors.
+and $b$ for each sensed data type, for each sensor node, based on the time
+series received from them. Thereafter, the sink node sends the calculated
+coefficients to the respective sensors.
 
  
 \subsubsection{Sensing}
@@ -471,13 +471,15 @@ second method, called Cluster Heads (CHs), on the other hand, one sensor node
 (the CH) in each cluster $C_{i}$ is selected to coordinate the data sensing
 activity carried out by all nodes in $C_{i}$.
 
-After a node receives the coefficients, it starts reading / prediction loop. 
-Whenever a sensor node senses a given value $v$ of a certain data type $d$, it
-verifies if $v$ is not within a ``tolerable difference'' $t$, i.e., $v \not \in
-[p-t,p+t], t \geq 0$, where $p$ is the predicted value by applying the
-regression equation corresponding to data type $d$. Data outside the tolerable
-difference are treated as novelty for the model. The ``tolerable difference'' is
-a parameter, set by the application expert (e.g. $5\%$ or $10\%$).
+After a node receives the coefficients, it starts reading / prediction loop.
+Whenever a sensor node senses values \{$v_{1}$,$v_{2}$,\ldots,$v_{n}$\} of
+certain data type \{$d_{1}$,$d_{2}$,\ldots,$d_{n}$\}, it verifies if anyone of
+$v_{n}$ is not within a ``tolerable difference'' $t$, i.e., $v_{n} \not \in
+[p_{n}-t,p_{n}+t], t \geq 0$, where $p_{n}$ is the predicted value by applying
+the regression equation corresponding to data type $d_{n}$. Any data outside the
+tolerable difference are treated as novelty for the model.
+The ``tolerable difference'' is a parameter, set by the application expert (e.g.
+$5\%$ or $10\%$).
 
 In RN mode, only the representative nodes (one for cluster) receive the
 coefficients and execute the reading / prediction loop. Whenever a representative
@@ -626,7 +628,7 @@ environment: ``temperature'' and/or ``humidity'', according to kind of test.
 %[The application versions to achieve the simulations are]
 In the experiments, we have executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, where all nodes send their sensed
-information to the sink node;  {\it
+data to the sink node;  {\it
   (ii)} Adaga-P* approach \cite{MaiaACR2013} \cite{MaiaSAC2013}, which
 implicitly implements spatial correlation to cluster sensors and exploits the
 benefits of using a linear regression model to reduce the number of messages
@@ -676,7 +678,7 @@ Sink node &1 (center) \\
 \hline
 Notification rate (per second) &31 \\
 \hline
-Data type sensed &Temp. / Hum. \\
+Sensed data type &Temp. / Hum. \\
 \hline
 Initial slot time (\# learning stage) &70 \\
 \hline
@@ -702,7 +704,7 @@ FC threshold ($\tau$) &0.03 \\
 
 % Table \ref{tab:rmseVsRounds} presents the RMSE values of the four approaches
 % evaluated during the experiments, in the following cycles (rounds): 100, 500,
-% 1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
+% 1000 and 10000; with Sensed type = T, Sensor delay {\it(n)} = 1 and Limit per
 % cluster {\it(m)} = 1.
 
 % \begin{table}[h!]
@@ -727,7 +729,7 @@ FC threshold ($\tau$) &0.03 \\
 
 % In Table \ref{tab:numMsgVsRounds}, we present the total Number of Messages (Num Msg)
 % of the four approaches evaluated, in the following cycles (rounds): 100, 500,
-% 1000 and 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per
+% 1000 and 10000; with Sensed type = T, Sensor delay {\it(n)} = 1 and Limit per
 % cluster {\it(m)} = 1.
 % 
 % \begin{table}[h!]
@@ -751,7 +753,7 @@ FC threshold ($\tau$) &0.03 \\
 % \end{table}
 
 % Table \ref{tab:sensReadVsRounds} shows, for cycles (rounds): 100, 500, 1000 and
-% 10000; with Type sensed = T, Sensor delay {\it(n)} = 1 and Limit per cluster
+% 10000; with Sensed type = T, Sensor delay {\it(n)} = 1 and Limit per cluster
 % {\it(m)} = 1, the total Number of Sensed Data (Sensor Reading) from all sensors
 % of the network.
 % 
