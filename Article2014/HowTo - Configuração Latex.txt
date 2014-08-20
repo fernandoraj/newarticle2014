@@ -1,0 +1,7 @@
+
+20 de Agosto de 2014
+
+Para configurar o Latex para gerar documento (PDF) para o ISCC2014, basta mudar a configuração acessando o menu:
+"Project" / "Properties", opção: "Latex Project Properties", então alterar "Main TeX File" and "Output File".
+
+***************************************************************************
