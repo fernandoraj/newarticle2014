@@ -11,7 +11,8 @@
 
 %
 \usepackage{graphicx}
-\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+%\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage{algorithm2e}
 %\usepackage{draftwatermark}
 
 
@@ -509,18 +510,15 @@ notifications is greater than a preset limit $m$ (Cluster Delay, also
 defined by the application expert), the CH sends a message to the sink for
 computing new regression coefficients for that cluster.
 
-[PAREI AQUI!]
 
 \subsubsection{Cluster Maintenance}
 \label{cluster-maintenance}
 
 In the proposed approach, the sink has the ability to automatically and
-autonomously maintain the clusters. There are two strategies implemented by
-BCWSN to recompute clusters. One strategy is to maintain the sensor clusters
-according to the Minimum Difference of Fractal Dimension (MDFD), based on the
-Fractal Clustering algorithm (\textit{FC} for short) that allows only
-merge operations. The other strategy is according to the Similarity
-Measures algorithm (\textit{SM}) that allows split and merge operations.
+autonomously maintain the clusters. The strategy is to maintain the sensor
+clusters according to the Minimum Difference of Fractal Dimension (MDFD), based
+on the Fractal Clustering algorithm (\textit{FC} for short).
+% that allows split and merge operations.
 
 Let $R_{new}$ be the new reading data to be treated by the sink; let $S_{R}$ be
 the sensor which report that ``novelties'' (i.e. new reading - $R_{new}$) to the
@@ -531,27 +529,36 @@ cluster $C_i$ with the new reading data $R_{new}$ (i.e. $D'(C_i) = D(C_i) \cup
 R_{new}$) and let $F_{d}(D(C_i))$ be the value of Fractal Dimension of the data
 of cluster $C_i$.
 
-When \textit{FC} is chosen, in clustering sensor nodes phase (Section
-\ref{clustering-sensors}), the Fractal Dimension is calculated and stored for
-each initial cluster ($F_{d}(D(C_i)), \forall i$). The idea is to find out which
-cluster $C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take the
-slightest change in its Fractal Dimension.
+In clustering sensor nodes phase (Section \ref{clustering-sensors}), the Fractal
+Dimension is calculated and stored for each initial cluster ($F_{d}(D(C_i)),
+\forall i$). The idea is to find out which cluster $C_{\hat{i}}$ the inclusion
+of new sensor data $R_{new}$ will take the slightest change in its Fractal
+Dimension.
+
+[PAREI AQUI!]
 
 The Minimum Difference of Fractal Dimension (MDFD) strategy is as follows:
-whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a RN or CH on
+whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a CH on
 a given cluster $C_j$, it calculates which cluster $C_i$ has the minimal
 \textit{fractal impact}, i.e. the minimum absolute difference between the
 previous Fractal Dimension value (calculated before the new data arrives)
 ($F_d(D(C_i))$) and the new one ($F_d(D'(C_i))$), where: $D'(C_i) = D(C_i) \cup
 R_{new}, \forall i$.
-If this minimal difference ($|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))|$,
-where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|), \forall i$), is greater than
-a certain threshold ($\tau$) - defined by the application expert (e.g. $\tau =
-0.03$), then this new data $R_{new}$ is simply rejected as noise.
-On the other hand, if the cluster $C_i$ is the same $C_j$ (i.e. $i=j$), the
-sink just add the new data $R_{new}$ to the corresponding sensor in this cluster.
-Otherwise, the sink must remove this sensor node ($S_{R}$ with new data
-$R_{new}$) from its old cluster $C_j$ and add it to the new cluster $(C_i)$.
+This minimal difference ($|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))|$,
+where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|), \forall i$), is called
+min$\Delta$. If min$\Delta$ is greater than a split threshold ($\sigma$) (e.g.
+$\sigma = 0.1$) or if the Ncounter is greater than MaxSeqNoise threshold
+(defined by the application expert - e.g. MaxSeqNoise = 3), than a split process
+is triggered.
+
+Otherwise,  If min$\Delta$ is greater than a certain threshold ($\tau$) -
+defined by the application expert (e.g. $\tau = 0.03$), then this new data
+$R_{new}$ is simply rejected as noise and a sequential noise counter (Ncounter)
+is incremented. On the other hand, if the cluster $C_i$ is the same $C_j$ (i.e.
+$i=j$), the sink just add the new data $R_{new}$ to the corresponding sensor in
+this cluster.
+[On the other hand], the sink must remove this sensor node ($S_{R}$ with new
+data $R_{new}$) from its old cluster $C_j$ and add it to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
 
 \begin{algorithm}
@@ -589,23 +596,23 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 % representative nodes or cluster heads (one for each of the new clusters) based
 % on the criteria described in Section \ref{clustering-sensors}.
 
-On the other hand, the strategy using \textit{SM} for Cluster Maintenance can be
-subdivided into two phases: splitting and merging clusters. Splitting cluster is
-the following:
-Whenever the sink receives "novelties" (new data) from a RN or CH on a given
-cluster $C$, it checks if the sensor nodes in $C$ are not meeting the minimum
-similarity requirements M-magnitude and T-trend anymore. In that case, the sink
-disjoins $C$ in two or more new clusters, selecting new representative nodes or
-cluster heads (one for each of the new clusters) based on the criteria described
-in Section \ref{clustering-sensors}.
+% On the other hand, the strategy using \textit{SM} for Cluster Maintenance can be
+% subdivided into two phases: splitting and merging clusters. Splitting cluster is
+% the following:
+% Whenever the sink receives "novelties" (new data) from a RN or CH on a given
+% cluster $C$, it checks if the sensor nodes in $C$ are not meeting the minimum
+% similarity requirements M-magnitude and T-trend anymore. In that case, the sink
+% disjoins $C$ in two or more new clusters, selecting new representative nodes or
+% cluster heads (one for each of the new clusters) based on the criteria described
+% in Section \ref{clustering-sensors}.
 
-For merging clusters, the sink monitors the number of sensors in each cluster of
-the network. This way, whenever there are a large number of cluster splits and
-the cluster rate occupation is lower than a limit defined by the application
-expert, the sink triggers a global process for merging clusters. Thus, the
-proposed approach avoids the existence of clusters composed by a very low number
-of sensors. Such a feature is quite important, since after several cluster
-splits in a network, one could have clusters with only one sensor node.
+% For merging clusters, the sink monitors the number of sensors in each cluster of
+% the network. This way, whenever there are a large number of cluster splits and
+% the cluster rate occupation is lower than a limit defined by the application
+% expert, the sink triggers a global process for merging clusters. Thus, the
+% proposed approach avoids the existence of clusters composed by a very low number
+% of sensors. Such a feature is quite important, since after several cluster
+% splits in a network, one could have clusters with only one sensor node.
 
 \section{Empirical Evaluation}
 \label{eval}
@@ -703,9 +710,9 @@ T-trend &0.05 \\
 \hline
 Tolerable difference {\it(t)} &0.05 \\
 \hline
-Sensor delay {\it(n)} &(1, 5) \\
+Sensor delay {\it(n)} &(1) \\
 \hline
-Limit per cluster {\it(m)} &(1, 5) \\
+Cluster delay {\it(m)} &(5) \\
 \hline
 FC threshold ($\tau$) &0.03 \\
 \hline
