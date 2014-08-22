@@ -1,4 +1,5 @@
-\documentclass[conference]{IEEEtran}
+\documentclass{acm_proc_article-sp}
+%\documentclass[conference]{IEEEtran} - For IEEE, search for [@IEEE] tags
 % Add the compsoc option for Computer Society conferences.
 %
 % If IEEEtran.cls has not been installed into the LaTeX system files,
@@ -11,35 +12,35 @@
 %
 \usepackage{graphicx}
 \usepackage[lined,boxed,commentsnumbered]{algorithm2e}
-\usepackage{draftwatermark}
+%\usepackage{draftwatermark}
 
 
 % correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
+\hyphenation{op-tical net-works semi-conduc-tor sche-dul-ing}
 
 
 \begin{document}
 %
 
-\title{Using Fractal Dimension to explore Behavioral Correlation in the
-reduction of energy consumption in Wireless Sensor Networks}
+\title{Using Fractal Clustering to explore Behavioral Correlation for
+reducing energy consumption in Sensor Networks}
 
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Fernando Rodrigues}
-\IEEEauthorblockA{University of Fortaleza\\Fortaleza - Ceara - Brazil\\
-fernandorodrigues@edu.unifor.br}
-\and
-\IEEEauthorblockN{Angelo Brayner}
-\IEEEauthorblockA{University of Fortaleza\\
-Fortaleza - Ceara - Brazil\\
-brayner@unifor.br}
-\and
-\IEEEauthorblockN{Jose E. Bessa Maia}
-\IEEEauthorblockA{State University of Ceara\\
-Fortaleza - Ceara - Brazil\\
-jose.maia@uece.br}}
+% \author{\IEEEauthorblockN{Fernando Rodrigues}
+% \IEEEauthorblockA{University of Fortaleza\\Fortaleza - Ceara - Brazil\\
+% fernandorodrigues@edu.unifor.br}
+% \and
+% \IEEEauthorblockN{Angelo Brayner}
+% \IEEEauthorblockA{University of Fortaleza\\
+% Fortaleza - Ceara - Brazil\\
+% brayner@unifor.br}
+% \and
+% \IEEEauthorblockN{Jose E. Bessa Maia}
+% \IEEEauthorblockA{State University of Ceara\\
+% Fortaleza - Ceara - Brazil\\
+% jose.maia@uece.br}}
 
 
 % make the title area
@@ -59,22 +60,23 @@ in magnitude and trend of sensed data. For clusters maintenance, we propose
 an alternative approach based on Fractal Clustering, where this technique use
 the concept of Fractal Dimension to find the best configuration for clusters
 based on the Minimum Difference of Fractal Dimension strategy.
-Furthermore, two scheduling intra-clustering methods are presented:
-Representative Nodes (RNs) and Cluster Heads (CHs). We develop a framework to
-address several important technical challenges, including how to partition the sensors
-into clusters (using Behavioral Correlation), how to dynamically maintain the
-clusters in response to environmental changes (using Fractal Clustering),
-how to schedule the sensors in a cluster (RN or CH) and how to explore temporal
-correlation for restore the data in the sink with high fidelity (using Linear
-Regression with threshold error), apart from dealing with multiple types of
-sensed data at the same time. To the best of our knowledge, there is no other
-paper that uses Fractal Clustering to maintain clusters while making predictions
-about multiple types of sensed data simultaneously in a WSN.
+Furthermore, Cluster Head (CH) technique is used as scheduling intra-clustering
+method.
+We develop a framework to address several important technical challenges,
+including how to partition the sensors into clusters (using Behavioral
+Correlation), how to dynamically maintain the clusters in response to
+environmental changes (using Fractal Clustering), how to schedule the sensors in
+a cluster (CH) and how to explore temporal correlation for restore the data in
+the sink with high fidelity (using Linear Regression with threshold error),
+apart from dealing with multiple types of sensed data at the same time.
+To the best of our knowledge, there is no other paper that uses Fractal
+Clustering to maintain clusters while making predictions about multiple types of
+sensed data simultaneously in a WSN.
 In order to validate our approach, simulations with a prototype have been
-conducted over real data. The results show that, with 5\% error
-threshold in temporal prediction, BCWSN can save the communication overhead up
-to 98.95\% over naive strategy and 90.4\% over a temporal correlation approach,
-while the RMSE remains roughly stable.
+conducted over real data. The results show that, with 5\% error threshold in
+temporal prediction, BCWSN can save the communication overhead up to 98.95\%
+over naive strategy and 90.4\% over a temporal correlation approach, while the
+RMSE remains roughly stable.
 
 % The results point to gains of up to 97.72\% over naive strategy in terms of
 % reduction in message transmission and 45,12\% of reduction in data sensing,
@@ -107,7 +109,7 @@ while the RMSE remains roughly stable.
 %
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
-\IEEEpeerreviewmaketitle
+%\IEEEpeerreviewmaketitle - [@IEEE]
 
 
 
@@ -118,7 +120,7 @@ while the RMSE remains roughly stable.
 Sensors are devices used to collect data from the environment related to the
 detection or measurement of physical phenomena. Sensors are limited in power,
 computational capacity, and memory. Advances in wireless communication have
-enabled the development of massive-scale wireless sensor networks (WSN). In a
+enabled the development of massive-scale wireless sensor networks (WSNs). In a
 WSN, sensors are usually scattered in the network and use low-power
 communication channels. Thus, sensors disseminate collected data to a base
 station, from where the information (query) was originally requested. Wireless
@@ -151,13 +153,13 @@ their values (principle of temporal locality). Such a feature makes possible to
 predict (with a certain margin of error) sensed values in the future based on
 data collected in the past.
 
-Grouping sensors in clusters is the main technique used to take advantage of the
-principle of spatial locality for reducing the energy consumption in WSNs. This
-is because one can use only a few representative nodes from each cluster to
-sense data in a given spatial region (cluster) in which sensors are spatially
-correlated.
-Several works have been proposed in order to use that technique, with different
-approaches \cite{Chu2006, Villas2012, Singh2010, Liu2007, Shah2007}.
+% Grouping sensors in clusters is the main technique used to take advantage of the
+% principle of spatial locality for reducing the energy consumption in WSNs. This
+% is because one can use only a few representative nodes from each cluster to
+% sense data in a given spatial region (cluster) in which sensors are spatially
+% correlated.
+% Several works have been proposed in order to use that technique, with different
+% approaches \cite{Chu2006, Villas2012, Singh2010, Liu2007, Shah2007}.
 
 Nonetheless, in several scenarios, sensors which are not spatially close to each
 other may have similar data reading patterns. In order to illustrate such a
@@ -201,22 +203,22 @@ WSNs. The main features of the proposed approach are: {\it (i)} Cluster
 formation based on the \textit{Behavioral Correlation} of the sensors, which, in
 turn, is computed from the time series of sensor readings by applying a
 \textit{Similarity Measure}; {\it (ii)} Maintenance of clusters through a
-technique called Fractal Clustering, where the values ​​of Fractal Dimension of
+technique called Fractal Clustering, where the values of Fractal Dimension of
 each cluster are used to maintain the structure of the clusters, and; {\it
 (iii)} the use of a linear regression model for the temporal suppression of
 sensed data, through the maximum error level (threshold) desired by the user, is
-used to control the data to be sent to the sink. Hence, special sensor nodes
+used to control the data to be sent to the sink. Hence, sensor nodes
 only transmit data which are novelties for the regression model applied by our
-proposal. Furthermore, two different approaches to select of active nodes
-(scheduling) in each cluster have been implemented: Representative Nodes (RNs)
-and Cluster Heads (CHs).
+proposal. Furthermore, Cluster Head technique have been implemented to select
+node (scheduling one sensor - CH - in each cluster) responsible for aggregating
+the data collected by all sensors, coordinating the operation of such a cluster.
 
 
 The remainder of this document is organized as follows. Section
 \ref{related-work} describes related work and point out the differences between
 our method and existing methods. In Section \ref{implementing-bcwsn} the
-proposed Behavioral Correlation in WSN (BCWSN) method and two sensor-scheduling
-policies are presented and discussed. Simulations with a Sinalgo prototype
+proposed Behavioral Correlation in WSN (BCWSN) method and the sensor-scheduling
+policy are presented and discussed. Simulations with a Sinalgo prototype
 operating over real sensor data are reported in Section \ref{eval}. Finally,
 Section \ref{conclusion} concludes the paper.
 
@@ -224,16 +226,16 @@ Section \ref{conclusion} concludes the paper.
 \section{Related Work}
 \label{related-work}
 
-In \cite{Vuran2004}, the authors propose a strategy to cluster sensors in WSNs.
-The idea is the following: given a set of N sensors, M nodes, with $M < N$, are
-chosen to send data. The M representative nodes are defined based on the
-application of a distortion function ($D(M)$) on sensed data.
-The spatial distance between the nodes (representative) directly influences the
-computation of the distortion function by means of a correlation coefficient.
-That work does not take into account the energy capacity of each node as a
-criterion for choosing representative nodes, although this is a very important
-factor due to the restrictive characteristics regarding the energy consumption
-of the nodes in a WSN.
+% In \cite{Vuran2004}, the authors propose a strategy to cluster sensors in WSNs.
+% The idea is the following: given a set of N sensors, M nodes, with $M < N$, are
+% chosen to send data. The M representative nodes are defined based on the
+% application of a distortion function ($D(M)$) on sensed data.
+% The spatial distance between the nodes (representative) directly influences the
+% computation of the distortion function by means of a correlation coefficient.
+% That work does not take into account the energy capacity of each node as a
+% criterion for choosing representative nodes, although this is a very important
+% factor due to the restrictive characteristics regarding the energy consumption
+% of the nodes in a WSN.
 
 In EAST \cite{Villas2012}, sensors are grouped into two levels, under a spatial
 correlation approach, while the leader and the representative nodes perform a
@@ -297,22 +299,22 @@ The weak point is the process of forming clusters, in
 which there is an intensive exchange of messages, scattering a significant
 amount of energy from the network sensors.
 
-In \cite{Shah2007}, the spatial correlation is explored by a mechanism called
-the GSC (Gridiron Spatial Correlation), where the sensed region has a Cluster
-Head that will be in the center of the region delimited by r (radius of the
-monitored region), which will be divided into correlated regular regions
-(quadratic), according to the spatial density level chosen, defined through
-$\theta$ (size of the correlation region equal to $\theta^2$). In this way,
-active sensors will be chosen according to 2 basic parameters: {\it (i)} the
-proximity of the them regarding the center of the regions correlated and {\it
-(ii)} their energy level must be within a certain threshold, above the ones of
-their closest neighbours. The scheduling of active nodes works through the
-passage of a list by the cluster-head for all nodes with the nodes being active
-in each time slot, where this configuration is only changed when one of the
-active nodes has its energy level below the threshold established.
-That work does not describe how the energy threshold is calculated neither how
-this reconfiguration of the sizes of the rectangles are done and not even gives
-examples of that.
+% In \cite{Shah2007}, the spatial correlation is explored by a mechanism called
+% the GSC (Gridiron Spatial Correlation), where the sensed region has a Cluster
+% Head that will be in the center of the region delimited by r (radius of the
+% monitored region), which will be divided into correlated regular regions
+% (quadratic), according to the spatial density level chosen, defined through
+% $\theta$ (size of the correlation region equal to $\theta^2$). In this way,
+% active sensors will be chosen according to 2 basic parameters: {\it (i)} the
+% proximity of the them regarding the center of the regions correlated and {\it
+% (ii)} their energy level must be within a certain threshold, above the ones of
+% their closest neighbours. The scheduling of active nodes works through the
+% passage of a list by the cluster-head for all nodes with the nodes being active
+% in each time slot, where this configuration is only changed when one of the
+% active nodes has its energy level below the threshold established.
+% That work does not describe how the energy threshold is calculated neither how
+% this reconfiguration of the sizes of the rectangles are done and not even gives
+% examples of that.
 
 Carvalho \textit{et al.} \cite{Carvalho2011} proposed applying Multivariate
 Spatio-Temporal Correlation to improving prediction accuracy in a WSN. But the
@@ -340,26 +342,30 @@ some sensor in the network.
 In this section, we present the proposed approach for clustering sensors in a
 WSN based on the notion of {\it Behavioral Correlation}. Our approach, called
 Behavioral Correlation in Wireless Sensor Networks (\textit{BCWSN} for short),
-is based on clustering sensors by means of behavioral correlation (descrived in
-\ref{clustering-sensors}) between gathered variables (such as temperature,
-humidity and light), which in turn is computed from the time series of sensor
-readings, and on using a linear regression model for the temporal
-suppression (prediction) of data to be sent to the sink node.
+is based on clustering sensors initially by means of behavioral correlation
+(described in \ref{clustering-sensors}) between gathered variables (such as
+temperature, humidity and light), which in turn is computed from the time series
+of sensor readings, and, after the first clusters were formed, \textit{Fractal
+Clustering} method is used in cluster maintenance (\ref{cluster-maintenance}).
+Clustering reduces the traffic on the network, since the Cluster Heads
+coordinate the data flow (messaging) between sensors and the sink.
+Furthermore, a linear regression model is used for the temporal suppression
+(prediction) of data to be sent from each sensor to the sink node.
 
-Two different approaches for intra-cluster sensor node scheduling have been
-implemented in order to uniformly distribute the sensing activity for the
-sensor nodes of a cluster. In the first one, called Representative Nodes (RNs),
-only one node in each cluster $C_{i}$ is chosen at each time to represent that
-cluster. In other words, a Representative Node is responsible for sensing and
-predicting data in $C_{i}$ for given time interval. In this case, we have a
-greater energy economy in the network as a trade-off from a little
-general precision, because changes in sensed fenomena at network positions where
-the sensors are in stand-by mode (non-Representative Nodes) would not be
-captured. To stand up to this weakness, we have a second method, called
-Cluster Heads (CHs). In this other approach, on the other hand, one sensor node
-(the CH) in each cluster $C_{i}$ is selected to coordinate the data sensing
-activity carried out by all nodes in $C_{i}$. So, changes are promptly sensed by
-active nodes, having major impact on energy expediture from nodes activation.
+% Two different approaches for intra-cluster sensor node scheduling have been
+% implemented in order to uniformly distribute the sensing activity for the
+% sensor nodes of a cluster. In the first one, called Representative Nodes (RNs),
+% only one node in each cluster $C_{i}$ is chosen at each time to represent that
+% cluster. In other words, a Representative Node is responsible for sensing and
+% predicting data in $C_{i}$ for given time interval. In this case, we have a
+% greater energy economy in the network as a trade-off from a little
+% general precision, because changes in sensed fenomena at network positions where
+% the sensors are in stand-by mode (non-Representative Nodes) would not be
+% captured. To stand up to this weakness, we have a second method, called
+% Cluster Heads (CHs). In this other approach, on the other hand, one sensor node
+% (the CH) in each cluster $C_{i}$ is selected to coordinate the data sensing
+% activity carried out by all nodes in $C_{i}$. So, changes are promptly sensed by
+% active nodes, having major impact on energy expediture from nodes activation.
 
 \subsection{The BCWSN Mechanism}
 
@@ -396,7 +402,7 @@ similarity of magnitude and similarity of trend, defined next.
 \begin{defini}
 Similarity of magnitude-M: Two sensors ($S$ and $S'$) with time series
 $S$=\{$s_{1}$,$s_{2}$,\ldots,$s_{n}$\} and
-$S'$=\{$s'_{1}$,$s'_{2}$,\ldots,$s'_{n}$\} are magnitude-M similar if 
+$S'$ = \{$s'_{1}$,$s'_{2}$,\ldots,$s'_{n}$\} are magnitude-M similar if 
 \begin{equation}
 \label{equ:magni}
 \frac{\sum_{i=1}^{n} |s_{i}-s'_{i}|}{n} \leq M
@@ -423,16 +429,15 @@ type, they are grouped in the same cluster. After all time series of all sensors
 in a WSN have been processed during the learning phase, the initial WSN cluster
 configuration is defined by the sink.
 
-Once the sensors are initially grouped into clusters, the representative node or
-the cluster head of each cluster is defined by applying the energy level criterion.
-In other words, for each cluster, the representative node or the cluster head
-is the node with the highest energy level. In the case of nodes with same energy
-level, the node with the shortest distance to the sink node is chosen.
+Once the sensors are initially grouped into clusters, the cluster head of each
+cluster is defined by applying the energy level criterion.
+In other words, for each cluster, the cluster head is the node with the highest
+energy level. In the case of nodes with same energy level, the node with the
+shortest distance to the sink node is chosen.
 
 
 \subsubsection{In-Network Data Prediction}
 \label{data-predict}
-
 
 The in-network prediction implemented by BCWSN relies on the
 following linear regression equation, applied for each sensed data type:
@@ -463,17 +468,22 @@ coefficients to the respective sensors.
  
 \subsubsection{Sensing}
 
-As already mentioned, two different approaches for intra-cluster sensor node
-scheduling have been implemented in order to uniformly distribute the sensing
-activity for the sensor nodes of a cluster. In the first one, called
-Representative Node (RN), only one node in a cluster $C_{i}$ is responsible
-for sensing and predicting data in $C_{i}$ for given time interval. In the
-second method, called Cluster Heads (CHs), on the other hand, one sensor node
-(the CH) in each cluster $C_{i}$ is selected to coordinate the data sensing
-activity carried out by all nodes in $C_{i}$.
+% As already mentioned, two different approaches for intra-cluster sensor node
+% scheduling have been implemented in order to uniformly distribute the sensing
+% activity for the sensor nodes of a cluster. In the first one, called
+% Representative Node (RN), only one node in a cluster $C_{i}$ is responsible
+% for sensing and predicting data in $C_{i}$ for given time interval. In the
+% second method, called Cluster Heads (CHs), on the other hand, one sensor node
+% (the CH) in each cluster $C_{i}$ is selected to coordinate the data sensing
+% activity carried out by all nodes in $C_{i}$.
 
-After a node receives the coefficients, it starts reading / prediction loop.
-Whenever a sensor node senses values \{$v_{1}$,$v_{2}$,\ldots,$v_{n}$\} of
+As already mentioned, one sensor node (Cluster Head) in each cluster $C_{i}$ is
+selected to coordinate the data sensing activity carried out by all nodes in
+$C_{i}$.
+
+After a node receives the corresponding coefficients, it starts using these
+coefficients in reading / prediction loop.
+Whenever a sensor node senses values \{$v_{1}$,$v_{2}$, \ldots,$v_{n}$\} of
 certain data type \{$d_{1}$,$d_{2}$,\ldots,$d_{n}$\}, it verifies if anyone of
 $v_{n}$ is not within a ``tolerable difference'' $t$, i.e., $v_{n} \not \in
 [p_{n}-t,p_{n}+t], t \geq 0$, where $p_{n}$ is the predicted value by applying
@@ -482,23 +492,27 @@ tolerable difference are treated as novelty for the model.
 The ``tolerable difference'' is a parameter, set by the application expert (e.g.
 $5\%$ or $10\%$).
 
-In RN mode, only the representative nodes (one for cluster) receive the
-coefficients and execute the reading / prediction loop. Whenever a representative
-node detects a given amount of novelties $n$ (defined by the application
-expert), it should send the novelties to the sink for updating the predicting
-model by computing new regression coefficients.
+% In RN mode, only the representative nodes (one for cluster) receive the
+% coefficients and execute the reading / prediction loop. Whenever a representative
+% node detects a given amount of novelties $n$ (defined by the application
+% expert), it should send the novelties to the sink for updating the predicting
+% model by computing new regression coefficients.
 
-In CH mode, all sensors in a cluster receive their respective coefficients and
-execute the reading / prediction loop. Case a sensor node $s$ detects a given
-amount of novelties $n$ (sensor delay, defined by the application expert), it
-sends the novelties as a notification to the cluster head of the cluster to which $s$ belongs. The cluster head in turn logs the
-number of notifications, in such way that when the number of received
-notifications is greater than a preset limit $m$ (limit per cluster, also
+% In CH mode, all sensors in a cluster receive their respective coefficients and
+% execute the reading / prediction loop. 
+
+When a sensor node $s$ detects a given amount of novelties $n$ (Sensor Delay,
+defined by the application expert), it sends the novelties as a notification to
+the Cluster Head of the cluster to which $s$ belongs. The Cluster Head in turn
+logs the number of notifications, in such way that when the number of received
+notifications is greater than a preset limit $m$ (Cluster Delay, also
 defined by the application expert), the CH sends a message to the sink for
 computing new regression coefficients for that cluster.
 
+[PAREI AQUI!]
 
 \subsubsection{Cluster Maintenance}
+\label{cluster-maintenance}
 
 In the proposed approach, the sink has the ability to automatically and
 autonomously maintain the clusters. There are two strategies implemented by
