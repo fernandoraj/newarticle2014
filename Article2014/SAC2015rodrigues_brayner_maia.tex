@@ -11,8 +11,8 @@
 
 %
 \usepackage{graphicx}
-%\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
-\usepackage{algorithm2e}
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+%\usepackage{algorithm2e}
 %\usepackage{draftwatermark}
 
 
@@ -75,8 +75,8 @@ Clustering to maintain clusters while making predictions about multiple types of
 sensed data simultaneously in a WSN.
 In order to validate our approach, simulations with a prototype have been
 conducted over real data. The results show that, with 5\% error threshold in
-temporal prediction, BCWSN can save the communication overhead up to 98.95\%
-over naive strategy and 90.4\% over a temporal correlation approach, while the
+temporal prediction, BCWSN can save the communication overhead up to 94.80\%
+over naive strategy and 57.24\% over a temporal correlation approach, while the
 RMSE remains roughly stable.
 
 % The results point to gains of up to 97.72\% over naive strategy in terms of
@@ -348,6 +348,18 @@ is based on clustering sensors initially by means of behavioral correlation
 temperature, humidity and light), which in turn is computed from the time series
 of sensor readings, and, after the first clusters were formed, \textit{Fractal
 Clustering} method is used in cluster maintenance (\ref{cluster-maintenance}).
+
+%O sink irá analizar, através da Diferença Mínima de Dimensão Fractal, se tais dados representam apenas um ruído ou se são novidades reais. Se o valor da Diferença Mínima de Dimensão Fractal ficar acima de um certo limiar, ou se for atingido um número máximo de ruídos para um certo nó sensor, então é disparado o processo de divisão de cluster. Caso contrário, o nó sensor (que enviou as novidades) será realocado no cluster escolhido, ou seja, aquele que apresentar a menor diferença de Dimensão Fractal com a inclusão dos novos dados.
+This method is triggered whenever new data arrives at the sink.
+The sink will analyze, through the Minimum Difference of Fractal Dimension, if
+such data are just ``noise'' or if they are real ``novelties''. If the value of
+Minimum Difference of Fractal Dimension (MDFD) is above a certain threshold, or
+if a maximum number of noise for a certain sensor node is reached, then it
+triggered the process of splitting cluster. Otherwise, the sensor node (that
+sent the ``novelties'') will be relocated to the chosen cluster, i.e., one that
+has a smaller difference in Fractal Dimension with the inclusion of new data.
+%[To Review]
+
 Clustering reduces the traffic on the network, since the Cluster Heads
 coordinate the data flow (messaging) between sensors and the sink.
 Furthermore, a linear regression model is used for the temporal suppression
@@ -448,17 +460,19 @@ value of $S(t)$ and is variable with $t$. Parameter $a$ is the interceptor-t
 (value of $\hat{S}(t)$ for $t=0$) and $b$ is the stretch slope, and are computed
 as follows:
 \begin{equation}
+\label{coef-a}
 	a = \frac{1}{N}\left(\sum S_{i} - b\sum t_{i} \right) = \bar{S} - b\bar{t},
 \end{equation}
 \vspace*{-.3cm}
 \begin{equation}
+\label{coef-b}
 	b = \frac{\sum \left(t_{i} - \bar{t}\right)\left(S_{i} - \bar{S}\right)}{\sum \left(t_{i} - \bar{t}\right)^{2}}.
 \end{equation}
 
 The idea behind this method is that both the sink and the sensor node know the
 regression equations to predict the sensed values for all sensed data. Thus, a
 sensor node does not need to send any data to sink, since it is able to predict
-all sensed data by the sensors. Thus, the network is saving power of sensors
+all sensed data by the sensors. Then, the network is saving power of sensors
 \cite{MaiaACR2013}.
 
 During the Learning Stage, the sink node computes the initial coefficients $a$
@@ -535,30 +549,33 @@ Dimension is calculated and stored for each initial cluster ($F_{d}(D(C_i)),
 of new sensor data $R_{new}$ will take the slightest change in its Fractal
 Dimension.
 
-[PAREI AQUI!]
+%[PAREI AQUI!]
 
 The Minimum Difference of Fractal Dimension (MDFD) strategy is as follows:
 whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a CH on
 a given cluster $C_j$, it calculates which cluster $C_i$ has the minimal
-\textit{fractal impact}, i.e. the minimum absolute difference between the
-previous Fractal Dimension value (calculated before the new data arrives)
-($F_d(D(C_i))$) and the new one ($F_d(D'(C_i))$), where: $D'(C_i) = D(C_i) \cup
-R_{new}, \forall i$.
-This minimal difference ($|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))|$,
-where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|), \forall i$), is called
-min$\Delta$. If min$\Delta$ is greater than a split threshold ($\sigma$) (e.g.
-$\sigma = 0.1$) or if the Ncounter is greater than MaxSeqNoise threshold
-(defined by the application expert - e.g. MaxSeqNoise = 3), than a split process
-is triggered.
+\textit{fractal impact} with the addition of new data, i.e. the minimum absolute
+difference between the previous Fractal Dimension value (calculated before the
+new data arrives) ($F_d(D(C_i))$) and the new one ($F_d(D'(C_i))$), where:
+$D'(C_i) = D(C_i) \cup R_{new}, \forall i$.
 
-Otherwise,  If min$\Delta$ is greater than a certain threshold ($\tau$) -
+Let {\it min}$\nabla$ be the minimal difference ($|F_d(D'(C_{\hat{i}})) -
+F_d(D(C_{\hat{i}}))|$, where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|),
+\forall i$). If {\it min}$\nabla$ is greater than a certain threshold ($\tau$) -
 defined by the application expert (e.g. $\tau = 0.03$), then this new data
-$R_{new}$ is simply rejected as noise and a sequential noise counter (Ncounter)
-is incremented. On the other hand, if the cluster $C_i$ is the same $C_j$ (i.e.
-$i=j$), the sink just add the new data $R_{new}$ to the corresponding sensor in
-this cluster.
-[On the other hand], the sink must remove this sensor node ($S_{R}$ with new
-data $R_{new}$) from its old cluster $C_j$ and add it to the new cluster $(C_i)$.
+$R_{new}$ is simply rejected as noise and a sequential noise counter (NoiseCount)
+is incremented for the current sensor.
+
+Otherwise, if {\it min}$\nabla$ is greater than a split threshold ($\sigma$)
+(e.g. $\sigma = 0.1$) or if the NoiseCount is greater than a maximum number of
+sequential noise ($\mu$) (defined by the application expert - e.g. $\mu$ = 3),
+then a split process is triggered.
+
+On the other hand, if the chosen cluster $C_i$ is the same $C_j$ (i.e.
+$i=j$), sink just calculates new coefficients ($a$ and $b$, equations (\ref{coef-a})
+and (\ref{coef-b})) to the corresponding sensor in this cluster. Otherwise, the sink
+must remove this sensor node ($S_{R}$ with new data $R_{new}$) from its old
+cluster $C_j$ and add it to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
 
 \begin{algorithm}
@@ -566,7 +583,9 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
  \LinesNumbered
  \KwData{input parameters: set of all K current sensor clusters (\{$C_i \vert 1
  \leq i \leq K$\}), values of Fractal Dimension of all current sensor clusters
- ($F_d(D(C_i))$), sensor node($S_{R}$) with new data ($R_{new}$)}
+ ($F_d(D(C_i))$), sensor node($S_{R}$) with new data ($R_{new}$), noise
+ threshold ($\tau$), split threshold ($\sigma$), maximum sequential noise
+ ($\mu$)}
  \KwResult{processes Fractal Clustering}
  Sink Node receives new data ($R_{new}$) from sensor ($S_{R}$) of cluster $C_j$\;
  \For{i = 1 \ldots K}{
@@ -575,9 +594,12 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 	  Compute $F_d(D'(C_i))$\;
  }
   Find $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|)$\;
+  \If{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
+  	SplitCluster($C_j$)\;
+  } 
   \eIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
-  	Discard $R_{new}$ as noise\;
-  }{
+  	Discard $R_{new}$ as noise{;} numSeqNoise++\;
+  }{ 
   	\eIf{$j \neq \hat{i}$}{
   		Remove $S_{R}$ from cluster $C_j$\;
   		Place $S_{R}$ in cluster $C_\hat{i}$\;
@@ -589,6 +611,40 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
  \caption{Fractal Clustering Algorithm - FC Strategy}
  \label{alg:MDFD}
 \end{algorithm}
+%    numSeqNoise = numSeqNoise + 1\;
+
+% \begin{algorithm}
+%  \SetAlgoLined
+%  \LinesNumbered
+%  \KwData{input parameters: set of all K current sensor clusters (\{$C_i \vert 1
+%  \leq i \leq K$\}), values of Fractal Dimension of all current sensor clusters
+%  ($F_d(D(C_i))$), sensor node($S_{R}$) with new data ($R_{new}$), noise
+%  threshold ($\tau$), split threshold ($\sigma$), maximum sequential noise
+%  ($\mu$)}
+%  \KwResult{processes Fractal Clustering}
+%  Sink Node receives new data ($R_{new}$) from sensor ($S_{R}$) of cluster $C_j$\;
+%  \For{i = 1 \ldots K}{
+% 	  Compute $F_d(D(C_i))$\;
+% 	  Let $D'(C_i) = D(C_i) \cup R_{new}$\;
+% 	  Compute $F_d(D'(C_i))$\;
+%  }
+%   Find $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|)$\;
+%   \eIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
+%   	Discard $R_{new}$ as noise\;
+%   }{
+%   	\eIf{$j \neq \hat{i}$}{
+%   		Remove $S_{R}$ from cluster $C_j$\;
+%   		Place $S_{R}$ in cluster $C_\hat{i}$\;
+%   	}{
+%     	Replace $S_{R}$ in cluster $C_\hat{i}$\;
+%     }
+%   }
+%  
+%  \caption{Fractal Clustering Algorithm - FC Strategy}
+%  \label{alg:MDFD}
+% \end{algorithm}
+
+
 
 % the sensor nodes in $c$ are not
 % meeting the minimum similarity requirements M-magnitude and T-trend anymore. In
@@ -642,11 +698,11 @@ M-magnitude parameter has been configured with the value of $1.5$ and T-trend
 was $5\%$, the same as the error threshold (t). The amount of initial data sensing
 (initial slot time) was 70 readings, used for the learning stage.
 
-The performance evaluation was done through four application versions, which we
+The performance evaluation was done through three application versions, which we
 used to simulate and compare multiple linear regression to simple linear
 regression and to the original version of a monitoring application. This
-monitoring application simulates the gathering of two variables from the
-environment: ``temperature'' and/or ``humidity'', according to kind of test.
+monitoring application simulates the gathering of one variable from the
+environment: ``temperature''.
 %[The application versions to achieve the simulations are]
 In the experiments, we have executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, where all nodes send their sensed
@@ -654,33 +710,27 @@ data to the sink node;  {\it
   (ii)} Adaga-P* approach \cite{MaiaACR2013} \cite{MaiaSAC2013}, which
 implicitly implements spatial correlation to cluster sensors and exploits the
 benefits of using a linear regression model to reduce the number of messages
-injected into the network;  {\it
-  (iii)} BCWSN-SM-RN approach, where, after the formation of the clusters based on the
-\textit{Behavioral Correlation}, only the Representative Node (RN) of each
-cluster senses data and the clusters are maintained by \textit{SM}
-strategy, and;  {\it 
-  (iv)} BCWSN-FC-CH approach, which implements the BCWSN, with the scheduling
+injected into the network, and;  {\it 
+  (iv)} BCWSN approach, which implements the BCWSN, with the scheduling
 policy of Cluster Heads (CH) and the maintenance of clusters through the
 \textit{FC} strategy.
 
-In order to compare the aforementioned approaches, three metrics have been
+In order to compare the aforementioned approaches, two metrics have been
 deployed: 1) The Root Mean Square Error (RMSE) to verify the accuracy of
-approach; 2) The Number of Messages injected into the network, which is a
-critical factor to measure energy consumption of the network, and; 3) The
-Number of Sensed Data, which impacts in the network energy consumption and in
-the accuracy of the result provided by each approach. The RMSE is calculated by
-reference to the naive approach filtered values.
+approach, and; 2) The Number of Messages injected into the network, which is a
+critical factor to measure energy consumption of the network. The RMSE is
+calculated by reference to the naive approach filtered values.
 
-It is important to note that the BCWSN-SM-CH and BCWSN-FC-RN approaches were
-disregarded because unsatisfactory results were found. That is due to the fact
-that: {\it
-  (i)} BCWSN-SM-CH approach, the \textit{SM} strategy was less effective than
-  \textit{FC} strategy when all sensors are sensing (CH), causing the [worst]
-  sensor clustering increases the RMS Error, while it increases the total number of
-  messages and sensor readings too, and; {\it
-  (ii)} BCWSN-FC-RN approach, the \textit{FC} strategy makes the total number of
-  clusters decrease over time, decreasing the RN (sensors that make readings)
-  too. So, the RMS Error increases as well.
+% It is important to note that the BCWSN-SM-CH and BCWSN-FC-RN approaches were
+% disregarded because unsatisfactory results were found. That is due to the fact
+% that: {\it
+%   (i)} BCWSN-SM-CH approach, the \textit{SM} strategy was less effective than
+%   \textit{FC} strategy when all sensors are sensing (CH), causing the [worst]
+%   sensor clustering increases the RMS Error, while it increases the total number of
+%   messages and sensor readings too, and; {\it
+%   (ii)} BCWSN-FC-RN approach, the \textit{FC} strategy makes the total number of
+%   clusters decrease over time, decreasing the RN (sensors that make readings)
+%   too. So, the RMS Error increases as well.
 
 The simulation parameters are presented in Table \ref{tab:parameters}.
 
@@ -692,15 +742,15 @@ The simulation parameters are presented in Table \ref{tab:parameters}.
 \hline
 Parameters &Values\\
 \hline\hline
-Sink node &1 (center) \\
+Sink node: number (position) &1 (center) \\
 \hline
 \# of nodes &54 \\
 \hline
-\# of cycles executed &10000 \\
+\# of cycles executed &1000 \\
 \hline
 Notification rate (per second) &31 \\
 \hline
-Sensed data type &Temp. / Hum. \\
+Sensed data type &Temperature \\
 \hline
 Initial slot time (\# learning stage) &70 \\
 \hline
@@ -710,11 +760,15 @@ T-trend &0.05 \\
 \hline
 Tolerable difference {\it(t)} &0.05 \\
 \hline
-Sensor delay {\it(n)} &(1) \\
+Sensor delay {\it(n)} &1 \\
 \hline
-Cluster delay {\it(m)} &(5) \\
+Cluster delay {\it(m)} &5 \\
 \hline
-FC threshold ($\tau$) &0.03 \\
+FC noise threshold ($\tau$) &0.03 \\
+\hline
+FC split threshold ($\sigma$) &0.1 \\
+\hline
+FC maximum sequential noise ($\mu$) &3 \\
 \hline
 \end{tabular}
 \end{center}
@@ -801,7 +855,7 @@ FC threshold ($\tau$) &0.03 \\
 
 
 Table \ref{tab:rmse} presents the average (AVG), standard deviation (STD),
-maximum (MAX) and minimum (MIN) value for the RMSE of the four approaches
+maximum (MAX) and minimum (MIN) value for the RMSE of the three approaches
 evaluated during the experiments.
 
 \begin{table}[h!]
@@ -814,37 +868,35 @@ RMSE &AVG &STD &MAX &MIN \\
 \hline\hline
 Naive &0 &0 &0 &0 \\
 \hline
-Adaga-P* &0.4251 &0.0328 &0.47 &0.299 \\
+Adaga-P* &0.4168 &0.0499 &0.469 &0 \\
 \hline
-BCWSN-SM-RN &0.5387 &0.0649 &0.897 &0.499 \\
-\hline
-BCWSN-FC-CH &0.3963 &0.0386 &0.69 &0.229 \\
+BCWSN &0.443 &0.1028 &1.158 &0 \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
 
-Looking more closely to Table \ref{tab:rmse}, one can observe that BCWSN-SM-RN
-presented a RMSE of $0.5$ (with average $0.5387$ and standard deviation $0.0649$),
-while the average of transmitted messages is $96.25\%$ smaller than the Naive
+Looking more closely to Table \ref{tab:rmse}, one can observe that BCWSN
+presented a RMSE of $0.39$ (with average $0.443$ and standard deviation $0.1028$),
+while the average of transmitted messages is $94.80\%$ smaller than the Naive
 approach (Table \ref{tab:num-msg}). Compared to Adaga-P*, the average of
-messages exchanged in BCWSN-SM-RN is $65.61\%$ lower and the average of sensed
-data is $49.94\%$ lower. The RMSE produced by BCWSN-SM-RN is $26.72\%$ higher in
-average than the RMSE presented by Adaga-P*.
+messages exchanged in BCWSN is $57,24\%$ lower. The RMSE produced by BCWSN is
+$6.3\%$ higher in average than the RMSE presented by Adaga-P*, whereas
+in Naive approach the RMSE is virtually $0$.
 % $96.25\%$ = ((224 - 8.39)*100)/224
 % $65.61\%$ = ((24.4 - 8.39)*100)/24.4
 % $49.94\%$ = ((53 - 26.53)*100)/53
 % $26.72\%$ = ((0.5387 - 0.4251)*100)/0.4251
 
-Regarding BCWSN-FC-CH approach, although the average RMSE is $0.3963$ (whereas
-in Naive approach it is virtually $0$), the average of number of exchanged
-messages is $98.95\%$ lower than Naive, besides the number of data readings
-$75.85\%$ lower in average. When compared to Adaga-P*, the average RMSE of
-BCWSN-FC-CH approach is $6.77\%$ ($0.0288$) smaller, while the average of number
-of messages is $90.4\%$ smaller. It is worthwhile to note that we have
-considered the both directions of transmission, i.e. from and into sensor nodes,
-for computing communication cost.
+% Regarding BCWSN approach, although the average RMSE is $0.3963$ (whereas
+% in Naive approach it is virtually $0$), the average of number of exchanged
+% messages is $98.95\%$ lower than Naive, besides the number of data readings
+% $75.85\%$ lower in average. When compared to Adaga-P*, the average RMSE of
+% BCWSN-FC-CH approach is $6.77\%$ ($0.0288$) smaller, while the average of number
+% of messages is $90.4\%$ smaller. 
+It is worthwhile to note that we have considered the both directions of
+transmission, i.e. from and into sensor nodes, for computing communication cost.
 % and the number of exchanged messages $75.85\%$ smaller in average.
 
 % $0.0288$ = 0.4251 - 0.3963
@@ -862,137 +914,130 @@ Num Msg &AVG &STD &MAX &MIN \\
 \hline\hline
 Naive &224 &0 &224 &224 \\
 \hline
-Adaga-P* &24.40 &14.09 &109 &0 \\
+Adaga-P* &27.257 &24.8360 &198 &0 \\
 \hline
-BCWSN-SM-RN &8.39 &9.45 &55 &0 \\
-\hline
-BCWSN-FC-CH &2.34 &4.15 &33 &0 \\
+BCWSN &11.654 &49.5202 &607 &0 \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
-In Table \ref{tab:num-msg}, the values for column MIN for Adaga-P*, BCWSN-SM-RN
-and BCWSN-FC-CH are equal to zero because in several rounds the predict value is
-equal to the sensed value. In this case, the sensor does not need to forward the
-sensed value. In Table \ref{tab:sens-read}, the values for column MIN for
-BCWSN-SM-RN and BCWSN-FC-CH are equal to 0(zero) due to the cluster split or
-merge process, during which the sensors stop to sense. 
-The average of number of messages and sensor readings in BCWSN-FC-CH approach is
-lower than in BCWSN-SM-RN, because the number of clusters decreases over time in
-Fractal Clustering strategy, while in Similarity Measures, there are constantly
-cluster splits, only with a merge process when the number of clusters exceeds a
-threshold.
+In Table \ref{tab:num-msg}, the values for column MIN for Adaga-P* and BCWSN are
+equal to zero because in several rounds the predict value is equal to the sensed
+value. In this case, the sensor does not need to forward the sensed value. 
+% In Table \ref{tab:sens-read}, the values for column MIN for BCWSN-SM-RN and
+% BCWSN-FC-CH are equal to 0(zero) due to the cluster split or merge process,
+% during which the sensors stop to sense.
+% The average of number of messages in BCWSN approach is
+% lower than in BCWSN, because the number of clusters decreases over time in
+% Fractal Clustering strategy, while in Similarity Measures, there are constantly
+% cluster splits, only with a merge process when the number of clusters exceeds a
+% threshold.
 
-In BCWSN-SM-RN, the only sensors that constantly sensing are the representative
-nodes, but, in some situations as during a merge process, all the nodes are
-sensing, while in others, none of them is active because everyone are waiting
-for new coefficients from sink node.
-So, the Standard Deviation of number of message and sensor reading is greater
-than in BCWSN-FC-CH.
+As already mentioned, sensor clusters are formed in BCWSN and Cluster Heads are
+responsible for coordenating the communication between sensor nodes and sink.
+In some situations as during a split process, all the nodes from some clusters
+are sensing and sending messages to the sink. Thus, the Standard Deviation of
+number of message in BCWSN is greater than in Adaga-P*.
 
 
-\begin{table}[h!]
-\caption{Sensed data per Round (1000 cycles)}
-\label{tab:sens-read}
-\begin{center}
-\begin{tabular}{|l||l|l|l|l|}
-\hline
-Sensor Reading &AVG &STD &MAX &MIN \\
-\hline\hline
-Naive &53 &0 &53 &53 \\
-\hline
-Adaga-P* &53 &0 &53 &53 \\
-\hline
-BCWSN-SM-RN &26.53 &19.20 &53 &0 \\
-\hline
-BCWSN-FC-CH &12.80 &10.30 &53 &0 \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+% \begin{table}[h!]
+% \caption{Sensed data per Round (1000 cycles)}
+% \label{tab:sens-read}
+% \begin{center}
+% \begin{tabular}{|l||l|l|l|l|}
+% \hline
+% Sensor Reading &AVG &STD &MAX &MIN \\
+% \hline\hline
+% Naive &53 &0 &53 &53 \\
+% \hline
+% Adaga-P* &53 &0 &53 &53 \\
+% \hline
+% BCWSN-SM-RN &26.53 &19.20 &53 &0 \\
+% \hline
+% BCWSN-FC-CH &12.80 &10.30 &53 &0 \\
+% \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
 
 
 Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in the
-BCWSN-SM-RN and Adaga-P* approaches tend to get very close to $0.5$ at about $1000$
-cycles, while the BCWSN-FC-CH stabilizes at about $0.37$ in the same point. Thus,
-BCWSN-FC-CH provides a good compromise between accuracy and reduction in energy
-consumption, since it reduces the communication activity and data readings (see
-Tables \ref{tab:num-msg} and \ref{tab:sens-read}). It is important to note that
-in the Naive approach, the RMSE is always 0 (zero), because all sensors send all
-sensed data to the sink.
+Adaga-P* approaches tend to get very close to $0.47$ at about $1000$ cycles,
+while the BCWSN stabilizes at about $0.39$ in the same point. Thus, BCWSN
+provides a good compromise between accuracy and reduction in energy consumption,
+since it reduces the communication activity (see Table \ref{tab:num-msg}). It is
+important to note that in the Naive approach, the RMSE is always 0 (zero),
+because all sensors send all sensed data to the sink.
 
 \begin{figure}[!htb]
 \centering
-	\includegraphics[scale=0.33]{WsneeFD_RMSE.png}
+	\includegraphics[scale=0.33]{FCWSN-RMSExRound02-SD1.png}
     \caption{RMSE per Round}
     \label{fig:rmse}
 \end{figure}
 
-One can identify a peak in Figure \ref{fig:rmse} for the BCWSN-SM-RN and
-BCWSN-FC-CH curves. The reason for this is due to the fact that the initial
-cluster formation is only an initialization step for the two approaches.
-Since all sensors stay sensing in the BCWSN-FC-CH approach, the RMSE peak is
-lower than in BCWSN-SM-RN, where only representative nodes are responsible for
-sensing data and there is only one representative node per cluster.
+One can identify a peak in Figure \ref{fig:rmse} for the BCWSN curve. The reason
+for this is due to the fact that the initial cluster formation is only an
+initialization step for this approach.
+% Since all sensors stay sensing in the BCWSN-FC-CH approach, the RMSE peak is
+% lower than in BCWSN-SM-RN, where only representative nodes are responsible for
+% sensing data and there is only one representative node per cluster.
 %the number of sensed data is small as well.
 Thus the BCWSN accuracy is jeopardized at the beginning. Nonetheless, the
-BCWSN-SM-RN and BCWSN-FC-CH approaches are able to dynamically adjust the
-accuracy by reducing the RMSE.
+BCWSN approach is able to dynamically adjust the accuracy by reducing the RMSE.
 
 In Figure \ref{fig:num-msg}, one can observe the number of transmitted messages
 per round. In the Naive approach, the number of messages is steady, since in
 each round all sensors send sensed data to the sink. It is important to observe
-that, in average, BCWSN-FC-CH and BCWSN-SM-RN transmit less messages than Adaga-P*
-(see Table \ref{tab:num-msg}). However, there are some peaks in BCWSN-SM-RN
-curve, which represent periods in time when clusters are being restructured
-(splitting or merging), since the clusters, in this approach, are always
-undergoing division and, at times, go through the merge process. This can be
-proved by the high standard deviation for this approach in Table
-\ref{tab:num-msg}.
+that, in average, BCWSN transmit less messages than Adaga-P* (see Table
+\ref{tab:num-msg}). However, there are some peaks in BCWSN curve, which
+represent periods in time when clusters are being restructured (splitting or
+merging), since the clusters, in this approach, are always undergoing division
+and merge process. This can be proved by the high standard deviation for this
+approach in Table \ref{tab:num-msg}.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.35]{WsneeFD_NumMsgPerRound.png}
+	\includegraphics[scale=0.35]{FCWSN-NumMsgPerRoundxRound02-SD1.png}
     \caption{Number of Messages per Round}
     \label{fig:num-msg}
 \end{center}
 \end{figure}
 
 
-Finally, Figure \ref{fig:sens-reading} shows the evolution of the amount of
-sensed data for the four evaluated approaches.
-Naive and Adaga-P* approaches, as one can observe, have the same number of
-sensed data (53 per round), because all sensors in those approaches sense data
-during all cycles. In BCWSN-FC-CH, sensors do not sense while they are waiting to
-receive new coefficients after sending new data to sink (during Fractal
-Clustering process). In the case of BCWSN-SM-RN, only representative nodes (one
-per cluster) make data reading continuously, but during merge process, all sensors
-must sense data, leading reading data peaks.
+% Finally, Figure \ref{fig:sens-reading} shows the evolution of the amount of
+% sensed data for the four evaluated approaches.
+% Naive and Adaga-P* approaches, as one can observe, have the same number of
+% sensed data (53 per round), because all sensors in those approaches sense data
+% during all cycles. In BCWSN-FC-CH, sensors do not sense while they are waiting to
+% receive new coefficients after sending new data to sink (during Fractal
+% Clustering process). In the case of BCWSN-SM-RN, only representative nodes (one
+% per cluster) make data reading continuously, but during merge process, all sensors
+% must sense data, leading reading data peaks.
 
-\begin{figure}[!htb]
-\centering
-	\includegraphics[scale=0.35]{WsneeFD_SReadPerRound.png}
-    \caption{Number of Sensed Data per Round}
-    \label{fig:sens-reading}
-\end{figure}
+% \begin{figure}[!htb]
+% \centering
+% 	\includegraphics[scale=0.35]{WsneeFD_SReadPerRound.png}
+%     \caption{Number of Sensed Data per Round}
+%     \label{fig:sens-reading}
+% \end{figure}
 
 
 \section{Conclusion}
 \label{conclusion}
 
 In this paper, we have described a new approach for clustering sensors in WSNs
-based on the notion of behavioral correlation. Behavioral correlation identifies
-sensors with similar data reading patterns, between one or more (different) data
-type readings. Moreover, two different approaches to select of active nodes in
-each cluster have been proposed: Representative Nodes (RNs) and Cluster Heads
-(CHs), besides two strategies for cluster maintenance: Similarity
-Measures and Fractal Clustering.
+based on the notion of Behavioral Correlation using Fractal Clustering.
+Behavioral correlation identifies sensors with similar data reading patterns,
+between one or more (different) data type readings. Moreover, it was adapted a
+Fractal Clustering method to maintain the clusters.
 
 The results presented in Section \ref{results-and-discussion} show that the use
 of data behavioral correlation associated with a temporal correlation technique,
-associated with a correct strategy for cluster maintenance may significantly
-decrease energy consumption in WSNs, while assuring a low RMS Error.
+associated with a correct strategy for cluster maintenance (Fractal Clustering
+method) may significantly decrease energy consumption in WSNs, while assuring a
+low RMS Error.
 
 In this work, the similarity among time series behavior has been measured by
 applying similarity in magnitude and trend. Now, we are working on evaluating
@@ -1007,8 +1052,9 @@ purpose.
 
 
 
-\bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv,SAC2015rodrigues_brayner_maia}  
+\bibliographystyle{abbrv}
+% \bibliography{IEEEabrv,SAC2015rodrigues_brayner_maia}  
+\bibliography{SAC2015rodrigues_brayner_maia}  
 % SAC2015rodrigues_brayner_maia.bib is the name of the Bibliography in this case
 % You must have a proper ".bib" file
 %  and remember to run:
