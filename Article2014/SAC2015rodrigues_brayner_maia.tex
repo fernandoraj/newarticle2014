@@ -23,8 +23,8 @@
 \begin{document}
 %
 
-\title{Using Fractal Clustering to explore Behavioral Correlation for
-reducing energy consumption in Sensor Networks}
+\title{Using Fractal Clustering to explore Behavioral Correlation to
+reduce energy consumption in Sensor Networks}
 
 % author names and affiliations
 % use a multiple column layout for up to three different
@@ -52,22 +52,22 @@ reducing energy consumption in Sensor Networks}
 
 Sensor clustering is an efficient strategy to reduce the number of messages
 transmitted to the sink in a multi-hop Wireless Sensor Network.
-In this work, we present a new approach to cluster sensors in WSN, denoted
-Behavioral Correlation in WSN (BCWSN), based on the behave of recent historical
-data collected by sensors. Instead of using the spatial distance among sensors
-for clustering them, the proposed approach uses the concept of behavioral
-correlation to group sensors, that takes into account the concepts of difference
-in magnitude and trend of sensed data. For clusters maintenance, we propose
-an alternative approach based on Fractal Clustering, where this technique use
-the concept of Fractal Dimension to find the best configuration for clusters
-based on the Minimum Difference of Fractal Dimension strategy.
-Furthermore, Cluster Head (CH) technique is used as scheduling intra-clustering
+In this work, we present a new approach to cluster sensors in WSN, called
+Behavioral Correlation in WSN (BCWSN), based on the behavior of recent
+historical data collected by sensors. Instead of using the spatial distance
+among sensors to cluster them, the proposed approach uses the concept of
+behavioral correlation to group sensors, which takes into account the concepts
+of difference in magnitude and trend of sensed data. For clusters maintenance,
+we propose an alternative approach based on Fractal Clustering, since this
+technique use the concept of Fractal Dimension to find the best configuration
+for clusters based on the Minimum Difference of Fractal Dimension strategy.
+Furthermore, Cluster Head (CH) technique is used as intra-cluster scheduling
 method.
-We develop a framework to address several important technical challenges,
+We developed a framework to address several important technical challenges,
 including how to partition the sensors into clusters (using Behavioral
 Correlation), how to dynamically maintain the clusters in response to
 environmental changes (using Fractal Clustering), how to schedule the sensors in
-a cluster (CH) and how to explore temporal correlation for restore the data in
+a cluster (CH) and how to explore temporal correlation to restore the data in
 the sink with high fidelity (using Linear Regression with threshold error),
 apart from dealing with multiple types of sensed data at the same time.
 To the best of our knowledge, there is no other paper that uses Fractal
@@ -100,8 +100,6 @@ RMSE remains roughly stable.
 % no keywords
 
 
-
-
 % For peer review papers, you can put extra information on the cover
 % page as needed:
 % \ifCLASSOPTIONpeerreview
@@ -124,7 +122,7 @@ computational capacity, and memory. Advances in wireless communication have
 enabled the development of massive-scale wireless sensor networks (WSNs). In a
 WSN, sensors are usually scattered in the network and use low-power
 communication channels. Thus, sensors disseminate collected data to a base
-station, from where the information (query) was originally requested. Wireless
+station, from which the information (query) was originally requested. Wireless
 sensor networks (WSNs) have been widely used for environmental monitoring (e.g.,
 traffic, habitat), industrial sensing and diagnostics (e.g., factory, supply
 chains), infrastructure protection (e.g., water distribution), battlefield
@@ -136,23 +134,23 @@ energy consumption of sensor nodes. It is well known that communication among
 sensors is the activity responsible for the bulk of the power consumption. By
 reducing communication costs, energy may be drastically saved, consequently
 increasing the WSN's lifetime. An effective strategy to reduce energy
-consumption is thus to reduce the number of messages (sensed data) sent across
-the network. Nevertheless, the less the number of sensed data is transmitted,
-the lower the accuracy of results provided by a WSN. Thus higher accuracy in
+consumption, therefore, is to reduce the number of messages (sensed data) sent
+across the network. Nevertheless, the less the number of sensed data is transmitted,
+the lower the accuracy of results provided by a WSN. Thus, higher accuracy in
 WSNs comes at a higher energy cost.
 
-By now, it is well-known that data collected by WSN are strongly temporally
-and/or spatial correlated \cite{Yoon2005, Chu2006}. The traditional spatial data
-correlation is related to the idea that the physical proximity among sensors
-leads to similar measurements (values) of sensed data, phenomenon known as
-"principle of spatial locality". Thus, one can infer that from the capture of
-some sensors readings (located in some regions of sensing space), it is possible
-to obtain, approximately, the values of the readings of other sensors in its
-surroundings. On the other hand, the temporal correlation indicates the various
-readings of a sensor within a time interval have a certain approximation of
-their values (principle of temporal locality). Such a feature makes possible to
-predict (with a certain margin of error) sensed values in the future based on
-data collected in the past.
+By now, it is well-known that data collected by WSN are spatial and/or strongly
+temporally correlated \cite{Chu2006, Villas2012, Yoon2005}. The traditional
+spatial data correlation is related to the idea that the physical proximity
+among sensors leads to similar measurements (values) of sensed data, phenomenon
+known as "principle of spatial locality". Thus, one can infer that from the
+capture of some sensor readings (located in some regions of sensing space), it
+is possible to obtain, approximately, the values of the readings of other
+sensors in its surroundings. On the other hand, the temporal correlation
+indicates the various readings of a sensor within a time interval have a certain
+approximation of their values (principle of temporal locality). Such a feature
+makes possible to predict (with a certain margin of error) sensed values in the
+future based on data collected in the past.
 
 % Grouping sensors in clusters is the main technique used to take advantage of the
 % principle of spatial locality for reducing the energy consumption in WSNs. This
@@ -164,15 +162,15 @@ data collected in the past.
 
 Nonetheless, in several scenarios, sensors which are not spatially close to each
 other may have similar data reading patterns. In order to illustrate such a
-claim, consider a dense WSN deployed to monitor forest fires. 
+claim, consider a dense WSN deployed to monitor forest fires.
 Now, suppose a scenario in which the monitored region is affected by dozens of
-small forest fires. Figure \ref{fig:contour_lines} depicts a possible temperature
-contour lines graph for this hypothetical situation. Observe that the contour
-lines in Figure \ref{fig:contour_lines} form several closed regions representing
-areas which may have small forest fire areas, where it is very likely that the
-temperature measurements of sensors in those spatially separated regions present
-high correlation. For that reason, we claim that in such cases, a better
-alternative would be to use sensor clustering strategy based on
+small forest fires. Figure \ref{fig:contour_lines} depicts a graph of possible
+temperature contour lines for this hypothetical situation. Observe that the
+contour lines in Figure \ref{fig:contour_lines} form several closed regions
+representing fields which may have small forest fire areas, where it is very
+likely that the temperature measurements of sensors in those spatially separated
+regions present high correlation. For that reason, we claim that in such cases,
+a better alternative would be to use sensor clustering strategy based on
 \textit{Behavioral Correlation}.
 
 The idea behind the concept of {\it Behavioral Correlation} is to identify
@@ -181,8 +179,8 @@ distant from each other. Thus, one could apply a Behavioral Correlation
 Clustering (BCC) technique to group sensors which are spatially separated into a
 single cluster, in contrast to existing spatio-temporal correlation techniques.
 The BCC technique clusters sensors for which the forecasting models of sensed
-data time series are approximately the same independent of spatial proximity of
-sensors.
+data time series are approximately the same, independent of the spatial
+proximity of sensors.
 
 \begin{figure}[!htb]
 \centering
@@ -193,10 +191,10 @@ sensors.
 
 Furthermore, to make the maintenance of clusters, we have developed a technique
 based on Fractal Clustering \cite{Barbara1999}, which uses the Minimum
-Difference Fractal Dimension (MDFD), where sensors that send new data
-(novelties) are allocated by the sink node in cluster where the smallest change
-in value of Fractal Dimension occurs, making the choice of the new most
-appropriate node's cluster (with new data readings received by sink node) the
+Difference Fractal Dimension (MDFD). The sensors that send new data (novelties)
+are allocated in clusters therein by sink node, which the smallest
+change in value of Fractal Dimension occurs, making the choice of the new most
+appropriate cluster nodes (with new data readings received by sink node) the
 most accurate possible.
 
 In this sense, this paper presents a new approach for clustering sensors in
@@ -207,17 +205,17 @@ turn, is computed from the time series of sensor readings by applying a
 technique called Fractal Clustering, where the values of Fractal Dimension of
 each cluster are used to maintain the structure of the clusters, and; {\it
 (iii)} the use of a linear regression model for the temporal suppression of
-sensed data, through the maximum error level (threshold) desired by the user, is
+sensed data through the maximum error level (threshold) desired by the user is
 used to control the data to be sent to the sink. Hence, sensor nodes
 only transmit data which are novelties for the regression model applied by our
 proposal. Furthermore, Cluster Head technique have been implemented to select
-node (scheduling one sensor - CH - in each cluster) responsible for aggregating
+nodes (scheduling one sensor - CH - in each cluster) responsible for aggregating
 the data collected by all sensors, coordinating the operation of such a cluster.
 
 
-The remainder of this document is organized as follows. Section
-\ref{related-work} describes related work and point out the differences between
-our method and existing methods. In Section \ref{implementing-bcwsn} the
+The remainder of this document is organized as follows: Section
+\ref{related-work} describes related work and outlines the differences between
+our method and existing methods. In Section \ref{implementing-bcwsn}, the
 proposed Behavioral Correlation in WSN (BCWSN) method and the sensor-scheduling
 policy are presented and discussed. Simulations with a Sinalgo prototype
 operating over real sensor data are reported in Section \ref{eval}. Finally,
@@ -238,67 +236,63 @@ Section \ref{conclusion} concludes the paper.
 % factor due to the restrictive characteristics regarding the energy consumption
 % of the nodes in a WSN.
 
-In EAST \cite{Villas2012}, sensors are grouped into two levels, under a spatial
-correlation approach, while the leader and the representative nodes perform a
-temporal suppression technique.
-The leader node generates a representative value for each cluster based on data
-received by the representative nodes, which form a subset of all the nodes that
-sense the same event. The sensed area is divided into "event areas", which in
-turn are divided into "correlation regions (c) or cells", where the formers will
-be managed, each one, for a "Coordinator node" and the "correlation areas" will
-be represented, one by one, by a "Representative node" because a single reading
-within this region is enough to represent it.
-The size of the correlation region (c) can be decremented or incremented by the
-sink according to the application and the characteristics of the event, to
-maintain the accuracy of the data collected. However, in this approach, clusters
-are formed exclusively by spatial criterion, i.e. the Euclidean distance between
-sensors.
+% In EAST \cite{Villas2012}, sensors are grouped into two levels, under a spatial
+% correlation approach, while the leader and the representative nodes perform a
+% temporal suppression technique.
+% The leader node generates a representative value for each cluster based on data
+% received by the representative nodes, which form a subset of all the nodes that
+% sense the same event. The sensed area is divided into "event areas", which in
+% turn are divided into "correlation regions (c) or cells", where the formers will
+% be managed, each one, for a "Coordinator node" and the "correlation areas" will
+% be represented, one by one, by a "Representative node" because a single reading
+% within this region is enough to represent it.
+% The size of the correlation region (c) can be decremented or incremented by the
+% sink according to the application and the characteristics of the event to
+% maintain the accuracy of the data collected. However, in this approach, clusters
+% are formed exclusively by spatial criterion, i.e. the Euclidean distance between
+% sensors.
 
-Another way to group sensor nodes into clusters is through measures of
-dissimilarity.
-In EEDC \cite{Liu2007}, such measures of dissimilarity are calculated by the
-sink node for pairs of nodes of the network, according to the maximum distance
-between them.
-So, the measure of dissimilarity between two nodes is calculated based on up to
-$3$ parameters, namely:
+% Another way to group sensor nodes into clusters is through measures of
+% dissimilarity.
+In EEDC \cite{Liu2007}, measures of dissimilarity are calculated by the sink
+node for pairs of nodes based on up to $3$ parameters, namely:
 the differences in magnitude (\textit{M}) and trend (\textit{T}) of the data
 values and the geographical/euclidean distance between nodes ($g_{max}dist$).
 The criterion of formation of clusters is based on the maximum threshold of
 dissimilarity (max\_dst) defined by a tuple (\textit{M}, \textit{T},
-$g_{max}dist$), based on the measure of dissimilarity between the nodes. It
-works as follows: $1)$ Initially, the sensed data by each node are sent in the
-form of a temporal series for the sink. $2)$ The sink then stores all the data
-from the sensors and then calculates the measure of dissimilarity (previously
-mentioned) for each pair of nodes of the network. $3)$ With the measures
-calculated and the maximum threshold of dissimilarity (max\_dst), the sink
-divides the nodes into clusters. 
+$g_{max}dist$). It works as follows: $1)$ Initially, the sensed data by each
+node are sent in the form of a temporal series for the sink. $2)$ The sink then
+stores all the data from the sensors and then calculates the measure of
+dissimilarity for each pair of nodes of the network. $3)$
+With the measures calculated and the maximum threshold of dissimilarity
+(max\_dst), the sink divides the nodes into clusters.
 That work does not takes into account the energy reserve of each node as a
 criterion for choosing representative nodes (it is used an algorithm that makes,
 simultaneously, the equitable scheduling - round robin - along with the random
-choice of representatives nodes). In this work, we choose Representative Nodes /
-Cluster Heads according to the remaining energy level and the minimum distance
-to the sink. Moreover, unlike \cite{Liu2007}, we took into account readings from
-multiple different data types by sensors.
+choice of representative nodes). In this work, we chose Cluster Heads according
+to the remaining energy level and the minimum distance to the sink. Moreover,
+unlike \cite{Liu2007}, we took into account readings from multiple different
+data types by sensors.
 
-The spatial correlation through the formation of clusters is addressed in
-\cite{Pham2010} as a flooding algorithm where the sink node starts to
-send messages to the other nodes of the network, inviting them to form groups
-from criteria such as a dissimilarity measure, in addition to the physical
-proximity between nodes, since, of course, the message forwarding in a WSN
-occurs between adjacent nodes (i.e. geographically close). Cluster Heads (CHs)
-are selected, basically, by 2 parameters: {\it (i)} the nodes that are one hop
-from the ancestor that sent the message calculate the measure of dissimilarity
-with the mean value informed in the message and then those that are within the
-threshold of dissimilarity if they apply for CH, where {\it (ii)} it is said to
-be the CH the one that have higher level of energy reserve.
-We should notice that, during the process of forming clusters, the nodes that
-will form the communication backbone between each Cluster Head node and the sink
-are also configured. A scheduling of each cluster is done through round robin in
-order to decide which member node that will be active in each time slot making
-the sensing and sending the data to its respective CH.
-The weak point is the process of forming clusters, in
-which there is an intensive exchange of messages, scattering a significant
-amount of energy from the network sensors.
+% The spatial correlation through the formation of clusters is addressed in
+% \cite{Pham2010} as a flooding algorithm where the sink node starts to
+% send messages to the other nodes of the network, inviting them to form groups
+% from criteria such as a dissimilarity measure, in addition to the physical
+% proximity between nodes, since, of course, the message forwarding in a WSN
+% occurs between adjacent nodes (i.e. geographically close). Cluster Heads (CHs)
+% are selected, basically, by 2 parameters: {\it (i)} the nodes that are one hop
+% from the ancestor that sent the message calculate the measure of dissimilarity
+% with the mean value informed in the message and then those that are within the
+% threshold of dissimilarity if they apply for CH, and {\it (ii)} the CH is said
+% to be the one that has higher level of energy reserve.
+% We should notice that, during the process of cluster formation, the nodes that
+% will form the communication backbone between each Cluster Head node and the sink
+% are also configured. A schedule of each cluster is done through round robin in
+% order to decide which member node will be active in each time slot, making
+% the sensing and sending the data to its respective CH.
+% The weak point is the process of forming clusters, in which there is an
+% intensive exchange of messages, scattering a significant amount of energy from
+% the network sensors.
 
 % In \cite{Shah2007}, the spatial correlation is explored by a mechanism called
 % the GSC (Gridiron Spatial Correlation), where the sensed region has a Cluster
@@ -322,27 +316,27 @@ Spatio-Temporal Correlation to improving prediction accuracy in a WSN. But the
 major drawback of this work is that it do not reduces the energy consumption of
 the network compared to other existing approaches. In fact, it even increases
 the energy consumption of the network in many situations. In our work, using
-multiple linear regression together with fractal clustering, we achieved reduce
+multiple linear regression with fractal clustering, we achieved the reduction of
 the overall energy consumption of the network, obtaining results with a Root
 Mean Square Error (RMSE) for the prediction data (w.r.t. the sensed data) even
 smaller than other approaches.
 
 In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
-\textit{Fractal Dimension} to cluster datasets, from an initialization step
-based on the nearest neighbor strategy, that create the initial clusters. Then
+\textit{Fractal Dimension} to cluster datasets from an initialization step
+based on the nearest neighbor strategy which creates the initial clusters. Then
 they present the algorithm of the incremental step, which uses \textit{Fractal
 Dimension} calculation based on an implementation of Box Counting algorithm,
 called FD3 \cite{Liebovitch1989}. In our proposal, we use an adapted version of
 this algorithm (Fractal Clustering) for the maintenance of clusters each time a
 change in the sensed environment is detected and reported to the sink node by
-some sensor in the network.
+a sensor or some sensors in the network.
 
 \section{Implementing Behavioral Correlation in WSNs}
 \label{implementing-bcwsn}
 
 In this section, we present the proposed approach for clustering sensors in a
 WSN based on the notion of {\it Behavioral Correlation}. Our approach, called
-Behavioral Correlation in Wireless Sensor Networks (\textit{BCWSN} for short),
+Behavioral Correlation in Wireless Sensor Networks (\textit{BCWSN}),
 is based on clustering sensors initially by means of behavioral correlation
 (described in \ref{clustering-sensors}) between gathered variables (such as
 temperature, humidity and light), which in turn is computed from the time series
@@ -351,12 +345,12 @@ Clustering} method is used in cluster maintenance (\ref{cluster-maintenance}).
 
 %O sink irá analizar, através da Diferença Mínima de Dimensão Fractal, se tais dados representam apenas um ruído ou se são novidades reais. Se o valor da Diferença Mínima de Dimensão Fractal ficar acima de um certo limiar, ou se for atingido um número máximo de ruídos para um certo nó sensor, então é disparado o processo de divisão de cluster. Caso contrário, o nó sensor (que enviou as novidades) será realocado no cluster escolhido, ou seja, aquele que apresentar a menor diferença de Dimensão Fractal com a inclusão dos novos dados.
 This method is triggered whenever new data arrives at the sink.
-The sink will analyze, through the Minimum Difference of Fractal Dimension, if
-such data are just ``noise'' or if they are real ``novelties''. If the value of
-Minimum Difference of Fractal Dimension (MDFD) is above a certain threshold, or
+The sink will analyze, through the Minimum Difference of Fractal Dimension,
+whether such data are just ``noise'' or real ``novelties''. If the
+value of Minimum Difference of Fractal Dimension (MDFD) is above a certain threshold, or
 if a maximum number of noise for a certain sensor node is reached, then it
-triggered the process of splitting cluster. Otherwise, the sensor node (that
-sent the ``novelties'') will be relocated to the chosen cluster, i.e., one that
+will trigger the process of splitting cluster. Otherwise, the sensor node
+(that sent the ``novelties'') will be relocated to the chosen cluster, i.e., one that
 has a smaller difference in Fractal Dimension with the inclusion of new data.
 %[To Review]
 
@@ -404,11 +398,11 @@ sends only one message response to sink node with all reading data.
 \label{clustering-sensors}
 
 As already mentioned, the BCWSN mechanism clusters sensor nodes by means of
-behavioral correlation. In order to compute behavioral correlation, a
-\textit{similarity measure} \cite{Liu2007} is used. Thus, sensors with similar
-data reading pattern for all sensed data type are grouped into a single cluster.
-The similarity measure among sensed data of two different sensors is defined by 
-similarity of magnitude and similarity of trend, defined next.
+behavioral correlation. A \textit{similarity measure} \cite{Liu2007} is used in
+order to compute behavioral correlation. Thus, sensors with similar data reading
+pattern for all sensed data type are grouped into a single cluster.
+The similarity measure among sensed data of two different sensors is defined by
+similarity of magnitude and similarity of trend, as described next.
 
 \newtheorem{defini}{Definition}
 
@@ -438,7 +432,7 @@ s'_{i} = s'_{i} - s'_{i-1}$ and $1 < i \leq n$.
 \end{defini}
 
 Thus, sensors which are magnitude-M and trend-T similar for all sensed data
-type, they are grouped in the same cluster. After all time series of all sensors
+type are grouped in the same cluster. After all time series of all sensors
 in a WSN have been processed during the learning phase, the initial WSN cluster
 configuration is defined by the sink.
 
@@ -501,7 +495,7 @@ coefficients in reading / prediction loop.
 Whenever a sensor node senses values \{$v_{1}$,$v_{2}$, \ldots,$v_{n}$\} of
 certain data type \{$d_{1}$,$d_{2}$,\ldots,$d_{n}$\}, it verifies if anyone of
 $v_{n}$ is not within a ``tolerable difference'' $t$, i.e., $v_{n} \not \in
-[p_{n}-t,p_{n}+t], t \geq 0$, where $p_{n}$ is the predicted value by applying
+[p_{n}-t,p_{n}+t], t \geq 0$, let $p_{n}$ be the predicted value by applying
 the regression equation corresponding to data type $d_{n}$. Any data outside the
 tolerable difference are treated as novelty for the model.
 The ``tolerable difference'' is a parameter, set by the application expert (e.g.
@@ -519,7 +513,7 @@ $5\%$ or $10\%$).
 When a sensor node $s$ detects a given amount of novelties $n$ (Sensor Delay,
 defined by the application expert), it sends the novelties as a notification to
 the Cluster Head of the cluster to which $s$ belongs. The Cluster Head in turn
-logs the number of notifications, in such way that when the number of received
+logs the number of notifications, in such a way that when the number of received
 notifications is greater than a preset limit $m$ (Cluster Delay, also
 defined by the application expert), the CH sends a message to the sink for
 computing new regression coefficients for that cluster.
@@ -530,24 +524,23 @@ computing new regression coefficients for that cluster.
 
 In the proposed approach, the sink has the ability to automatically and
 autonomously maintain the clusters. The strategy is to maintain the sensor
-clusters according to the Minimum Difference of Fractal Dimension (MDFD), based
-on the Fractal Clustering algorithm (\textit{FC} for short).
+clusters according to the Minimum Difference of Fractal Dimension (MDFD).
 % that allows split and merge operations.
 
-Let $R_{new}$ be the new reading data to be treated by the sink; let $S_{R}$ be
-the sensor which report that ``novelties'' (i.e. new reading - $R_{new}$) to the
-sink node; let $C_i$ be the $i-th$ sensor cluster, formed by a 
-CH and other cluster members (0 or more sensors); let $D(C_i)$
-be the data (sensor's data) of cluster $C_i$; let $D'(C_i)$ denote the data of
-cluster $C_i$ with the new reading data $R_{new}$ (i.e. $D'(C_i) = D(C_i) \cup
-R_{new}$) and let $F_{d}(D(C_i))$ be the value of Fractal Dimension of the data
-of cluster $C_i$.
+Considering the Fractal Clustering (Algorithm \ref{alg:MDFD}), let $R_{new}$ be
+the new reading data to be treated by the sink; let $S_{R}$ be the sensor which
+report that ``novelties'' (i.e. new reading - $R_{new}$) to the sink node; let
+$C_i$ be the $i-th$ sensor cluster, formed by a CH and other cluster members (0
+or more sensors); let $D(C_i)$ be the data (sensor's data) of cluster $C_i$; let
+$D'(C_i)$ denote the data of cluster $C_i$ with the new reading data $R_{new}$
+(i.e. $D'(C_i) = D(C_i) \cup R_{new}$) and let $F_{d}(D(C_i))$ be the value of
+Fractal Dimension of the data of cluster $C_i$.
 
-In clustering sensor nodes phase (Section \ref{clustering-sensors}), the Fractal
-Dimension is calculated and stored for each initial cluster ($F_{d}(D(C_i)),
-\forall i$). The idea is to find out which cluster $C_{\hat{i}}$ the inclusion
-of new sensor data $R_{new}$ will take the slightest change in its Fractal
-Dimension.
+In the phase of sensor node clustering (Section \ref{clustering-sensors}), the
+Fractal Dimension is calculated and stored for each initial cluster
+($F_{d}(D(C_i)), \forall i$). The idea is to find out which cluster
+$C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take to produce
+the slightest change in its Fractal Dimension.
 
 %[PAREI AQUI!]
 
@@ -563,8 +556,8 @@ Let {\it min}$\nabla$ be the minimal difference ($|F_d(D'(C_{\hat{i}})) -
 F_d(D(C_{\hat{i}}))|$, where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|),
 \forall i$). If {\it min}$\nabla$ is greater than a certain threshold ($\tau$) -
 defined by the application expert (e.g. $\tau = 0.03$), then this new data
-$R_{new}$ is simply rejected as noise and a sequential noise counter (NoiseCount)
-is incremented for the current sensor.
+$R_{new}$ will simply be rejected as noise and a sequential noise counter
+(NoiseCount) is incremented for the current sensor.
 
 Otherwise, if {\it min}$\nabla$ is greater than a split threshold ($\sigma$)
 (e.g. $\sigma = 0.1$) or if the NoiseCount is greater than a maximum number of
@@ -572,10 +565,10 @@ sequential noise ($\mu$) (defined by the application expert - e.g. $\mu$ = 3),
 then a split process is triggered.
 
 On the other hand, if the chosen cluster $C_i$ is the same $C_j$ (i.e.
-$i=j$), sink just calculates new coefficients ($a$ and $b$, equations (\ref{coef-a})
-and (\ref{coef-b})) to the corresponding sensor in this cluster. Otherwise, the sink
-must remove this sensor node ($S_{R}$ with new data $R_{new}$) from its old
-cluster $C_j$ and add it to the new cluster $(C_i)$.
+$i=j$), the sink will just calculate new coefficients ($a$ and $b$, equations
+(\ref{coef-a}) and (\ref{coef-b})) to the corresponding sensor in this cluster.
+Otherwise, the sink must remove this sensor node ($S_{R}$ with new data
+$R_{new}$) from its old cluster $C_j$ and add it to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
 
 \begin{algorithm}
@@ -705,9 +698,9 @@ monitoring application simulates the gathering of one variable from the
 environment: ``temperature''.
 %[The application versions to achieve the simulations are]
 In the experiments, we have executed the following approaches: {\it
-  (i)} Naive approach \cite{Madden2005}, where all nodes send their sensed
+  (i)} Naive approach \cite{Madden2005}, in which all nodes send their sensed
 data to the sink node;  {\it
-  (ii)} Adaga-P* approach \cite{MaiaACR2013} \cite{MaiaSAC2013}, which
+  (ii)} Adaga-P* approach \cite{MaiaSAC2013, MaiaACR2013}, which
 implicitly implements spatial correlation to cluster sensors and exploits the
 benefits of using a linear regression model to reduce the number of messages
 injected into the network, and;  {\it 
@@ -895,7 +888,7 @@ in Naive approach the RMSE is virtually $0$.
 % $75.85\%$ lower in average. When compared to Adaga-P*, the average RMSE of
 % BCWSN-FC-CH approach is $6.77\%$ ($0.0288$) smaller, while the average of number
 % of messages is $90.4\%$ smaller. 
-It is worthwhile to note that we have considered the both directions of
+It is worthwhile to note that we have considered both directions of
 transmission, i.e. from and into sensor nodes, for computing communication cost.
 % and the number of exchanged messages $75.85\%$ smaller in average.
 
@@ -936,9 +929,9 @@ value. In this case, the sensor does not need to forward the sensed value.
 
 As already mentioned, sensor clusters are formed in BCWSN and Cluster Heads are
 responsible for coordenating the communication between sensor nodes and sink.
-In some situations as during a split process, all the nodes from some clusters
-are sensing and sending messages to the sink. Thus, the Standard Deviation of
-number of message in BCWSN is greater than in Adaga-P*.
+In some situations as during a split process, all of the nodes from some
+clusters are sensing and sending messages to the sink. Thus, the Standard
+Deviation of number of message in BCWSN is greater than in Adaga-P*.
 
 
 % \begin{table}[h!]
@@ -964,10 +957,10 @@ number of message in BCWSN is greater than in Adaga-P*.
 
 Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in the
 Adaga-P* approaches tend to get very close to $0.47$ at about $1000$ cycles,
-while the BCWSN stabilizes at about $0.39$ in the same point. Thus, BCWSN
+while the BCWSN stabilizes at about $0.39$ at the same point. Thus, BCWSN
 provides a good compromise between accuracy and reduction in energy consumption,
 since it reduces the communication activity (see Table \ref{tab:num-msg}). It is
-important to note that in the Naive approach, the RMSE is always 0 (zero),
+important to note that in the Naive approach the RMSE is always 0 (zero),
 because all sensors send all sensed data to the sink.
 
 \begin{figure}[!htb]
@@ -990,7 +983,7 @@ BCWSN approach is able to dynamically adjust the accuracy by reducing the RMSE.
 In Figure \ref{fig:num-msg}, one can observe the number of transmitted messages
 per round. In the Naive approach, the number of messages is steady, since in
 each round all sensors send sensed data to the sink. It is important to observe
-that, in average, BCWSN transmit less messages than Adaga-P* (see Table
+that, in average, BCWSN transmits less messages than Adaga-P* (see Table
 \ref{tab:num-msg}). However, there are some peaks in BCWSN curve, which
 represent periods in time when clusters are being restructured (splitting or
 merging), since the clusters, in this approach, are always undergoing division
@@ -1035,14 +1028,14 @@ Fractal Clustering method to maintain the clusters.
 
 The results presented in Section \ref{results-and-discussion} show that the use
 of data behavioral correlation associated with a temporal correlation technique,
-associated with a correct strategy for cluster maintenance (Fractal Clustering
-method) may significantly decrease energy consumption in WSNs, while assuring a
-low RMS Error.
+in its turn associated with a correct strategy for cluster maintenance (Fractal
+Clustering method), may significantly decrease energy consumption in WSNs, while
+assuring a low RMS Error.
 
 In this work, the similarity among time series behavior has been measured by
-applying similarity in magnitude and trend. Now, we are working on evaluating
+applying similarity in magnitude and trend. Nowadays, we are working on the
 measures of distance between prediction models to assess the dissimilarity in
-sensed data behavior. Moreover, we are evaluation the use of traditional
+sensed data behavior. Moreover, we are evaluating the use of traditional
 techniques of data mining, such as K-Means, to perform the initial grouping of
 sensors into clusters, overriding the use of similarity measures for such
 purpose.
