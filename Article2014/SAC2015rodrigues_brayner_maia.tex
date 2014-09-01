@@ -23,8 +23,8 @@
 \begin{document}
 %
 
-\title{Using Fractal Clustering to explore Behavioral Correlation to
-reduce energy consumption in Sensor Networks}
+\title{Using Fractal Clustering to explore Behavioral Correlation: A new
+approach to reduce energy consumption in Wireless Sensor Networks}
 
 % author names and affiliations
 % use a multiple column layout for up to three different
@@ -51,7 +51,7 @@ reduce energy consumption in Sensor Networks}
 \begin{abstract}
 
 Sensor clustering is an efficient strategy to reduce the number of messages
-transmitted to the sink in a multi-hop Wireless Sensor Network.
+transmitted to the sink in a multi-hop Wireless Sensor Network (WSN).
 In this work, we present a new approach to cluster sensors in WSN, called
 Behavioral Correlation in WSN (BCWSN), based on the behavior of recent
 historical data collected by sensors. Instead of using the spatial distance
@@ -61,18 +61,20 @@ of difference in magnitude and trend of sensed data. For clusters maintenance,
 we propose an alternative approach based on Fractal Clustering, since this
 technique use the concept of Fractal Dimension to find the best configuration
 for clusters based on the Minimum Difference of Fractal Dimension strategy.
-Furthermore, Cluster Head (CH) technique is used as intra-cluster scheduling
-method.
-We developed a framework to address several important technical challenges,
-including how to partition the sensors into clusters (using Behavioral
-Correlation), how to dynamically maintain the clusters in response to
-environmental changes (using Fractal Clustering), how to schedule the sensors in
-a cluster (CH) and how to explore temporal correlation to restore the data in
-the sink with high fidelity (using Linear Regression with threshold error),
-apart from dealing with multiple types of sensed data at the same time.
-To the best of our knowledge, there is no other paper that uses Fractal
-Clustering to maintain clusters while making predictions about multiple types of
-sensed data simultaneously in a WSN.
+
+% Furthermore, Cluster Head (CH) technique is used as intra-cluster scheduling
+% method.
+% We developed a framework to address several important technical challenges,
+% including how to partition the sensors into clusters (using Behavioral
+% Correlation), how to dynamically maintain the clusters in response to
+% environmental changes (using Fractal Clustering), how to schedule the sensors in
+% a cluster (CH) and how to explore temporal correlation to restore the data in
+% the sink with high fidelity (using Linear Regression with threshold error),
+% apart from dealing with multiple types of sensed data at the same time.
+% To the best of our knowledge, there is no other paper that uses Fractal
+% Clustering to maintain clusters while making predictions about multiple types of
+% sensed data simultaneously in a WSN.
+
 In order to validate our approach, simulations with a prototype have been
 conducted over real data. The results show that, with 5\% error threshold in
 temporal prediction, BCWSN can save the communication overhead up to 94.80\%
@@ -519,7 +521,7 @@ defined by the application expert), the CH sends a message to the sink for
 computing new regression coefficients for that cluster.
 
 
-\subsubsection{Cluster Maintenance}
+\subsubsection{Fractal Clustering}
 \label{cluster-maintenance}
 
 In the proposed approach, the sink has the ability to automatically and
