@@ -24,7 +24,9 @@
 %
 
 \title{Using Fractal Clustering to explore Behavioral Correlation: A new
-approach to reduce energy consumption in Wireless Sensor Networks}
+approach to reduce energy consumption in WSN}
+% \title{Using Fractal Clustering to explore Behavioral Correlation: A new
+% approach to reduce energy consumption in Wireless Sensor Networks}
 
 % author names and affiliations
 % use a multiple column layout for up to three different
@@ -61,6 +63,11 @@ of difference in magnitude and trend of sensed data. For clusters maintenance,
 we propose an alternative approach based on Fractal Clustering, since this
 technique use the concept of Fractal Dimension to find the best configuration
 for clusters based on the Minimum Difference of Fractal Dimension strategy.
+In order to validate our approach, simulations with a prototype have been
+conducted over real data. The results show that, with 5\% error threshold in
+temporal prediction, BCWSN can save the communication overhead up to 94.80\%
+over naive strategy and 57.24\% over a temporal correlation approach, while the
+RMSE remains roughly stable.
 
 % Furthermore, Cluster Head (CH) technique is used as intra-cluster scheduling
 % method.
@@ -74,12 +81,6 @@ for clusters based on the Minimum Difference of Fractal Dimension strategy.
 % To the best of our knowledge, there is no other paper that uses Fractal
 % Clustering to maintain clusters while making predictions about multiple types of
 % sensed data simultaneously in a WSN.
-
-In order to validate our approach, simulations with a prototype have been
-conducted over real data. The results show that, with 5\% error threshold in
-temporal prediction, BCWSN can save the communication overhead up to 94.80\%
-over naive strategy and 57.24\% over a temporal correlation approach, while the
-RMSE remains roughly stable.
 
 % The results point to gains of up to 97.72\% over naive strategy in terms of
 % reduction in message transmission and 45,12\% of reduction in data sensing,
@@ -192,27 +193,40 @@ proximity of sensors.
 \end{figure}
 
 Furthermore, to make the maintenance of clusters, we have developed a technique
-based on Fractal Clustering \cite{Barbara1999}, which uses the Minimum
-Difference Fractal Dimension (MDFD). The sensors that send new data (novelties)
-are allocated in clusters therein by sink node, which the smallest
-change in value of Fractal Dimension occurs, making the choice of the new most
-appropriate cluster nodes (with new data readings received by sink node) the
-most accurate possible.
+based on Fractal Clustering (FC) \cite{Barbara1999}, which uses the Minimum
+Difference of Fractal Dimension (MDFD). 
+
+In our technique, allocation of a given sensor X in a given cluster is performed
+based on the novelties this node sends to the sink. Whenever X sends novelties,
+the sink use them to recalculate the Fractal Dimension (FD) of each cluster.
+Then, X is allocated in the cluster which presents the smallest difference
+between its actual value of FD and its previous value of FD (i.e. MDFD).
+
+% Sensors that send new
+% data (novelties) are allocated in clusters therein by the sink node, which the
+% smallest change in value of Fractal Dimension occurs, making the choice of the
+% new most appropriate cluster nodes (with new data readings received by sink
+% node) the most accurate as possible (known as Fractal Clustering - FC). 
+
+The advantage of FC is lightweight as possible, since in this case the sink just
+receive data from sensors that had news to determine their clusters, without the
+need to send the data read from other nodes in the same cluster.
 
 In this sense, this paper presents a new approach for clustering sensors in
 WSNs. The main features of the proposed approach are: {\it (i)} Cluster
 formation based on the \textit{Behavioral Correlation} of the sensors, which, in
 turn, is computed from the time series of sensor readings by applying a
-\textit{Similarity Measure}; {\it (ii)} Maintenance of clusters through a
-technique called Fractal Clustering, where the values of Fractal Dimension of
-each cluster are used to maintain the structure of the clusters, and; {\it
-(iii)} the use of a linear regression model for the temporal suppression of
-sensed data through the maximum error level (threshold) desired by the user is
-used to control the data to be sent to the sink. Hence, sensor nodes
-only transmit data which are novelties for the regression model applied by our
-proposal. Furthermore, Cluster Head technique have been implemented to select
-nodes (scheduling one sensor - CH - in each cluster) responsible for aggregating
-the data collected by all sensors, coordinating the operation of such a cluster.
+\textit{Similarity Measure} centralized in the sink node; {\it (ii)} Maintenance
+of clusters through a technique called Fractal Clustering, where the values of
+Fractal Dimension of each cluster are used to maintain the structure of the
+clusters, and; {\it (iii)} the use of a linear regression model for the temporal
+suppression of sensed data through the maximum error level (threshold) desired
+by the user is used to control the data to be sent to the sink. Hence, sensor
+nodes only transmit data which are novelties for the regression model applied by
+our proposal. Furthermore, Cluster Head technique have been implemented to
+select nodes (scheduling one sensor - CH - in each cluster) responsible for
+aggregating the data collected by all sensors, coordinating the operation of
+such a cluster.
 
 
 The remainder of this document is organized as follows: Section
@@ -546,7 +560,7 @@ the slightest change in its Fractal Dimension.
 
 %[PAREI AQUI!]
 
-The Minimum Difference of Fractal Dimension (MDFD) strategy is as follows:
+MDFD strategy is as follows:
 whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a CH on
 a given cluster $C_j$, it calculates which cluster $C_i$ has the minimal
 \textit{fractal impact} with the addition of new data, i.e. the minimum absolute
@@ -576,6 +590,7 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 \begin{algorithm}
  \SetAlgoLined
  \LinesNumbered
+ \small
  \KwData{input parameters: set of all K current sensor clusters (\{$C_i \vert 1
  \leq i \leq K$\}), values of Fractal Dimension of all current sensor clusters
  ($F_d(D(C_i))$), sensor node($S_{R}$) with new data ($R_{new}$), noise
@@ -593,7 +608,7 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
   	SplitCluster($C_j$)\;
   } 
   \eIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
-  	Discard $R_{new}$ as noise{;} numSeqNoise++\;
+  	numSeqNoise++\;
   }{ 
   	\eIf{$j \neq \hat{i}$}{
   		Remove $S_{R}$ from cluster $C_j$\;
@@ -624,9 +639,12 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 % 	  Compute $F_d(D'(C_i))$\;
 %  }
 %   Find $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|)$\;
+%   \If{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
+%   	SplitCluster($C_j$)\;
+%   } 
 %   \eIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
-%   	Discard $R_{new}$ as noise\;
-%   }{
+%   	Discard $R_{new}$ as noise{;} numSeqNoise++\;
+%   }{ 
 %   	\eIf{$j \neq \hat{i}$}{
 %   		Remove $S_{R}$ from cluster $C_j$\;
 %   		Place $S_{R}$ in cluster $C_\hat{i}$\;
