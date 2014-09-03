@@ -93,6 +93,7 @@ consumption, therefore, is to reduce the number of messages (sensed data) sent
 across the network. Nevertheless, the less the number of sensed data is transmitted,
 the lower the accuracy of results provided by a WSN. Thus, higher accuracy in
 WSNs comes at a higher energy cost.
+\vspace*{-.3cm}
 
 By now, it is well-known that data collected by WSN are spatial and/or strongly
 temporally correlated \cite{Chu2006, Villas2012, Yoon2005}. The traditional
@@ -106,6 +107,7 @@ indicates the various readings of a sensor within a time interval have a certain
 approximation of their values (principle of temporal locality). Such a feature
 makes possible to predict (with a certain margin of error) sensed values in the
 future based on data collected in the past.
+\vspace*{-.3cm}
 
 Nonetheless, in several scenarios, sensors which are not spatially close to each
 other may have similar data reading patterns. In order to illustrate such a
@@ -119,6 +121,7 @@ likely that the temperature measurements of sensors in those spatially separated
 regions present high correlation. For that reason, we claim that in such cases,
 a better alternative would be to use sensor clustering strategy based on
 \textit{Behavioral Correlation}.
+\vspace*{-.3cm}
 
 The idea behind the concept of {\it Behavioral Correlation} is to identify
 similar patterns of sensor readings even in sensors which are geographically
@@ -128,6 +131,7 @@ single cluster, in contrast to existing spatio-temporal correlation techniques.
 The BCC technique clusters sensors for which the forecasting models of sensed
 data time series are approximately the same, independent of the spatial
 proximity of sensors.
+\vspace*{-.3cm}
 
 \begin{figure}[!htb]
 \centering
@@ -135,20 +139,26 @@ proximity of sensors.
     \caption{Contours lines of temperature}
     \label{fig:contour_lines}
 \end{figure}
+\vspace*{-.3cm}
 
 Furthermore, to make the maintenance of clusters, we have developed a technique
 based on Fractal Clustering (FC) \cite{Barbara1999}, which uses the Minimum
 Difference of Fractal Dimension (MDFD). 
+\vspace*{-.3cm}
 
+%[To Review]
 In our technique, allocation of a given sensor X in a given cluster is performed
 based on the novelties this node sends to the sink. Whenever X sends novelties,
 the sink use them to recalculate the Fractal Dimension (FD) of each cluster.
 Then, X is allocated in the cluster which presents the smallest difference
 between its actual value of FD and its previous value of FD (i.e. MDFD).
+\vspace*{-.3cm}
 
-The advantage of FC is lightweight as possible, since in this case the sink just
-receive data from sensors that had news to determine their clusters, without the
-need to send the data read from other nodes in the same cluster.
+The advantage of FC is that it is more lightweight than other approaches, since in 
+our case the sink just receives data from sensors that read novelties to determine their 
+clusters, without the need to receive data read from other nodes in the same cluster.
+\vspace*{-.3cm}
+%[\To Review]
 
 In this sense, this paper presents a new approach for clustering sensors in
 WSNs. The main features of the proposed approach are: {\it (i)} Cluster
@@ -165,7 +175,7 @@ our proposal. Furthermore, Cluster Head technique have been implemented to
 select nodes (scheduling one sensor - CH - in each cluster) responsible for
 aggregating the data collected by all sensors, coordinating the operation of
 such a cluster.
-
+\vspace*{-.3cm}
 
 The remainder of this document is organized as follows: Section
 \ref{related-work} describes related work and outlines the differences between
@@ -198,6 +208,7 @@ choice of representative nodes). In this work, we chose Cluster Heads according
 to the remaining energy level and the minimum distance to the sink. Moreover,
 unlike \cite{Liu2007}, we took into account readings from multiple different
 data types by sensors.
+\vspace*{-.3cm}
 
 Carvalho \textit{et al.} \cite{Carvalho2011} proposed applying Multivariate
 Spatio-Temporal Correlation to improving prediction accuracy in a WSN. But the
@@ -208,6 +219,7 @@ multiple linear regression with fractal clustering, we achieved the reduction of
 the overall energy consumption of the network, obtaining results with a Root
 Mean Square Error (RMSE) for the prediction data (w.r.t. the sensed data) even
 smaller than other approaches.
+\vspace*{-.3cm}
 
 In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
 \textit{Fractal Dimension} to cluster datasets from an initialization step
@@ -226,10 +238,11 @@ In this section, we present the proposed approach for clustering sensors in a
 WSN based on the notion of {\it Behavioral Correlation}. Our approach, called
 Behavioral Correlation in Wireless Sensor Networks (\textit{BCWSN}),
 is based on clustering sensors initially by means of behavioral correlation
-(described in \ref{clustering-sensors}) between gathered variables (such as
-temperature, humidity and light), which in turn is computed from the time series
+(described in Step 2) between gathered variables (such as temperature, humidity 
+and light), which in turn is computed from the time series
 of sensor readings, and, after the first clusters were formed, \textit{Fractal
-Clustering} method is used in cluster maintenance (\ref{cluster-maintenance}).
+Clustering} method is used in cluster maintenance (Step 5).
+\vspace*{-.3cm}
 
 This method is triggered whenever new data arrives at the sink.
 The sink will analyze, through the Minimum Difference of Fractal Dimension,
@@ -239,41 +252,42 @@ if a maximum number of noise for a certain sensor node is reached, then it
 will trigger the process of splitting cluster. Otherwise, the sensor node
 (that sent the ``novelties'') will be relocated to the chosen cluster, i.e., one that
 has a smaller difference in Fractal Dimension with the inclusion of new data.
+\vspace*{-.3cm}
 
 Clustering reduces the traffic on the network, since the Cluster Heads
 coordinate the data flow (messaging) between sensors and the sink.
 Furthermore, a linear regression model is used for the temporal suppression
 (prediction) of data to be sent from each sensor to the sink node.
+\vspace*{-.3cm}
 
-\subsection{The BCWSN Mechanism}
-
-
+%\subsection{The BCWSN Mechanism}
 The algorithm BCWSN can be divided into five steps described next.
+\vspace*{-.3cm}
 
-
-\subsubsection{Learning Stage}
-
+%\subsubsection{Learning Stage}
+{\bf Step 1 - Learning Stage}
 In this step, the sink node collects sensed data from all sensors belonging to
 the network in order to compute the initial cluster formation and the
-coefficients of the linear regression equation (see Section \ref
-{data-predict}). Thus, the sink node firstly sends a broadcast message to all
+coefficients of the linear regression equation (see Step 3). Thus, the sink 
+node firstly sends a broadcast message to all
 nodes of the network, requesting the following data from sensors:
 battery level, spatial location and sensed values. The amount of data used by the
 learning stage is a parameter, denoted initial slot time, which should be
 defined by the application expert (e.g. 70). Each sensor answers the broadcast
 message from sink in a batch mode, i.e., it makes all sensing tasks required and
 sends only one message response to sink node with all reading data.
+\vspace*{-.3cm}
 
-
-\subsubsection{Clustering Sensor Nodes}
-\label{clustering-sensors}
-
+%\subsubsection{Clustering Sensor Nodes}
+{\bf Step 2 - Clustering Sensor Nodes}
+%\label{clustering-sensors}
 As already mentioned, the BCWSN mechanism clusters sensor nodes by means of
 behavioral correlation. A \textit{similarity measure} \cite{Liu2007} is used in
 order to compute behavioral correlation. Thus, sensors with similar data reading
 pattern for all sensed data type are grouped into a single cluster.
 The similarity measure among sensed data of two different sensors is defined by
 similarity of magnitude and similarity of trend, as described next.
+\vspace*{-.3cm}
 
 \newtheorem{defini}{Definition}
 
@@ -286,6 +300,7 @@ $S'$ = \{$s'_{1}$,$s'_{2}$,\ldots,$s'_{n}$\} are magnitude-M similar if
 \frac{\sum_{i=1}^{n} |s_{i}-s'_{i}|}{n} \leq M
 \end{equation}
 \end{defini}
+\vspace*{-.3cm}
 
 \begin{defini}
 Similarity of trend-T: Two sensors ($S$ and $S'$) with time series
@@ -300,22 +315,24 @@ $(s_{i},s'_{i})$ in the time series which satisfy $\nabla s_{i} \times \nabla
 s'_{i} \geq 0$, where $\nabla s_{i} = s_{i} - s_{i-1}$, $\nabla
 s'_{i} = s'_{i} - s'_{i-1}$ and $1 < i \leq n$.
 \end{defini}
+\vspace*{-.3cm}
 
 Thus, sensors which are magnitude-M and trend-T similar for all sensed data
 type are grouped in the same cluster. After all time series of all sensors
 in a WSN have been processed during the learning phase, the initial WSN cluster
 configuration is defined by the sink.
+\vspace*{-.3cm}
 
 Once the sensors are initially grouped into clusters, the cluster head of each
 cluster is defined by applying the energy level criterion.
 In other words, for each cluster, the cluster head is the node with the highest
 energy level. In the case of nodes with same energy level, the node with the
 shortest distance to the sink node is chosen.
+\vspace*{-.3cm}
 
-
-\subsubsection{In-Network Data Prediction}
-\label{data-predict}
-
+%\subsubsection{In-Network Data Prediction}
+{\bf Step 3 - In-Network Data Prediction}
+%\label{data-predict}
 The in-network prediction implemented by BCWSN relies on the
 following linear regression equation, applied for each sensed data type:
 $\hat{S}(t) = a + bt$.
@@ -332,24 +349,27 @@ as follows:
 \label{coef-b}
 	b = \frac{\sum \left(t_{i} - \bar{t}\right)\left(S_{i} - \bar{S}\right)}{\sum \left(t_{i} - \bar{t}\right)^{2}}.
 \end{equation}
+\vspace*{-.3cm}
 
 The idea behind this method is that both the sink and the sensor node know the
 regression equations to predict the sensed values for all sensed data. Thus, a
 sensor node does not need to send any data to sink, since it is able to predict
 all sensed data by the sensors. Then, the network is saving power of sensors
 \cite{MaiaACR2013}.
+\vspace*{-.3cm}
 
 During the Learning Stage, the sink node computes the initial coefficients $a$
 and $b$ for each sensed data type, for each sensor node, based on the time
 series received from them. Thereafter, the sink node sends the calculated
 coefficients to the respective sensors.
+\vspace*{-.3cm}
 
- 
-\subsubsection{Sensing}
-
+%\subsubsection{Sensing}
+{\bf Step 4 - Sensing}
 As already mentioned, one sensor node (Cluster Head) in each cluster $C_{i}$ is
 selected to coordinate the data sensing activity carried out by all nodes in
 $C_{i}$.
+\vspace*{-.3cm}
 
 After a node receives the corresponding coefficients, it starts using these
 coefficients in reading / prediction loop.
@@ -361,6 +381,7 @@ the regression equation corresponding to data type $d_{n}$. Any data outside the
 tolerable difference are treated as novelty for the model.
 The ``tolerable difference'' is a parameter, set by the application expert (e.g.
 $5\%$ or $10\%$).
+\vspace*{-.3cm}
 
 When a sensor node $s$ detects a given amount of novelties $n$ (Sensor Delay,
 defined by the application expert), it sends the novelties as a notification to
@@ -369,14 +390,15 @@ logs the number of notifications, in such a way that when the number of received
 notifications is greater than a preset limit $m$ (Cluster Delay, also
 defined by the application expert), the CH sends a message to the sink for
 computing new regression coefficients for that cluster.
+\vspace*{-.3cm}
 
-
-\subsubsection{Fractal Clustering}
-\label{cluster-maintenance}
-
+%\subsubsection{Fractal Clustering}
+{\bf Step 5 - Fractal Clustering}
+%\label{cluster-maintenance}
 In the proposed approach, the sink has the ability to automatically and
 autonomously maintain the clusters. The strategy is to maintain the sensor
 clusters according to the Minimum Difference of Fractal Dimension (MDFD).
+\vspace*{-.3cm}
 
 Considering the Fractal Clustering (Algorithm \ref{alg:MDFD}), let $R_{new}$ be
 the new reading data to be treated by the sink; let $S_{R}$ be the sensor which
@@ -386,12 +408,14 @@ or more sensors); let $D(C_i)$ be the data (sensor's data) of cluster $C_i$; let
 $D'(C_i)$ denote the data of cluster $C_i$ with the new reading data $R_{new}$
 (i.e. $D'(C_i) = D(C_i) \cup R_{new}$) and let $F_{d}(D(C_i))$ be the value of
 Fractal Dimension of the data of cluster $C_i$.
+\vspace*{-.3cm}
 
 In the phase of sensor node clustering (Section \ref{clustering-sensors}), the
 Fractal Dimension is calculated and stored for each initial cluster
 ($F_{d}(D(C_i)), \forall i$). The idea is to find out which cluster
 $C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take to produce
 the slightest change in its Fractal Dimension.
+\vspace*{-.3cm}
 
 MDFD strategy is as follows:
 whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a CH on
@@ -400,6 +424,7 @@ a given cluster $C_j$, it calculates which cluster $C_i$ has the minimal
 difference between the previous Fractal Dimension value (calculated before the
 new data arrives) ($F_d(D(C_i))$) and the new one ($F_d(D'(C_i))$), where:
 $D'(C_i) = D(C_i) \cup R_{new}, \forall i$.
+\vspace*{-.3cm}
 
 Let {\it min}$\nabla$ be the minimal difference ($|F_d(D'(C_{\hat{i}})) -
 F_d(D(C_{\hat{i}}))|$, where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|),
@@ -407,11 +432,13 @@ F_d(D(C_{\hat{i}}))|$, where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|),
 defined by the application expert (e.g. $\tau = 0.03$), then this new data
 $R_{new}$ will simply be rejected as noise and a sequential noise counter
 (NoiseCount) is incremented for the current sensor.
+\vspace*{-.3cm}
 
 Otherwise, if {\it min}$\nabla$ is greater than a split threshold ($\sigma$)
 (e.g. $\sigma = 0.1$) or if the NoiseCount is greater than a maximum number of
 sequential noise ($\mu$) (defined by the application expert - e.g. $\mu$ = 3),
 then a split process is triggered.
+\vspace*{-.3cm}
 
 On the other hand, if the chosen cluster $C_i$ is the same $C_j$ (i.e.
 $i=j$), the sink will just calculate new coefficients ($a$ and $b$, equations
@@ -419,6 +446,7 @@ $i=j$), the sink will just calculate new coefficients ($a$ and $b$, equations
 Otherwise, the sink must remove this sensor node ($S_{R}$ with new data
 $R_{new}$) from its old cluster $C_j$ and add it to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
+\vspace*{-.3cm}
 
 \begin{algorithm}
  \SetAlgoLined
@@ -483,13 +511,12 @@ extracted from the real data of experiment Intel Lab Data \cite{Intel2004}.
 M-magnitude parameter has been configured with the value of $1.5$ and T-trend
 was $5\%$, the same as the error threshold (t). The amount of initial data sensing
 (initial slot time) was 70 readings, used for the learning stage.
+\vspace*{-.3cm}
 
-The performance evaluation was done through three application versions, which we
-used to simulate and compare multiple linear regression to simple linear
-regression and to the original version of a monitoring application. This
-monitoring application simulates the gathering of one variable from the
+The performance evaluation was done through different applications, which we used
+to simulate and compare three approaches of a monitoring application. 
+This monitoring application simulates the gathering of one variable from the
 environment: ``temperature''.
-%[The application versions to achieve the simulations are]
 In the experiments, we have executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, in which all nodes send their sensed
 data to the sink node;  {\it
@@ -497,16 +524,15 @@ data to the sink node;  {\it
 implicitly implements spatial correlation to cluster sensors and exploits the
 benefits of using a linear regression model to reduce the number of messages
 injected into the network, and;  {\it 
-  (iv)} BCWSN approach, which implements the BCWSN, with the scheduling
-policy of Cluster Heads (CH) and the maintenance of clusters through the
-\textit{FC} strategy.
+  (iii)} BCWSN approach, which implements the BCWSN, with the maintenance of 
+clusters through the \textit{FC} strategy.
+\vspace*{-.3cm}
 
 In order to compare the aforementioned approaches, two metrics have been
 deployed: 1) The Root Mean Square Error (RMSE) to verify the accuracy of
 approach, and; 2) The Number of Messages injected into the network, which is a
 critical factor to measure energy consumption of the network. The RMSE is
 calculated by reference to the naive approach filtered values.
-
 The simulation parameters are presented in Table \ref{tab:parameters}.
 
 \begin{table}[h!]
@@ -548,15 +574,16 @@ FC maximum sequential noise ($\mu$) &3 \\
 \end{tabular}
 \end{center}
 \end{table}
+\vspace*{-.3cm}
 
 
 \subsection{Results and Discussion}
 \label{results-and-discussion}
 
-
-Table \ref{tab:rmse} presents the average (AVG), standard deviation (STD),
-maximum (MAX) and minimum (MIN) value for the RMSE of the three approaches
-evaluated during the experiments.
+Since in Naive approach the RMSE is virtually $0$, Table \ref{tab:rmse} presents 
+the average (AVG), standard deviation (STD),
+maximum (MAX) and minimum (MIN) value of RMSE only for Adaga-P* and BCWSN.
+%\vspace*{-.3cm}
 
 \begin{table}[h!]
 \caption{RMSE per Round (1000 cycles)}
@@ -566,8 +593,6 @@ evaluated during the experiments.
 \hline
 RMSE &AVG &STD &MAX &MIN \\
 \hline\hline
-Naive &0 &0 &0 &0 \\
-\hline
 Adaga-P* &0.4168 &0.0499 &0.469 &0 \\
 \hline
 BCWSN &0.443 &0.1028 &1.158 &0 \\
@@ -575,18 +600,19 @@ BCWSN &0.443 &0.1028 &1.158 &0 \\
 \end{tabular}
 \end{center}
 \end{table}
-
+\vspace*{-.3cm}
 
 Looking more closely to Table \ref{tab:rmse}, one can observe that BCWSN
-presented a RMSE of $0.39$ (with average $0.443$ and standard deviation $0.1028$),
+presented a RMSE with average $0.443$ and standard deviation $0.1028$,
 while the average of transmitted messages is $94.80\%$ smaller than the Naive
 approach (Table \ref{tab:num-msg}). Compared to Adaga-P*, the average of
 messages exchanged in BCWSN is $57,24\%$ lower. The RMSE produced by BCWSN is
-$6.3\%$ higher in average than the RMSE presented by Adaga-P*, whereas
-in Naive approach the RMSE is virtually $0$.
+$6.3\%$ higher in average than the RMSE presented by Adaga-P*.
+\vspace*{-.3cm}
 
 It is worthwhile to note that we have considered both directions of
 transmission, i.e. from and into sensor nodes, for computing communication cost.
+\vspace*{-.3cm}
 
 
 \begin{table}[h!]
@@ -606,26 +632,28 @@ BCWSN &11.654 &49.5202 &607 &0 \\
 \end{tabular}
 \end{center}
 \end{table}
+\vspace*{-.3cm}
 
 In Table \ref{tab:num-msg}, the values for column MIN for Adaga-P* and BCWSN are
 equal to zero because in several rounds the predict value is equal to the sensed
 value. In this case, the sensor does not need to forward the sensed value. 
+\vspace*{-.3cm}
 
 As already mentioned, sensor clusters are formed in BCWSN and Cluster Heads are
 responsible for coordenating the communication between sensor nodes and sink.
 In some situations as during a split process, all of the nodes from some
 clusters are sensing and sending messages to the sink. Thus, the Standard
 Deviation of number of message in BCWSN is greater than in Adaga-P*.
-
-
+\vspace*{-.3cm}
 
 Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in the
-Adaga-P* approaches tend to get very close to $0.47$ at about $1000$ cycles,
+Adaga-P* approach tends to get very close to $0.47$ at about $1000$ cycles,
 while the BCWSN stabilizes at about $0.39$ at the same point. Thus, BCWSN
 provides a good compromise between accuracy and reduction in energy consumption,
 since it reduces the communication activity (see Table \ref{tab:num-msg}). It is
 important to note that in the Naive approach the RMSE is always 0 (zero),
 because all sensors send all sensed data to the sink.
+\vspace*{-.3cm}
 
 \begin{figure}[!htb]
 \centering
@@ -636,10 +664,10 @@ because all sensors send all sensed data to the sink.
 
 One can identify a peak in Figure \ref{fig:rmse} for the BCWSN curve. The reason
 for this is due to the fact that the initial cluster formation is only an
-initialization step for this approach.
-
-Thus the BCWSN accuracy is jeopardized at the beginning. Nonetheless, the
-BCWSN approach is able to dynamically adjust the accuracy by reducing the RMSE.
+initialization step for this approach. Thus the BCWSN accuracy is jeopardized 
+at the beginning. Nonetheless, the BCWSN approach is able to dynamically adjust 
+the accuracy by reducing the RMSE through the use of Fractal Clustering (FC) technique.
+\vspace*{-.3cm}
 
 In Figure \ref{fig:num-msg}, one can observe the number of transmitted messages
 per round. In the Naive approach, the number of messages is steady, since in
@@ -650,6 +678,7 @@ represent periods in time when clusters are being restructured (splitting or
 merging), since the clusters, in this approach, are always undergoing division
 and merge process. This can be proved by the high standard deviation for this
 approach in Table \ref{tab:num-msg}.
+\vspace*{-.3cm}
 
 \begin{figure}[!htb]
 \begin{center}
@@ -658,6 +687,7 @@ approach in Table \ref{tab:num-msg}.
     \label{fig:num-msg}
 \end{center}
 \end{figure}
+\vspace*{-.3cm}
 
 \section{Conclusion}
 \label{conclusion}
@@ -667,12 +697,14 @@ based on the notion of Behavioral Correlation using Fractal Clustering.
 Behavioral correlation identifies sensors with similar data reading patterns,
 between one or more (different) data type readings. Moreover, it was adapted a
 Fractal Clustering method to maintain the clusters.
+\vspace*{-.3cm}
 
 The results presented in Section \ref{results-and-discussion} show that the use
 of data behavioral correlation associated with a temporal correlation technique,
 in its turn associated with a correct strategy for cluster maintenance (Fractal
 Clustering method), may significantly decrease energy consumption in WSNs, while
 assuring a low RMS Error.
+\vspace*{-.3cm}
 
 In this work, the similarity among time series behavior has been measured by
 applying similarity in magnitude and trend. Nowadays, we are working on the
@@ -684,9 +716,8 @@ purpose.
 
 
 
-
 \bibliographystyle{abbrv}
-\bibliography{SAC2015rodrigues_brayner_maia}
+\bibliography{SAC2015rodrigues_brayner_maia}  
 % SAC2015rodrigues_brayner_maia.bib is the name of the Bibliography in this case
 % You must have a proper ".bib" file
 %  and remember to run:
