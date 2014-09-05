@@ -5,6 +5,10 @@
 \usepackage[lined,boxed,commentsnumbered]{algorithm2e}
 %\usepackage{algorithm2e}
 %\usepackage{draftwatermark}
+% path to spreadsheet with test data and graphs: "Google Drive\Doutorado\Pesquisa\Testes\WsnEE\"
+% file name: "WsneeFD - Experimental Data + Grafs - 1000 Cycles - Averages (Fernando) - 19082014.ods"
+% sub-path to graphic files: "Gráficos\Gráficos BCWSN SD=1 CD=5"
+% path to files for upload project: "Google Drive\Doutorado\Pesquisa\Artigos\SAC2015\SACLatex"
 
 
 % correct bad hyphenation here
@@ -157,6 +161,10 @@ between its actual value of FD and its previous value of FD (i.e. MDFD).
 The advantage of FC is that it is more lightweight than other approaches, since in 
 our case the sink just receives data from sensors that read novelties to determine their 
 clusters, without the need to receive data read from other nodes in the same cluster.
+Moreover, our approach proved to be very efficient, with a Root Mean Squared Error (RMSE)
+compatible with another approach (Adaga-P*)  \cite{MaiaSAC2013, MaiaACR2013}, while the 
+energy consumption of sensors decreased due to a reduction in the total number of sent 
+messages (about $57\%$ less).
 \vspace*{-.3cm}
 %[\To Review]
 
@@ -239,7 +247,7 @@ WSN based on the notion of {\it Behavioral Correlation}. Our approach, called
 Behavioral Correlation in Wireless Sensor Networks (\textit{BCWSN}),
 is based on clustering sensors initially by means of behavioral correlation
 (described in Step 2) between gathered variables (such as temperature, humidity 
-and light), which in turn is computed from the time series
+and/or light), which in turn is computed from the time series
 of sensor readings, and, after the first clusters were formed, \textit{Fractal
 Clustering} method is used in cluster maintenance (Step 5).
 \vspace*{-.3cm}
@@ -410,8 +418,8 @@ $D'(C_i)$ denote the data of cluster $C_i$ with the new reading data $R_{new}$
 Fractal Dimension of the data of cluster $C_i$.
 \vspace*{-.3cm}
 
-In the phase of sensor node clustering (Section \ref{clustering-sensors}), the
-Fractal Dimension is calculated and stored for each initial cluster
+In the phase of sensor node clustering (Step 2), the Fractal Dimension is 
+calculated and stored for each initial cluster
 ($F_{d}(D(C_i)), \forall i$). The idea is to find out which cluster
 $C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take to produce
 the slightest change in its Fractal Dimension.
@@ -515,8 +523,8 @@ was $5\%$, the same as the error threshold (t). The amount of initial data sensi
 
 The performance evaluation was done through different applications, which we used
 to simulate and compare three approaches of a monitoring application. 
-This monitoring application simulates the gathering of one variable from the
-environment: ``temperature''.
+This monitoring application simulates the gathering of two variables from the
+environment: ``temperature'' and ``humidity''.
 In the experiments, we have executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, in which all nodes send their sensed
 data to the sink node;  {\it
@@ -551,7 +559,7 @@ Sink node: number (position) &1 (center) \\
 \hline
 Notification rate (per second) &31 \\
 \hline
-Sensed data type &Temperature \\
+Sensed data types &Temp. / Hum. \\
 \hline
 Initial slot time (\# learning stage) &70 \\
 \hline
@@ -580,6 +588,8 @@ FC maximum sequential noise ($\mu$) &3 \\
 \subsection{Results and Discussion}
 \label{results-and-discussion}
 
+Firstly, we show an expensive set of results for ``temperature'' as sensed data type. 
+
 Since in Naive approach the RMSE is virtually $0$, Table \ref{tab:rmse} presents 
 the average (AVG), standard deviation (STD),
 maximum (MAX) and minimum (MIN) value of RMSE only for Adaga-P* and BCWSN.
@@ -606,8 +616,8 @@ Looking more closely to Table \ref{tab:rmse}, one can observe that BCWSN
 presented a RMSE with average $0.443$ and standard deviation $0.1028$,
 while the average of transmitted messages is $94.80\%$ smaller than the Naive
 approach (Table \ref{tab:num-msg}). Compared to Adaga-P*, the average of
-messages exchanged in BCWSN is $57,24\%$ lower. The RMSE produced by BCWSN is
-$6.3\%$ higher in average than the RMSE presented by Adaga-P*.
+messages exchanged in BCWSN is $57,24\%$ lower. RMSE produced by BCWSN is
+$6.3\%$ higher in average than RMSE presented by Adaga-P*.
 \vspace*{-.3cm}
 
 It is worthwhile to note that we have considered both directions of
@@ -641,9 +651,10 @@ value. In this case, the sensor does not need to forward the sensed value.
 
 As already mentioned, sensor clusters are formed in BCWSN and Cluster Heads are
 responsible for coordenating the communication between sensor nodes and sink.
-In some situations as during a split process, all of the nodes from some
-clusters are sensing and sending messages to the sink. Thus, the Standard
-Deviation of number of message in BCWSN is greater than in Adaga-P*.
+In some situations, several nodes from some clusters are sending multiple 
+messages to the sink through its cluster heads, because changes are occurring 
+in the sensed environment. Thus, the Standard Deviation of number of message 
+in BCWSN is greater than in Adaga-P*.
 \vspace*{-.3cm}
 
 Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in the
@@ -656,11 +667,39 @@ because all sensors send all sensed data to the sink.
 \vspace*{-.3cm}
 
 \begin{figure}[!htb]
-\centering
-	\includegraphics[scale=0.33]{FCWSN-RMSExRound02-SD1.png}
-    \caption{RMSE per Round}
+\begin{center}
+	\includegraphics[scale=0.40]{BCWSN-RMSExRound-PB.png}
+    \caption{RMSE per Round - Temp}
     \label{fig:rmse}
+\end{center}
 \end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[scale=0.37]{BCWSN-NumMsgPerRoundxRound-PB.png}
+    \caption{Number of Messages per Round - Temp}
+    \label{fig:num-msg}
+\end{center}
+\end{figure}
+\vspace*{-.3cm}
+
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[scale=0.40]{BCWSN-TotNumMsgxRound-PB-2Appr.png}
+    \caption{Total Number of Messages per Round - Temp}
+    \label{fig:tot-num-msg}
+\end{center}
+\end{figure}
+\vspace*{-.3cm}
+
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[scale=0.33]{BCWSN-NumClustersxRound-PB.png}
+    \caption{Number of Clusters per Round - Temp}
+    \label{fig:num-clts}
+\end{center}
+\end{figure}
+\vspace*{-.3cm}
 
 One can identify a peak in Figure \ref{fig:rmse} for the BCWSN curve. The reason
 for this is due to the fact that the initial cluster formation is only an
@@ -672,7 +711,7 @@ the accuracy by reducing the RMSE through the use of Fractal Clustering (FC) tec
 In Figure \ref{fig:num-msg}, one can observe the number of transmitted messages
 per round. In the Naive approach, the number of messages is steady, since in
 each round all sensors send sensed data to the sink. It is important to observe
-that, in average, BCWSN transmits less messages than Adaga-P* (see Table
+that, in average, BCWSN transmits $57.24\%$ less messages than Adaga-P* (see Table
 \ref{tab:num-msg}). However, there are some peaks in BCWSN curve, which
 represent periods in time when clusters are being restructured (splitting or
 merging), since the clusters, in this approach, are always undergoing division
@@ -680,11 +719,39 @@ and merge process. This can be proved by the high standard deviation for this
 approach in Table \ref{tab:num-msg}.
 \vspace*{-.3cm}
 
+As one can see in Figure \ref{fig:tot-num-msg}, the total number of messages sent
+by sensors in BCWSN is much smaller compared to Adaga-P*, despite the wide variation 
+in the number of messages sent per round in the former (Figure \ref{fig:num-msg}).
+\vspace*{-.3cm}
+
+Figure \ref{fig:num-clts} shows the variation in number of clusters from BCWSN 
+that demonstrates how our proposal is able to adapt to changes in the sensed 
+environment by changing the clusters to reflect such changes.
+\vspace*{-.3cm}
+
+Next, we present the test results for ``humidity'' as sensed data type, 
+to prove the validity of our proposal in a more general way.
+\vspace*{-.3cm}
+
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.35]{FCWSN-NumMsgPerRoundxRound02-SD1.png}
-    \caption{Number of Messages per Round}
-    \label{fig:num-msg}
+	\includegraphics[scale=0.33]{BCWSN-RMSExRound-PB-Hum.png}
+    \caption{RMSE per Round - Hum}
+    \label{fig:rmse-hum}
+\end{center}
+\end{figure}
+\vspace*{-.3cm}
+
+As in the case of temperature, Figure \ref{fig:rmse-hum} demonstrates that for 
+humidity, RMSE from BCWSN starts higher than Adaga-P* one, however from a certain 
+point it decreases until lower.
+\vspace*{-.3cm}
+
+\begin{figure}[!htb]
+\begin{center}
+	\includegraphics[scale=0.33]{BCWSN-TotNumMsgxRound-PB-2Appr-Hum.png}
+    \caption{Total Number of Messages per Round - Hum}
+    \label{fig:tot-num-msg-hum}
 \end{center}
 \end{figure}
 \vspace*{-.3cm}
