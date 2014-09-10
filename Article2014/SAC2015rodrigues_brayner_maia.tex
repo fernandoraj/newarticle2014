@@ -155,14 +155,14 @@ In our technique, allocation of a given sensor X in a given cluster is performed
 based on the novelties this node sends to the sink. Whenever X sends novelties,
 the sink use them to recalculate the Fractal Dimension (FD) of each cluster.
 Then, X is allocated in the cluster which presents the smallest difference
-between its actual value of FD and its previous value of FD (i.e. MDFD).
+between its current value of FD and its previous value of FD (i.e. MDFD).
 \vspace*{-.3cm}
 
 The advantage of FC is that it is more lightweight than other approaches, since in 
-our case the sink just receives data from sensors that read novelties to determine their 
+our case the sink only receives data from sensors that read novelties to determine their 
 clusters, without the need to receive data read from other nodes in the same cluster.
 Moreover, our approach proved to be very efficient, with a Root Mean Squared Error (RMSE)
-compatible with another approach (Adaga-P*)  \cite{MaiaSAC2013, MaiaACR2013}, while the 
+similar to another approach (Adaga-P*  \cite{MaiaSAC2013, MaiaACR2013}), while the 
 energy consumption of sensors decreased due to a reduction in the total number of sent 
 messages (about $57\%$ less).
 \vspace*{-.3cm}
