@@ -3,7 +3,7 @@
 
 \usepackage{graphicx}
 \usepackage[lined,boxed,commentsnumbered]{algorithm2e}
-%\usepackage{algorithm2e}
+\usepackage{algorithm2e}
 %\usepackage{draftwatermark}
 % path to spreadsheet with test data and graphs: "Google Drive\Doutorado\Pesquisa\Testes\WsnEE\"
 % file name: "WsneeFD - Experimental Data + Grafs - 1000 Cycles - Averages (Fernando) - 19082014.ods"
@@ -159,12 +159,12 @@ between its current value of FD and its previous value of FD (i.e. MDFD).
 \vspace*{-.3cm}
 
 The advantage of FC is that it is more lightweight than other approaches, since in 
-our case the sink only receives data from sensors that read novelties to determine their 
-clusters, without the need to receive data read from other nodes in the same cluster.
-Moreover, our approach proved to be very efficient, with a Root Mean Squared Error (RMSE)
-similar to another approach (Adaga-P*  \cite{MaiaSAC2013, MaiaACR2013}), while the 
-energy consumption of sensors decreased due to a reduction in the total number of sent 
-messages (about $57\%$ less).
+our case the sink only receives data from sensors that read novelties to determine
+their clusters, without the need to receive data read from other nodes in the same
+cluster. Moreover, our approach proved to be very efficient, with a Root Mean 
+Squared Error (RMSE) similar to another approach (Adaga-P* \cite{MaiaSAC2013,
+MaiaACR2013}), while the energy consumption of sensors decreased due to a reduction
+in the total number of sent messages (about $57\%$ less).
 \vspace*{-.3cm}
 %[\To Review]
 
@@ -457,8 +457,8 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 \vspace*{-.3cm}
 
 \begin{algorithm}
- \SetAlgoLined
- \LinesNumbered
+% \SetAlgoLined
+% \LinesNumbered
  \small
  \KwData{input parameters: set of all K current sensor clusters (\{$C_i \vert 1
  \leq i \leq K$\}), values of Fractal Dimension of all current sensor clusters
@@ -473,7 +473,7 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 	  Compute $F_d(D'(C_i))$\;
  }
   Find $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|)$\;
-  \uIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
+ \uIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
   	SplitCluster($C_j$)\;
   } 
   \uElseIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
@@ -481,27 +481,15 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
   } 
   	\uElseIf{$j \neq \hat{i}$}{
   		Remove $S_{R}$ from cluster $C_j$\;
-  		Place $S_{R}$ in cluster $C_\hat{i}$\;
+  		Place $S_{R}$ in cluster $C_{\hat{i}}$\;
   	}\uElse{
-    	Replace $S_{R}$ in cluster $C_\hat{i}$\;
+    	Replace $S_{R}$ in cluster $C_{\hat{i}}$\;
     }
+
+ 
  \caption{Fractal Clustering Algorithm - FC Strategy}
  \label{alg:MDFD}
 \end{algorithm}
-
-%   \If{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
-%   	SplitCluster($C_j$)\;
-%   } 
-%   \eIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
-%   	numSeqNoise++\;
-%   }{ 
-%   	\eIf{$j \neq \hat{i}$}{
-%   		Remove $S_{R}$ from cluster $C_j$\;
-%   		Place $S_{R}$ in cluster $C_\hat{i}$\;
-%   	}{
-%     	Replace $S_{R}$ in cluster $C_\hat{i}$\;
-%     }
-%   }
 
 
 \section{Empirical Evaluation}
