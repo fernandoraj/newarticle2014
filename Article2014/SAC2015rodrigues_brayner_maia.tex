@@ -3,7 +3,7 @@
 
 \usepackage{graphicx}
 \usepackage[lined,boxed,commentsnumbered]{algorithm2e}
-\usepackage{algorithm2e}
+%\usepackage{algorithm2e}
 %\usepackage{draftwatermark}
 % path to spreadsheet with test data and graphs: "Google Drive\Doutorado\Pesquisa\Testes\WsnEE\"
 % file name: "WsneeFD - Experimental Data + Grafs - 1000 Cycles - Averages (Fernando) - 19082014.ods"
@@ -454,11 +454,11 @@ $i=j$), the sink will just calculate new coefficients ($a$ and $b$, equations
 Otherwise, the sink must remove this sensor node ($S_{R}$ with new data
 $R_{new}$) from its old cluster $C_j$ and add it to the new cluster $(C_i)$.
 The Algorithm \ref{alg:MDFD} outlines this strategy.
-\vspace*{-.3cm}
+%\vspace*{-.3cm}
 
 \begin{algorithm}
-% \SetAlgoLined
-% \LinesNumbered
+ \SetAlgoLined
+ \LinesNumbered
  \small
  \KwData{input parameters: set of all K current sensor clusters (\{$C_i \vert 1
  \leq i \leq K$\}), values of Fractal Dimension of all current sensor clusters
@@ -473,7 +473,7 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 	  Compute $F_d(D'(C_i))$\;
  }
   Find $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|)$\;
- \uIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
+  \uIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
   	SplitCluster($C_j$)\;
   } 
   \uElseIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
@@ -485,8 +485,6 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
   	}\uElse{
     	Replace $S_{R}$ in cluster $C_{\hat{i}}$\;
     }
-
- 
  \caption{Fractal Clustering Algorithm - FC Strategy}
  \label{alg:MDFD}
 \end{algorithm}
