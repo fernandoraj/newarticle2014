@@ -416,12 +416,12 @@ or more sensors); let $D(C_i)$ be the data (sensor's data) of cluster $C_i$; let
 $D'(C_i)$ denote the data of cluster $C_i$ with the new reading data $R_{new}$
 (i.e. $D'(C_i) = D(C_i) \cup R_{new}$) and let $F_{d}(D(C_i))$ be the value of
 Fractal Dimension of the data of cluster $C_i$.
-\vspace*{-.3cm}
+\vspace*{-.6cm}
 
 In the phase of sensor node clustering (Step 2), the Fractal Dimension is 
 calculated and stored for each initial cluster
 ($F_{d}(D(C_i)), \forall i$). The idea is to find out which cluster
-$C_{\hat{i}}$ the inclusion of new sensor data $R_{new}$ will take to produce
+$C_{\hat{\imath}}$ the inclusion of new sensor data $R_{new}$ will take to produce
 the slightest change in its Fractal Dimension.
 \vspace*{-.3cm}
 
@@ -434,8 +434,8 @@ new data arrives) ($F_d(D(C_i))$) and the new one ($F_d(D'(C_i))$), where:
 $D'(C_i) = D(C_i) \cup R_{new}, \forall i$.
 \vspace*{-.3cm}
 
-Let {\it min}$\nabla$ be the minimal difference ($|F_d(D'(C_{\hat{i}})) -
-F_d(D(C_{\hat{i}}))|$, where $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|),
+Let {\it min}$\nabla$ be the minimal difference ($|F_d(D'(C_{\hat{\imath}})) -
+F_d(D(C_{\hat{\imath}}))|$, where $\hat{\imath} = min(|F_d(D'(C_i)) - F_d(D(C_i))|),
 \forall i$). If {\it min}$\nabla$ is greater than a certain threshold ($\tau$) -
 defined by the application expert (e.g. $\tau = 0.03$), then this new data
 $R_{new}$ will simply be rejected as noise and a sequential noise counter
@@ -472,18 +472,18 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 	  Let $D'(C_i) = D(C_i) \cup R_{new}$\;
 	  Compute $F_d(D'(C_i))$\;
  }
-  Find $\hat{i} = min(|F_d(D'(C_i)) - F_d(D(C_i))|)$\;
-  \uIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \sigma$ OR numSeqNoise > $\mu$}{
+  Find $\hat{\imath} = min(|F_d(D'(C_i)) - F_d(D(C_i))|)$\;
+  \uIf{$|F_d(D'(C_{\hat{\imath}})) - F_d(D(C_{\hat{\imath}}))| > \sigma$ OR numSeqNoise > $\mu$}{
   	SplitCluster($C_j$)\;
   } 
-  \uElseIf{$|F_d(D'(C_{\hat{i}})) - F_d(D(C_{\hat{i}}))| > \tau$}{
+  \uElseIf{$|F_d(D'(C_{\hat{\imath}})) - F_d(D(C_{\hat{\imath}}))| > \tau$}{
   	numSeqNoise++\;
   } 
-  	\uElseIf{$j \neq \hat{i}$}{
+  	\uElseIf{$j \neq \hat{\imath}$}{
   		Remove $S_{R}$ from cluster $C_j$\;
-  		Place $S_{R}$ in cluster $C_{\hat{i}}$\;
+  		Place $S_{R}$ in cluster $C_{\hat{\imath}}$\;
   	}\uElse{
-    	Replace $S_{R}$ in cluster $C_{\hat{i}}$\;
+    	Replace $S_{R}$ in cluster $C_{\hat{\imath}}$\;
     }
  \caption{Fractal Clustering Algorithm - FC Strategy}
  \label{alg:MDFD}
