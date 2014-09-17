@@ -49,18 +49,18 @@ Sensor clustering is an efficient strategy to reduce the number of messages
 transmitted to the sink in a multi-hop Wireless Sensor Network (WSN).
 In this work, we present a new approach to cluster sensors in WSN, called
 Behavioral Correlation in WSN (BCWSN), based on the behavior of recent
-historical data collected by sensors. Instead of using the spatial distance
-among sensors to cluster them, the proposed approach uses the concept of
-behavioral correlation to group sensors, which takes into account the concepts
+historical data collected by sensors. Instead of using spatial distance
+among sensors to cluster them, the proposed approach uses the concepts
 of difference in magnitude and trend of sensed data. For clusters maintenance,
-we propose an alternative approach based on Fractal Clustering, since this
-technique use the concept of Fractal Dimension to find the best configuration
-for clusters based on the Minimum Difference of Fractal Dimension strategy.
+we propose an alternative approach based on Fractal Clustering, which
+uses the concept of Fractal Dimension to find the best configuration
+for clusters based on the Minimum Difference of Fractal Dimension strategy (MDFD).
 In order to validate our approach, simulations with a prototype have been
 conducted over real data. The results show that, with 5\% error threshold in
-temporal prediction, BCWSN can save the communication overhead up to 94.80\%
-over naive strategy and 57.24\% over a temporal correlation approach, while the
-RMSE remains roughly stable.
+temporal correlation, BCWSN can save communication overhead up to 94.80\%
+over naive approach (no clustering, no prediction and no suppression) and 
+57.24\% over pure temporal correlation approach, while RMSE remains roughly 
+stable.
 
 
 \end{abstract}
@@ -74,67 +74,70 @@ RMSE remains roughly stable.
 \section{Introduction}
 % no \IEEEPARstart
 
+Advances in wireless communication have enabled the development of massive-scale
+wireless sensor networks (WSNs). Sensors nodes are devices used to measure
+physical phenomena from the environment. They are limited in power,
+computational capacity, and memory. In a WSN, sensors are usually scattered in
+the network and use low-power communication channels to disseminate collected
+data to a base station, from which the information (query) was originally
+requested. Due to these characteristics, WSNs have been widely used for
+environmental monitoring (e.g., traffic, habitat), industrial sensing and
+diagnostics (e.g., factory, supply chains), infrastructure protection (e.g.,
+water distribution), battlefield awareness (e.g., multi-target tracking) and
+context-aware computing (e.g., intelligent home) applications.
 
-Sensors are devices used to collect data from the environment related to the
-detection or measurement of physical phenomena. Sensors are limited in power,
-computational capacity, and memory. Advances in wireless communication have
-enabled the development of massive-scale wireless sensor networks (WSNs). In a
-WSN, sensors are usually scattered in the network and use low-power
-communication channels. Thus, sensors disseminate collected data to a base
-station, from which the information (query) was originally requested. Wireless
-sensor networks (WSNs) have been widely used for environmental monitoring (e.g.,
-traffic, habitat), industrial sensing and diagnostics (e.g., factory, supply
-chains), infrastructure protection (e.g., water distribution), battlefield
-awareness (e.g., multi-target tracking) and context-aware computing (e.g.,
-intelligent home) applications.
-
-In spite of advances in WSN technology, a critical key point is still the
-energy consumption of sensor nodes. It is well known that communication among
-sensors is the activity responsible for the bulk of the power consumption. By
+In spite of advances in WSN technology, a critical key point is still 
+energy consumption of sensor nodes. It is true that communication among
+sensors is the activity responsible for the great majority of power consumption. By
 reducing communication costs, energy may be drastically saved, consequently
-increasing the WSN's lifetime. An effective strategy to reduce energy
-consumption, therefore, is to reduce the number of messages (sensed data) sent
+increasing WSN's lifetime. An effective strategy to reduce energy
+consumption is, therefore, to reduce the number of messages sent
 across the network. Nevertheless, the less the number of sensed data is transmitted,
 the lower the accuracy of results provided by a WSN. Thus, higher accuracy in
 WSNs comes at a higher energy cost.
 \vspace*{-.3cm}
 
-By now, it is well known that data collected by WSN are spatial and/or strongly
-temporally correlated \cite{Chu2006, Villas2012, Yoon2005}. The traditional
-spatial data correlation is related to the idea that the physical proximity
+So far, it is well known that data collected by WSNs is spatially or temporally 
+correlated \cite{Chu2006, Villas2012, Yoon2005}. Temporal correlation states 
+that, within a given time interval, it is very likely that readings sensed by a 
+given node have approximate values (principle of temporal locality). Such a feature
+makes possible to predict (with a given error threshold) future sensed values 
+based on data collected in the past. On the other hand, traditional
+spatial data correlation is related to the idea that physical proximity
 among sensors leads to similar measurements (values) of sensed data, phenomenon
-known as "principle of spatial locality". Thus, one can infer that from the
-capture of some sensor readings (located in some regions of sensing space), it
-is possible to obtain, approximately, the values of the readings of other
-sensors in its surroundings. On the other hand, the temporal correlation
-indicates the various readings of a sensor within a time interval have a certain
-approximation of their values (principle of temporal locality). Such a feature
-makes possible to predict (with a certain margin of error) sensed values in the
-future based on data collected in the past.
+known as "principle of spatial locality". Thus, from the readings of a sensor 
+located in a given region, one can estimate the readings sensed by neighboring 
+nodes located in that same region.
 \vspace*{-.3cm}
 
-Nonetheless, in several scenarios, sensors which are not spatially close to each
-other may have similar data reading patterns. In order to illustrate such a
-claim, consider a dense WSN deployed to monitor forest fires.
+However, in several scenarios, sensors which are not spatially close to each
+other may also have similar data reading patterns. In order to illustrate this 
+situation, consider a dense WSN deployed to monitor forest fires.
 Now, suppose a scenario in which the monitored region is affected by dozens of
 small forest fires. Figure \ref{fig:contour_lines} depicts a graph of possible
 temperature contour lines for this hypothetical situation. Observe that the
 contour lines in Figure \ref{fig:contour_lines} form several closed regions
 representing fields which may have small forest fire areas, where it is very
 likely that the temperature measurements of sensors in those spatially separated
-regions present high correlation. For that reason, we claim that in such cases,
-a better alternative would be to use sensor clustering strategy based on
-\textit{Behavioral Correlation}.
+regions present high correlation. In such cases, traditional spatial data correlation techniques, using physical distance among sensors, are not applicable.
+For that reason, we claim that using sensor clustering strategy based on
+\textit{Behavioral Correlation} is a better alternative, since it provides a 
+good solution for both the traditional case and the case illustrated in Figure 
+\ref{fig:contour_lines}.
 \vspace*{-.3cm}
 
-The idea behind the concept of {\it Behavioral Correlation} is to identify
-similar patterns of sensor readings even in sensors which are geographically
-distant from each other. Thus, one could apply a Behavioral Correlation
-Clustering (BCC) technique to group sensors which are spatially separated into a
+The main idea of {\it Behavioral Correlation} is to identify
+similar patterns of sensor readings even in sensors geographically
+distant from each other. Thus, our Behavioral Correlation Clustering (BCC) 
+technique could be applied to group spatially separated sensors into a
 single cluster, in contrast to existing spatio-temporal correlation techniques.
-The BCC technique clusters sensors for which the forecasting models of sensed
-data time series are approximately the same, independent of the spatial
-proximity of sensors.
+\vspace*{-.3cm}
+
+For that reason, we developed a new cluster technique based on BCC technique.
+That technique clusters sensors, initially, using {\it Similarity Measure}
+(adapted from \cite{Liu2007}), i.e., regardless of the spatial proximity 
+of sensors, BCC groups sensors whose forecasting models of sensed 
+data time series are similar.
 \vspace*{-.3cm}
 
 \begin{figure}[!htb]
