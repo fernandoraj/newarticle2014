@@ -46,20 +46,18 @@ approach to reduce energy consumption in WSN}
 \begin{abstract}
 
 Sensor clustering is an efficient strategy to reduce the number of messages
-transmitted to the sink in a multi-hop Wireless Sensor Network (WSN).
-In this work, we present a new approach to cluster sensors in WSN, called
-Behavioral Correlation in WSN (BCWSN), based on the behavior of recent
+flowing in a Wireless Sensor Network (WSN).
+In this work, we present a new approach to cluster sensors in WSNs, called
+Behavioral Correlation in WSN (BCWSN), which is based on the behavior of recent
 historical data collected by sensors. Instead of using spatial distance
-among sensors to cluster them, the proposed approach uses the concepts
+among sensors, the proposed approach uses the concepts
 of difference in magnitude and trend of sensed data. For clusters maintenance,
-we propose an alternative approach based on Fractal Clustering, which
-uses the concept of Fractal Dimension to find the best configuration
-for clusters based on the Minimum Difference of Fractal Dimension strategy (MDFD).
-In order to validate our approach, simulations with a prototype have been
+we propose an approach, which
+employees the notion of Fractal Dimension to find the best configuration
+for clusters. In order to validate our approach, simulations have been
 conducted over real data. The results show that, with 5\% error threshold in
-temporal correlation, BCWSN can save communication overhead up to 94.80\%
-over naive approach (no clustering, no prediction and no suppression) and 
-57.24\% over pure temporal correlation approach, while RMSE remains roughly 
+temporal correlation, BCWSN can reduce the number of messages injected into the network up to 94.80\% over a naive approach (no clustering, no prediction and no suppression) and 
+up tp 57.24\% when compared to approaches implementing temporal correlation, while RMSE remains roughly 
 stable.
 
 
@@ -85,10 +83,11 @@ environmental monitoring (e.g., traffic, habitat), industrial sensing and
 diagnostics (e.g., factory, supply chains), infrastructure protection (e.g.,
 water distribution), battlefield awareness (e.g., multi-target tracking) and
 context-aware computing (e.g., intelligent home) applications.
+\vspace*{-.3cm}
 
 In spite of advances in WSN technology, a critical key point is still 
-energy consumption of sensor nodes. It is true that communication among
-sensors is the activity responsible for the great majority of power consumption. By
+energy consumption of sensor nodes. As a matter of fact, communication among
+sensors is by far the activity which consumes more energy in a WSN. By
 reducing communication costs, energy may be drastically saved, consequently
 increasing WSN's lifetime. An effective strategy to reduce energy
 consumption is, therefore, to reduce the number of messages sent
@@ -128,16 +127,16 @@ good solution for both the traditional case and the case illustrated in Figure
 
 The main idea of {\it Behavioral Correlation} is to identify
 similar patterns of sensor readings even in sensors geographically
-distant from each other. Thus, our Behavioral Correlation Clustering (BCC) 
-technique could be applied to group spatially separated sensors into a
-single cluster, in contrast to existing spatio-temporal correlation techniques.
+distant from each other. Thus, our {\it Behavioral Correlation Clustering} 
+(BCC) technique could be applied to group spatially separated sensors into a
+single cluster, in contrast to existing spatial correlation techniques.
 \vspace*{-.3cm}
 
-For that reason, we developed a new cluster technique based on BCC technique.
-That technique clusters sensors, initially, using {\it Similarity Measure}
-(adapted from \cite{Liu2007}), i.e., regardless of the spatial proximity 
-of sensors, BCC groups sensors whose forecasting models of sensed 
-data time series are similar.
+For that reason, we developed a new technique that clusters sensors, 
+initially, using {\it Similarity Measure} (adapted from \cite{Liu2007}), 
+i.e., regardless of the spatial proximity of sensors, BCC groups sensors 
+whose forecasting models of sensed data time series are similar (see 
+Step 2 in Section \ref{implementing-bcwsn}).
 \vspace*{-.3cm}
 
 \begin{figure}[!htb]
@@ -150,13 +149,22 @@ data time series are similar.
 
 Furthermore, to make the maintenance of clusters, we have developed a technique
 based on Fractal Clustering (FC) \cite{Barbara1999}, which uses the Minimum
-Difference of Fractal Dimension (MDFD). 
+Difference of Fractal Dimension (MDFD) (see Step 5 in Section
+\ref{implementing-bcwsn}).
 \vspace*{-.3cm}
 
 %[To Review]
-In our technique, allocation of a given sensor X in a given cluster is performed
-based on the novelties this node sends to the sink. Whenever X sends novelties,
-the sink use them to recalculate the Fractal Dimension (FD) of each cluster.
+BCWSN reduce the number of messages sent across the network through two 
+combined techniques: {\it Behavioral Correlation} (BC) and {\it Temporal 
+Correlation} (TC), called as {\it Behavio-Temporal Correlation} (BTC).
+\vspace*{-.3cm}
+%[\To Review]
+
+%[To Review]
+In our technique, after initial clustering, allocation of a given sensor 
+X in a given cluster is performed based on the novelties this node sends 
+to the sink. Whenever X sends novelties, the sink use them to recalculate 
+the Fractal Dimension (FD) of each cluster.
 Then, X is allocated in the cluster which presents the smallest difference
 between its current value of FD and its previous value of FD (i.e. MDFD).
 \vspace*{-.3cm}
