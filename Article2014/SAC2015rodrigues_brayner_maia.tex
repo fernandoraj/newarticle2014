@@ -47,24 +47,28 @@ approach to reduce energy consumption in WSN}
 
 Sensor clustering is an efficient strategy to reduce the number of messages
 flowing in a Wireless Sensor Network (WSN).
-In this work, we present a new approach to cluster sensors in WSNs, called
+This paper presents a new approach to cluster sensors in WSNs, called
 Behavioral Correlation in WSN (BCWSN), which is based on the behavior of recent
-historical data collected by sensors. Instead of using spatial distance
-among sensors, the proposed approach uses the concepts
-of difference in magnitude and trend of sensed data. For clusters maintenance,
-we propose an approach, which
-employees the notion of Fractal Dimension to find the best configuration
-for clusters. In order to validate our approach, simulations have been
-conducted over real data. The results show that, with 5\% error threshold in
-temporal correlation, BCWSN can reduce the number of messages injected into the network up to 94.80\% over a naive approach (no clustering, no prediction and no suppression) and 
-up tp 57.24\% when compared to approaches implementing temporal correlation, while RMSE remains roughly 
-stable.
-
+historical data collected by sensors. Instead of using spatial distance among
+sensors, the proposed approach uses the concepts of difference in magnitude and
+trend of sensed data. For clusters maintenance, we propose an approach, which
+employees the notion of Fractal Dimension to find the best configuration for
+clusters. In order to validate our approach, simulations have been conducted
+over real data. The results show that, with 5\% error threshold in temporal
+correlation, BCWSN can reduce the number of messages injected into the network
+up to 94.80\% over a naive approach (no clustering, no prediction and no
+suppression) and up tp 57.24\% when compared to approaches implementing temporal
+correlation, while RMSE remains roughly stable.
 
 \end{abstract}
 
+\category{H.2.m}{Database Management}{Miscellaneous}
 
-% no keywords
+\terms{Algorithms, Measurement, Performance}
+
+% keywords
+\keywords{Wireless sensor networks, Behavioral correlation, Fractal clustering}
+
 
 
 
@@ -88,7 +92,7 @@ context-aware computing (e.g., intelligent home) applications.
 In spite of advances in WSN technology, a critical key point is still 
 energy consumption of sensor nodes. As a matter of fact, communication among
 sensors is by far the activity which consumes more energy in a WSN. By
-reducing communication costs, energy may be drastically saved, consequently
+reducing communication costs, energy power may be drastically saved, consequently
 increasing WSN's lifetime. An effective strategy to reduce energy
 consumption is, therefore, to reduce the number of messages sent
 across the network. Nevertheless, the less the number of sensed data is transmitted,
@@ -98,45 +102,32 @@ WSNs comes at a higher energy cost.
 
 So far, it is well known that data collected by WSNs is spatially or temporally 
 correlated \cite{Chu2006, Villas2012, Yoon2005}. Temporal correlation states 
-that, within a given time interval, it is very likely that readings sensed by a 
-given node have approximate values (principle of temporal locality). Such a feature
-makes possible to predict (with a given error threshold) future sensed values 
-based on data collected in the past. On the other hand, traditional
+that it is very likely that readings sensed in a lapse of time by a 
+given node have very nearly values (the principle of temporal locality). This 
+peculiarity makes possible to predict (with a given error threshold) future sensed 
+values based on data collected in the past. On the other hand, traditional
 spatial data correlation is related to the idea that physical proximity
 among sensors leads to similar measurements (values) of sensed data, phenomenon
-known as "principle of spatial locality". Thus, from the readings of a sensor 
-located in a given region, one can estimate the readings sensed by neighboring 
-nodes located in that same region.
+also known as "the principle of spatial locality". Thus, it can be inferred that 
+from the readings of a sensor located in a given region, it is possible to estimate 
+the another sensors reading values nearby.
 \vspace*{-.3cm}
 
 However, in several scenarios, sensors which are not spatially close to each
-other may also have similar data reading patterns. In order to illustrate this 
-situation, consider a dense WSN deployed to monitor forest fires.
+other may also have similar data reading patterns. In order to illustrate this
+statement, consider a dense WSN deployed to monitor forest fires.
 Now, suppose a scenario in which the monitored region is affected by dozens of
 small forest fires. Figure \ref{fig:contour_lines} depicts a graph of possible
 temperature contour lines for this hypothetical situation. Observe that the
 contour lines in Figure \ref{fig:contour_lines} form several closed regions
 representing fields which may have small forest fire areas, where it is very
-likely that the temperature measurements of sensors in those spatially separated
-regions present high correlation. In such cases, traditional spatial data correlation techniques, using physical distance among sensors, are not applicable.
-For that reason, we claim that using sensor clustering strategy based on
-\textit{Behavioral Correlation} is a better alternative, since it provides a 
-good solution for both the traditional case and the case illustrated in Figure 
-\ref{fig:contour_lines}.
-\vspace*{-.3cm}
-
-The main idea of {\it Behavioral Correlation} is to identify
-similar patterns of sensor readings even in sensors geographically
-distant from each other. Thus, our {\it Behavioral Correlation Clustering} 
-(BCC) technique could be applied to group spatially separated sensors into a
-single cluster, in contrast to existing spatial correlation techniques.
-\vspace*{-.3cm}
-
-For that reason, we developed a new technique that clusters sensors, 
-initially, using {\it Similarity Measure} (adapted from \cite{Liu2007}), 
-i.e., regardless of the spatial proximity of sensors, BCC groups sensors 
-whose forecasting models of sensed data time series are similar (see 
-Step 2 in Section \ref{implementing-bcwsn}).
+probably that the temperature measurements of sensors in those spatially separated
+regions present high correlation. In such cases, traditional spatial data
+correlation techniques, using physical distance among sensors, are not
+applicable. For that reason, we assert that using sensor clustering strategy
+based on \textit{Behavioral Correlation} is the best method for accuracy results, 
+since it provides better solution for both the traditional case and the case 
+illustrated in Figure \ref{fig:contour_lines}.
 \vspace*{-.3cm}
 
 \begin{figure}[!htb]
@@ -145,6 +136,20 @@ Step 2 in Section \ref{implementing-bcwsn}).
     \caption{Contours lines of temperature}
     \label{fig:contour_lines}
 \end{figure}
+\vspace*{-.3cm}
+
+The main idea of {\it Behavioral Correlation} is to identify
+similar patterns of sensor readings even in sensors geographically
+distant from each other. Thus, our {\it Behavioral Correlation Clustering} 
+(BCC) technique could be applied to group spatially separated sensors into a
+single cluster, towards existing spatial correlation techniques.
+\vspace*{-.3cm}
+
+For that reason, we developed a new technique that clusters sensors, 
+initially, using {\it Similarity Measure} (adapted from \cite{Liu2007}), 
+i.e., regardless of the spatial proximity of sensors, BCC groups sensors 
+whose forecasting models of sensed data time series are similar (see 
+Step 2 in Section \ref{implementing-bcwsn}).
 \vspace*{-.3cm}
 
 Furthermore, to make the maintenance of clusters, we have developed a technique
@@ -156,7 +161,7 @@ Difference of Fractal Dimension (MDFD) (see Step 5 in Section
 %[To Review]
 BCWSN reduce the number of messages sent across the network through two 
 combined techniques: {\it Behavioral Correlation} (BC) and {\it Temporal 
-Correlation} (TC), called as {\it Behavio-Temporal Correlation} (BTC).
+Correlation} (TC) (a.k.a. {\it Behavio-Temporal Correlation} - BTC).
 \vspace*{-.3cm}
 %[\To Review]
 
