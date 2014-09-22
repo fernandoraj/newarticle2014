@@ -152,11 +152,13 @@ correlation is computed from the time series of sensor readings by applying a {\
 Similarity Measure} \cite{Liu2007}. This way, behavioral correlation is able to
 capture difference in magnitude and trend of sensed data instead of using
 spatial distance among sensors for identifying spatial correlation among data.
+\vspace*{-.3cm}
 
 Based on the concept of behavioral correlation, this paper presents a new
 approach for clustering sensors in WSNs, called Behavioral Correlation in WSN
 (BCWSN). The idea is to apply behavioral correlation for defining an initial
 cluster configuration in a WSN.
+\vspace*{-.3cm}
 
 Behavioral correlation may vary in time, which can in turn impose modification
 on the initial cluster configuration. Thus, for clusters maintenance, BCWSN
@@ -207,24 +209,23 @@ data types by sensors.
 \vspace*{-.3cm}
 
 Carvalho \textit{et al.} \cite{Carvalho2011} proposed applying Multivariate
-Spatio-Temporal Correlation to improving prediction accuracy in a WSN. But the
-major drawback of this work is that it do not reduces the energy consumption of
-the network compared to other existing approaches. In fact, it even increases
-the energy consumption of the network in many situations. In our work, using
-multiple linear regression with fractal clustering, we achieved the reduction of
-the overall energy consumption of the network, obtaining results with a Root
-Mean Square Error (RMSE) for the prediction data (w.r.t. the sensed data) even
-smaller than other approaches.
+Spatio-Temporal Correlation to improving prediction accuracy in a WSN. However,
+that work does not reduce the energy consumption of the network. In fact, it
+even increases the energy consumption of the network in many situations. In our
+work, using multiple linear regression with fractal clustering, we achieved the
+reduction of the overall energy consumption of the network, obtaining results
+with a Root Mean Square Error (RMSE) for the prediction data (w.r.t. the sensed
+data) even smaller than other approaches.
 \vspace*{-.3cm}
 
 In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
 \textit{Fractal Dimension} to cluster datasets from an initialization step
-based on the nearest neighbor strategy which creates the initial clusters. Then
-they present the algorithm of the incremental step, which uses \textit{Fractal
+based on the nearest neighbor strategy which creates the initial clusters. It
+presents the algorithm of incremental step, which uses \textit{Fractal
 Dimension} calculation based on an implementation of Box Counting algorithm,
-called FD3 \cite{Liebovitch1989}. In our proposal, we use an adapted version of
-this algorithm (Fractal Clustering) for the maintenance of clusters each time a
-change in the sensed environment is detected and reported to the sink node by
+called FD3 \cite{Liebovitch1989}. In this proposal, an adapted version of
+this algorithm (Fractal Clustering) is used for the maintenance of clusters each
+time a change in the sensed environment is detected and reported to the sink node by
 a sensor or some sensors in the network.
 
 \section{Implementing Behavioral Correlation in WSNs}
