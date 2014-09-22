@@ -104,10 +104,9 @@ higher energy cost.
 Clustering sensor nodes in a WSN may reduce the number of messages flowing in a
 WSN. This is because the Cluster Heads, which are responsible for a set of
 sensor nodes, coordinate the data flow (messaging) between sensors and the sink.
-By doing that, the cluster head forward to the sink node "important" messages.
-Several approaches have been implemented \textbf{for forming clusters} in WSNs,
-where most of them are based on spatial correlation of the \textbf{data collect by}
-sensors of the WSN.
+By doing that, the Cluster Head forward to the sink node "important" messages.
+Several approaches have been implemented to form clusters in WSNs, where most of
+them are based on spatial correlation of the sensors of the WSN.
 \vspace*{-.3cm}
 
 So far, it is well known that data collected by WSNs is spatially or temporally
@@ -147,8 +146,8 @@ applied as a criterion to cluster sensors in a WSN.
 For that reason, we propose a new approach for detecting data correlation among
 data produced by a WSN. The main goal of the proposed approach, called  {\it
 data behavioral correlation}, is to identify similar patterns of sensor readings
-even in sensors geographically \textbf{distant from each other}. Behavioral
-correlation is computed from the time series of sensor readings by applying a {\it
+even in sensors geographically distant from each other. Behavioral correlation
+is computed from the time series of sensor readings by applying a {\it
 Similarity Measure} \cite{Liu2007}. This way, behavioral correlation is able to
 capture difference in magnitude and trend of sensed data instead of using
 spatial distance among sensors for identifying spatial correlation among data.
@@ -212,26 +211,26 @@ Carvalho \textit{et al.} \cite{Carvalho2011} proposed applying Multivariate
 Spatio-Temporal Correlation to improving prediction accuracy in a WSN. However,
 that work does not reduce the energy consumption of the network. In fact, it
 even increases the energy consumption of the network in many situations. In our
-work, using multiple linear regression with fractal clustering, we achieved the
+work, using multiple linear regression with Fractal Clustering, we achieved the
 reduction of the overall energy consumption of the network, obtaining results
 with a Root Mean Square Error (RMSE) for the prediction data (w.r.t. the sensed
 data) even smaller than other approaches.
 \vspace*{-.3cm}
 
 In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
-\textit{Fractal Dimension} to cluster datasets from an initialization step
-based on the nearest neighbor strategy which creates the initial clusters. It
-presents the algorithm of incremental step, which uses \textit{Fractal
-Dimension} calculation based on an implementation of Box Counting algorithm,
-called FD3 \cite{Liebovitch1989}. In this proposal, an adapted version of
-this algorithm (Fractal Clustering) is used for the maintenance of clusters each
-time a change in the sensed environment is detected and reported to the sink node by
-a sensor or some sensors in the network.
+\textit{Fractal Dimension} to cluster datasets from an initialization step based
+on the nearest neighbor strategy which creates the initial clusters. It presents
+the algorithm of incremental step, which uses \textit{Fractal Dimension}
+calculation based on an implementation of Box Counting algorithm, called FD3
+\cite{Liebovitch1989}. In this proposal, an adapted version of this algorithm
+(Fractal Clustering) is used for the maintenance of clusters each time a change
+in the sensed environment is detected and reported to the sink node by a sensor
+or some sensors in the network.
 
 \section{Implementing Behavioral Correlation in WSNs}
 \label{implementing-bcwsn}
 
-In order to build an initial cluster configuration BCWSN implements the idea of
+In order to build an initial cluster configuration, BCWSN implements the idea of
 similarity measure, which is responsible for computing behavioral correlation.
 Behavioral correlation may vary in time, which can in turn impose modification
 on the initial cluster configuration. For that reason, BCWSN implements the
@@ -260,7 +259,7 @@ coefficients of the linear regression equation (see Step 3). Thus, the sink
 node firstly sends a broadcast message to all
 nodes of the network, requesting the following data from sensors:
 battery level, spatial location and sensed values. The amount of data used by the
-learning stage is a parameter, denoted initial slot time, which should be
+learning stage is a parameter, denoted \textit{initial slot time}, which should be
 defined by the application expert (e.g. 70). Each sensor answers the broadcast
 message from sink in a batch mode, i.e., it makes all sensing tasks required and
 sends only one message response to sink node with all reading data.
@@ -269,10 +268,10 @@ sends only one message response to sink node with all reading data.
 %\subsubsection{Clustering Sensor Nodes}
 {\bf Step 2 - Clustering Sensor Nodes}
 %\label{clustering-sensors}
-As already mentioned, the BCWSN mechanism clusters sensor nodes by means of
-behavioral correlation. A \textit{similarity measure} \cite{Liu2007} is used in
-order to compute behavioral correlation. Thus, sensors with similar data reading
-pattern for all sensed data type are grouped into a single cluster.
+As mentioned before, the BCWSN mechanism clusters sensor nodes by means of
+behavioral correlation. A \textit{similarity measure} (based on \cite{Liu2007})
+is used in order to compute behavioral correlation. Thus, sensors with similar
+data reading pattern for all sensed data type are grouped into a single cluster.
 The similarity measure among sensed data of two different sensors is defined by
 similarity of magnitude and similarity of trend, as described next.
 \vspace*{-.3cm}
@@ -307,15 +306,15 @@ s'_{i} = s'_{i} - s'_{i-1}$ and $1 < i \leq n$.
 \end{defini}
 \vspace*{-.5cm}
 
-Thus, sensors which are magnitude-M and trend-T similar for all sensed data
-type are grouped in the same cluster. After all time series of all sensors
-in a WSN have been processed during the learning phase, the initial WSN cluster
-configuration is defined by the sink.
+Thus, sensors which are magnitude-M and trend-T similar for all sensed data type
+are grouped in the same cluster (M and T defined by the application expert).
+After all time series of all sensors in a WSN have been processed during the
+learning phase, the initial WSN cluster configuration is defined by the sink.
 \vspace*{-.3cm}
 
-Once the sensors are initially grouped into clusters, the cluster head of each
+Once the sensors are initially grouped into clusters, the Cluster Head of each
 cluster is defined by applying the energy level criterion.
-In other words, for each cluster, the cluster head is the node with the highest
+In other words, for each cluster, the Cluster Head is the node with the highest
 energy level. In the case of nodes with same energy level, the node with the
 shortest distance to the sink node is chosen.
 \vspace*{-.3cm}
@@ -327,7 +326,7 @@ The in-network prediction implemented by BCWSN relies on the
 following linear regression equation, applied for each sensed data type:
 $\hat{S}(t) = a + bt$.
 The time $t$ is an independent variable. $\hat{S}(t)$ represents the estimated
-value of $S(t)$ and is variable with $t$. Parameter $a$ is the interceptor-t
+value of $S(t)$ and it is variable with $t$. Parameter $a$ is the interceptor-t
 (value of $\hat{S}(t)$ for $t=0$) and $b$ is the stretch slope, and are computed
 as follows:
 \begin{equation}
@@ -342,7 +341,7 @@ as follows:
 	\dia
 \vspace*{-.4cm}
 
-The idea behind this method is that both the sink and the sensor node know the
+The idea behind this method is that both (the sink and the sensor node) know the
 regression equations to predict the sensed values for all sensed data. Thus, a
 sensor node does not need to send any data to sink, since it is able to predict
 all sensed data by the sensors. Then, the network is saving power of sensors
@@ -357,7 +356,7 @@ coefficients to the respective sensors.
 
 %\subsubsection{Sensing}
 {\bf Step 4 - Sensing}
-As already mentioned, one sensor node (Cluster Head) in each cluster $C_{i}$ is
+As mentioned before, one sensor node (Cluster Head) in each cluster $C_{i}$ is
 selected to coordinate the data sensing activity carried out by all nodes in
 $C_{i}$.
 \vspace*{-.3cm}
@@ -369,18 +368,18 @@ certain data type \{$d_{1}$,$d_{2}$,\ldots,$d_{n}$\}, it verifies if anyone of
 $v_{n}$ is not within a ``tolerable difference'' $t$, i.e., $v_{n} \not \in
 [p_{n}-t,p_{n}+t], t \geq 0$, let $p_{n}$ be the predicted value by applying
 the regression equation corresponding to data type $d_{n}$. Any data outside the
-tolerable difference are treated as novelty for the model.
-The ``tolerable difference'' is a parameter, set by the application expert (e.g.
+tolerable difference are treated as ``novelty'' for the model.
+``Tolerable difference'' is a parameter, set by the application expert (e.g.
 $5\%$ or $10\%$).
 \vspace*{-.3cm}
 
-Whenever a sensor node $s$ detects a given amount of novelties $n$ (Sensor Delay,
-defined by the application expert), it sends the novelties as a notification to
-the Cluster Head of the cluster to which $s$ belongs. The Cluster Head in turn
-logs the number of notifications, in such a way that when the number of received
-notifications is greater than a preset limit $m$ (Cluster Delay, also
-defined by the application expert), the CH sends a message to the sink for
-computing new regression coefficients for that cluster.
+Whenever a sensor node $s$ detects a given amount of novelties $n$ (or ``Sensor
+Delay'', defined by the application expert), it sends the novelties as a
+notification to the Cluster Head of the cluster to which $s$ belongs. 
+Cluster Head in turn logs the number of notifications, in such a way that when
+the number of received notifications is greater than a preset limit $m$ (or
+``Cluster Delay'', also defined by the application expert), the CH sends a
+message to the sink for computing new regression coefficients for that cluster.
 \vspace*{-.3cm}
 
 %\subsubsection{Fractal Clustering}
@@ -606,7 +605,7 @@ column MIN for Adaga-P* and BCWSN are equal to zero. This is because in several
 rounds the predicted (see Section \ref{implementing-bcwsn}) value is equal to
 the sensed value. In this case, the sensor does not need to forward the sensed
 value. In some situations, sensor nodes from different clusters may send 
-messages to the sink (through their cluster heads), because changes are
+messages to the sink (through their Cluster Heads), because changes are
 occurring in the sensed environment. For that reason, the Standard Deviation of
 number of message in BCWSN is greater than in Adaga-P* (Table
 \ref{tab:num-msg}).
