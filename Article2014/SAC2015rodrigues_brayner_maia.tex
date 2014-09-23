@@ -3,6 +3,7 @@
 
 \usepackage{graphicx}
 \usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage[normalem]{ulem}
 %\usepackage{algorithm2e}
 %\usepackage{draftwatermark}
 % path to spreadsheet with test data and graphs: "Google Drive\Doutorado\Pesquisa\Testes\WsnEE\"
@@ -68,7 +69,7 @@ RMSE remains roughly stable.
 \terms{Algorithms, Measurement, Performance}
 
 % keywords
-\keywords{Wireless sensor networks, Behavioral correlation, Fractal clustering}
+\keywords{Wireless sensor networks, Behavioral Correlation, Fractal clustering}
 
 
 
@@ -104,9 +105,9 @@ higher energy cost.
 Clustering sensor nodes in a WSN may reduce the number of messages flowing in a
 WSN. This is because the Cluster Heads, which are responsible for a set of
 sensor nodes, coordinate the data flow (messaging) between sensors and the sink.
-By doing that, the Cluster Head forward to the sink node "important" messages.
-Several approaches have been implemented to form clusters in WSNs, where most of
-them are based on spatial correlation of the sensors of the WSN.
+By doing that, the Cluster Head (CH) forward to the sink node "important"
+messages. Several approaches have been implemented to form clusters in WSNs,
+where most of them are based on spatial correlation of the sensors of the WSN.
 \vspace*{-.3cm}
 
 So far, it is well known that data collected by WSNs is spatially or temporally
@@ -145,25 +146,25 @@ applied as a criterion to cluster sensors in a WSN.
 
 For that reason, we propose a new approach for detecting data correlation among
 data produced by a WSN. The main goal of the proposed approach, called  {\it
-data behavioral correlation}, is to identify similar patterns of sensor readings
-even in sensors geographically distant from each other. Behavioral correlation
-is computed from the time series of sensor readings by applying a {\it
-Similarity Measure} \cite{Liu2007}. This way, behavioral correlation is able to
+Behavioral Correlation}, is to identify similar patterns of sensor readings
+even in sensors geographically distant from each other. Behavioral Correlation
+is computed from the time series of sensor readings by applying {\it
+Similarity Measure} \cite{Liu2007}. This way, Behavioral Correlation is able to
 capture difference in magnitude and trend of sensed data instead of using
 spatial distance among sensors for identifying spatial correlation among data.
 \vspace*{-.3cm}
 
-Based on the concept of behavioral correlation, this paper presents a new
+Based on the concept of Behavioral Correlation, this paper presents a new
 approach for clustering sensors in WSNs, called Behavioral Correlation in WSN
-(BCWSN). The idea is to apply behavioral correlation for defining an initial
+(BCWSN). The idea is to apply Behavioral Correlation for defining an initial
 cluster configuration in a WSN.
 \vspace*{-.3cm}
 
-Behavioral correlation may vary in time, which can in turn impose modification
+Behavioral Correlation may vary in time, which can in turn impose modification
 on the initial cluster configuration. Thus, for clusters maintenance, BCWSN
 implements the notion of Fractal Dimension to dynamically find the best
 configuration for clusters. The idea is to apply fractal dimension to verify if
-the behavioral correlation computed for defining the initial cluster
+the Behavioral Correlation computed for defining the initial cluster
 configuration is still valid. This method is triggered whenever new data arrives
 at the sink.
 The sink will analyze, through the Minimum Difference of Fractal Dimension,
@@ -217,29 +218,39 @@ with a Root Mean Square Error (RMSE) for the prediction data (w.r.t. the sensed
 data) even smaller than other approaches.
 \vspace*{-.3cm}
 
-In Fractal Clustering \cite{Barbara2000}, the authors explain how to use the
-\textit{Fractal Dimension} to cluster datasets from an initialization step based
-on the nearest neighbor strategy which creates the initial clusters. It presents
-the algorithm of incremental step, which uses \textit{Fractal Dimension}
-calculation based on an implementation of Box Counting algorithm, called FD3
-\cite{Liebovitch1989}. In this proposal, an adapted version of this algorithm
-(Fractal Clustering) is used for the maintenance of clusters each time a change
-in the sensed environment is detected and reported to the sink node by a sensor
-or some sensors in the network.
+Barbar\'{a} and Chen \cite{Barbara2000} proposed a method, called {\it Fractal
+Clustering} (FC), to cluster datasets. In that work, an initialization step
+based on the nearest neighbor strategy creates the initial clusters. Then, it
+implements the algorithm of incremental step, which uses \textit{Fractal
+Dimension} calculation based on an implementation of Box Counting algorithm,
+called FD3 \cite{Liebovitch1989}. In our work, an extended version of FC
+method is proposed (BCWSN). In our case, sink uses Similarity
+Measure (see Step 2 in Section \ref{implementing-bcwsn}) in the initialization
+step to form initial clusters. \sout{An in-network data prediction strategy is used in
+order to avoid that every sensed data be transmitted to the sink node.} However,
+Behavioral Correlation \sout{environmental conditions} may vary in time at some sensed regions. For that
+reason, new data can arrive at the sink. Thus, we implemented a ``special''
+Fractal Clustering algorithm (see Step 5 in Section \ref{implementing-bcwsn})
+for clusters maintenance, which avoids a bulk of messages to receive the data
+reading of all sensors from the same involved clusters, since FC needs only
+``real'' new data.
 
 \section{Implementing Behavioral Correlation in WSNs}
 \label{implementing-bcwsn}
 
 In order to build an initial cluster configuration, BCWSN implements the idea of
-similarity measure, which is responsible for computing behavioral correlation.
-Behavioral correlation may vary in time, which can in turn impose modification
+Similarity Measure, which is responsible for computing Behavioral Correlation.
+Behavioral Correlation may vary in time, which can in turn impose modification
 on the initial cluster configuration. For that reason, BCWSN implements the
-concept of fractal dimension. Thus, whenever new data arrive at the sink, it
-analyzes them, through the Minimum Difference of Fractal Dimension method
-(described below) for identifying if such data are just ``noise'' or
-``novelties''. If the value of Minimum Difference of Fractal Dimension (MDFD) is
-above a certain threshold, or if a maximum number of noise for a certain sensor
-node is reached, then it will trigger the process of splitting cluster.
+concept of fractal dimension. In our proposal, a sensor network consists of a
+sink node (a.k.a. base station or fusion center) and a set of sensor nodes
+scattered in a region.
+Thus, whenever new data arrive at the sink, it analyzes them, through the
+Minimum Difference of Fractal Dimension method (described below) for identifying
+if such data are just ``noise'' or ``novelties''. If the value of Minimum
+Difference of Fractal Dimension (MDFD) is above a certain threshold, or if a
+maximum number of noise for a given sensor node is reached, then it will
+trigger the process of splitting cluster.
 Otherwise, the sensor node (that sent the ``novelties'') will be relocated to
 the chosen cluster, i.e., one that has a smaller difference in Fractal Dimension
 with the inclusion of new data.
@@ -269,8 +280,8 @@ sends only one message response to sink node with all reading data.
 {\bf Step 2 - Clustering Sensor Nodes}
 %\label{clustering-sensors}
 As mentioned before, the BCWSN mechanism clusters sensor nodes by means of
-behavioral correlation. A \textit{similarity measure} (based on \cite{Liu2007})
-is used in order to compute behavioral correlation. Thus, sensors with similar
+Behavioral Correlation. A \textit{similarity measure} (based on \cite{Liu2007})
+is used in order to compute Behavioral Correlation. Thus, sensors with similar
 data reading pattern for all sensed data type are grouped into a single cluster.
 The similarity measure among sensed data of two different sensors is defined by
 similarity of magnitude and similarity of trend, as described next.
@@ -341,7 +352,7 @@ as follows:
 	\dia
 \vspace*{-.4cm}
 
-The idea behind this method is that both (the sink and the sensor node) know the
+The idea behind this method is that both the sink and the sensor node know the
 regression equations to predict the sensed values for all sensed data. Thus, a
 sensor node does not need to send any data to sink, since it is able to predict
 all sensed data by the sensors. Then, the network is saving power of sensors
@@ -467,7 +478,7 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
   	}\uElse{
     	Replace $S_{R}$ in cluster $C_{\hat{\imath}}$\;
     }
- \caption{Fractal Clustering Algorithm - FC Strategy}
+ \caption{Fractal Clustering algorithm - FC strategy}
  \label{alg:MDFD}
 \end{algorithm}
 
@@ -510,8 +521,8 @@ data to the sink node;  {\it
 implicitly implements spatial correlation to cluster sensors and exploits the
 benefits of using a linear regression model to reduce the number of messages
 injected into the network, and;  {\it 
-  (iii)} BCWSN approach, which implements the BCWSN, with the maintenance of 
-clusters through the \textit{FC} strategy.
+  (iii)} BCWSN approach, which implements Behavioral Correlation, with the
+  maintenance of clusters through \textit{FC} strategy.
 \vspace*{-.3cm}
 
 In order to compare the aforementioned approaches, two metrics have been
@@ -584,7 +595,7 @@ BCWSN is $57,24\%$ lower.
 
 \begin{table}[h!]
 \small
-\caption{RMSE per Round (1000 cycles)}
+\caption{RMSE per round - Temperature}
 \label{tab:rmse}
 \begin{center}
 \begin{tabular}{|l||l|l|l|l|}
@@ -612,7 +623,7 @@ number of message in BCWSN is greater than in Adaga-P* (Table
 
 \begin{table}[h!]
 \small
-\caption{Number of Messages per Round (1000 cycles)}
+\caption{Number of messages per round - Temperature}
 \label{tab:num-msg}
 \begin{center}
 \begin{tabular}{|l||l|l|l|l|}
@@ -631,7 +642,7 @@ BCWSN &11.654 &49.5202 &607 &0 \\
 \vspace*{-.3cm}
 
 
-Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in the
+Figure \ref{fig:rmse} depicts the evolution of RMSE per round. The RMSE in 
 Adaga-P* approach tends to get very close to $0.47$ at about $1000$ cycles,
 while the BCWSN stabilizes at about $0.39$ at the same moment. Thus, BCWSN
 provides an efficient compromise between accuracy and reduction in energy
@@ -642,9 +653,9 @@ is always 0 (zero), because all sensors send all sensed data to the sink.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.45]{BCWSN-RMSExRound-PB.png}
+	\includegraphics[scale=0.45]{BCWSN-RMSExRound-PB-Temp.png}
 	 \vspace*{-.5cm}
-    \caption{RMSE per Round (Temperature)}
+    \caption{RMSE per round - Temperature}
     \label{fig:rmse}
 \end{center}
 \end{figure}
@@ -664,7 +675,7 @@ deviation in Table \ref{tab:num-msg}.
 \begin{center}
 	\includegraphics[scale=0.4]{BCWSN-NumMsgPerRoundxRound-PB.png}
 	 \vspace*{-.6cm}
-    \caption{Messages per Round - Temperature}
+    \caption{Messages per round - Temperature}
 
     \label{fig:num-msg}
 \end{center}
@@ -685,7 +696,7 @@ environment by changing the clusters to reflect such changes.
 \begin{center}
 	\includegraphics[scale=0.40]{BCWSN-TotNumMsgxRound-PB-2Appr.png}
 	 \vspace*{-.6cm}
-    \caption{Total Number of Messages - Temperature}
+    \caption{Total number of messages - Temperature}
     \label{fig:tot-num-msg}
 \end{center}
 \end{figure}
@@ -696,12 +707,13 @@ this is the fact that the first cluster formation is only an initialization step
 for this approach. Thus the BCWSN accuracy is jeopardized at the beginning.
 Nonetheless, the BCWSN approach is able to dynamically adjust the accuracy by
 reducing the RMSE through the use of Fractal Clustering (FC) technique.
-%\vspace*{-.3cm}
+\vspace*{-.3cm}
+
 \begin{figure}[!htb]
 \begin{center}
 	\includegraphics[scale=0.34]{BCWSN-NumClustersxRound-PB.png}
 	 \vspace*{-.6cm}
-    \caption{Number of Clusters per Round - Temperature}
+    \caption{Number of clusters per round - Temperature}
     \label{fig:num-clts}
 \end{center}
 \end{figure}
@@ -715,7 +727,7 @@ proposed proposal in a more general way.
 \begin{center}
 	\includegraphics[scale=0.37]{BCWSN-RMSExRound-PB-Hum.png}
 	 \vspace*{-.6cm}
-    \caption{RMSE per Round - Humidity}
+    \caption{RMSE per round - Humidity}
     \label{fig:rmse-hum}
 \end{center}
 \end{figure}
@@ -735,7 +747,7 @@ too high w.r.t. the other two approaches.
 \begin{center}
 	\includegraphics[scale=0.4]{BCWSN-TotNumMsgxRound-PB-2Appr-Hum.png}
 	 \vspace*{-.6cm}
-    \caption{Total Number of Messages - Humidity}
+    \caption{Total number of messages - Humidity}
     \label{fig:tot-num-msg-hum}
 \end{center}
 \end{figure}
@@ -746,10 +758,10 @@ too high w.r.t. the other two approaches.
 
 In this paper, we have described a new approach for clustering sensors in WSNs
 based on the notion of Behavioral Correlation and Fractal Clustering.
-Behavioral correlation identifies sensors with similar data reading patterns,
-between one or more (different) data type readings. Since behavioral correlation
-may vary in time,  BCWSN dynamically the behavioral correlation among the data
-collect by the sensor nodes.
+Behavioral Correlation identifies sensors with similar data reading patterns,
+among one or more (different) data type readings. Since environmental
+conditions may vary in time, BCWSN dynamically adjusts the Behavioral
+Correlation among the data collect by the sensor nodes.
 \vspace*{-.3cm}
 
 The results presented in Section \ref{results-and-discussion} show BCWSN may
