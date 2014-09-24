@@ -232,6 +232,7 @@ identifies whether data reading received by sink are just "noise" or actually
 they represent "novelties", and avoids a bulk of messages to receive the data
 reading of all sensors at same clusters, since FC needs only ``real'' new data
 to work properly.
+\vspace*{-.3cm}
 
 % Barbar\'{a} and Chen \cite{Barbara2000} proposed a method, called {\it Fractal
 % Clustering} (FC), to cluster datasets. In that work, an initialization step
@@ -249,6 +250,14 @@ to work properly.
 % for clusters maintenance, which avoids a bulk of messages to receive the data
 % reading of all sensors \sout{from the same involved clusters, since FC needs only
 % ``real'' new data}.
+
+Adaga-P* \cite{MaiaSAC2013, MaiaACR2013} constructs sensor-field models which
+implicitly implements spatial correlation to cluster sensors. Furthermore, it
+defines and uses an in-network data prediction model to reduce the number of
+messages injected into the network. Notwithstanding the above, it is unable
+to cluster sensors based on the behavior of sensor data (or ``data reading
+pattern''). Thus, in some situations, BCWSN groups sensors in a more
+optimized way, reducing the message traffic on the network.
 
 \section{Implementing Behavioral Correlation in WSNs}
 \label{implementing-bcwsn}
@@ -606,7 +615,7 @@ presented by Adaga-P*. Nevertheless, the average of the number of transmitted
 messages in BCWSN is $94.80\%$ smaller than the Naive approach (see Table
 \ref{tab:num-msg}). Compared to Adaga-P*, the average of messages exchanged in
 BCWSN is $57,24\%$ lower.
-\vspace*{-.3cm}
+%\vspace*{-.3cm}
 
 \begin{table}[h!]
 \small
@@ -624,7 +633,7 @@ BCWSN &0.443 &0.1028 &1.158 &0 \\
 \end{tabular}
 \end{center}
 \end{table}
-\vspace*{-.6cm}
+\vspace*{-.3cm}
 
 It is important to observe that in Table \ref{tab:num-msg}, the values for
 column MIN for Adaga-P* and BCWSN are equal to zero. This is because in several
@@ -635,7 +644,7 @@ messages to the sink (through their Cluster Heads), because changes are
 occurring in the sensed environment. For that reason, the Standard Deviation of
 number of message in BCWSN is greater than in Adaga-P* (Table
 \ref{tab:num-msg}).
-\vspace*{-.5cm}
+\vspace*{-.3cm}
 
 \begin{table}[h!]
 \small
@@ -664,7 +673,7 @@ provides an efficient compromise between accuracy and reduction in energy
 consumption, since it reduces the communication activity (see Table
 \ref{tab:num-msg}). It is important to note that in the Naive approach the RMSE
 is always 0 (zero), because all sensors send all sensed data to the sink.
-\vspace*{-.3cm}
+%\vspace*{-.3cm}
 
 \begin{figure}[!htb]
 \begin{center}
@@ -674,7 +683,7 @@ is always 0 (zero), because all sensors send all sensed data to the sink.
     \label{fig:rmse}
 \end{center}
 \end{figure}
-\vspace*{-.5cm}
+\vspace*{-.3cm}
 
 In Figure \ref{fig:rmse}, there is a peak for the BCWSN curve. The reason for
 this is the fact that the first cluster formation is only an initialization step
@@ -733,7 +742,7 @@ environment by changing the clusters to reflect such changes.
     \label{fig:num-clts}
 \end{center}
 \end{figure}
-\vspace*{-.3cm}
+%\vspace*{-.3cm}
 
 Next, we present the test results for ``humidity', to show the efficiency of the
 proposed proposal in a more general way.
