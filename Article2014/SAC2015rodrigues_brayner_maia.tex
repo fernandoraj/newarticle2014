@@ -68,7 +68,8 @@ correlation, while RMSE remains roughly stable.
 \terms{Algorithms, Measurement, Performance}
 
 % keywords
-\keywords{Wireless sensor networks, Behavioral correlation, Fractal clustering}
+\keywords{Wireless sensor networks, Behavioral correlation, Fractal clustering, 
+Temporal correlation, Energy efficiency}
 
 
 
@@ -87,7 +88,7 @@ environmental monitoring (e.g., habitat), industrial sensing and
 diagnostics (e.g., factory, supply chains), infrastructure protection (e.g.,
 water distribution), battlefield awareness (e.g., multi-target tracking) and
 context-aware computing (e.g., intelligent home) applications
-\cite{MaiaSAC2013}.
+\cite{MaiaACR2013}.
 \vspace*{-.3cm}
 
 In spite of advances in WSN technology, a critical key point is still energy
@@ -251,7 +252,7 @@ to work properly.
 % reading of all sensors \sout{from the same involved clusters, since FC needs only
 % ``real'' new data}.
 
-Adaga-P* \cite{MaiaSAC2013, MaiaACR2013} constructs sensor-field models which
+Adaga-P* \cite{MaiaACR2013} constructs sensor-field models which
 implicitly implements spatial correlation to cluster sensors. Furthermore, it
 defines and uses an in-network data prediction model to reduce the number of
 messages injected into the network. Notwithstanding the above, it is unable
@@ -541,12 +542,12 @@ environment: ``temperature'' and ``humidity''.
 In the experiments, we have executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, in which all nodes send their sensed
 data to the sink node;  {\it
-  (ii)} Adaga-P* approach \cite{MaiaSAC2013, MaiaACR2013}, which
+  (ii)} Adaga-P* approach \cite{MaiaACR2013}, which
 implicitly implements spatial correlation to cluster sensors and exploits the
 benefits of using a linear regression model to reduce the number of messages
 injected into the network, and;  {\it 
   (iii)} BCWSN approach, which implements Behavioral Correlation, with the
-  maintenance of clusters through \textit{FC} strategy.
+  maintenance of clusters through \textit{FC}.
 \vspace*{-.3cm}
 
 In order to compare the aforementioned approaches, two metrics have been
@@ -677,7 +678,7 @@ is always 0 (zero), because all sensors send all sensed data to the sink.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.45]{BCWSN-RMSExRound-PB-Temp.png}
+	\includegraphics[scale=0.4]{BCWSN-RMSExRound-PB-Temp.png}
 	 \vspace*{-.5cm}
     \caption{RMSE per round - Temperature}
     \label{fig:rmse}
@@ -712,7 +713,7 @@ deviation in Table \ref{tab:num-msg}.
     \label{fig:num-msg}
 \end{center}
 \end{figure}
-\vspace*{-.3cm}
+\vspace*{-.6cm}
 
 In Figure \ref{fig:tot-num-msg}, the total number of messages sent by sensors in
 BCWSN is much smaller compared to Adaga-P*, despite the wide variation in the
@@ -736,7 +737,7 @@ environment by changing the clusters to reflect such changes.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.34]{BCWSN-NumClustersxRound-PB.png}
+	\includegraphics[scale=0.32]{BCWSN-NumClustersxRound-PB.png}
 	 \vspace*{-.6cm}
     \caption{Number of clusters per round - Temperature}
     \label{fig:num-clts}
@@ -750,7 +751,7 @@ proposed proposal in a more general way.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.37]{BCWSN-RMSExRound-PB-Hum.png}
+	\includegraphics[scale=0.35]{BCWSN-RMSExRound-PB-Hum.png}
 	 \vspace*{-.6cm}
     \caption{RMSE per round - Humidity}
     \label{fig:rmse-hum}
@@ -777,7 +778,7 @@ too high w.r.t. the other two approaches.
     \label{fig:tot-num-msg-hum}
 \end{center}
 \end{figure}
-%\vspace*{-.3cm}
+\vspace*{-.3cm}
 
 \section{Conclusion}
 \label{conclusion}
@@ -802,7 +803,7 @@ higher than the energy consumed to execute BCWSN for gathering ``temperature''
 
 Finally, we emphasize the applicability and the effectiveness of BCWSN for a
 variety of applications which consume data produced by WSNs.
-\vspace*{-.2cm}
+%\vspace*{-.3cm}
 
 %Currently, we are working on
 %measuring distance between prediction models to assess the dissimilarity in
