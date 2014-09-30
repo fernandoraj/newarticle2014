@@ -48,18 +48,18 @@ approach to reduce energy consumption in WSN}
 \begin{abstract}
 
 Sensor clustering is an efficient strategy to reduce the number of messages
-flowing in a Wireless Sensor Network (WSN).
-This paper presents a new approach to cluster sensors in WSNs, called
-Behavioral Correlation in WSN (BCWSN), which is based on the behavior of recent
-historical data collected by sensors. Instead of using spatial distance among
-sensors, the proposed approach uses the concepts of difference in magnitude and
-trend of sensed data. For clusters maintenance, BCWSN implements the notion of
-Fractal Dimension to dynamically find the best configuration for clusters. In
-order to validate our approach, simulations have been conducted over real data.
-The results show that BCWSN can reduce the number of messages injected into the
-network up to 94.80\% over a naive approach (no clustering, no prediction and no
-suppression) and up to 57.24\% when compared to approaches implementing temporal
-correlation, while RMSE remains roughly stable.
+flowing in a Wireless Sensor Network (WSN) and thereby reducing the energy
+consumption. This paper presents a new approach to cluster sensors in WSNs,
+called Behavioral Correlation in WSN (BCWSN), which is based on the behavior of
+recent historical data collected by sensors. Instead of using spatial distance
+among sensors, the proposed approach uses the concepts of difference in
+magnitude and trend of sensed data. For clusters maintenance, BCWSN implements
+the notion of Fractal Dimension to dynamically find the best configuration for
+clusters. In order to validate our approach, simulations have been conducted
+over real data. The results show that BCWSN can reduce the number of messages
+injected into the network up to 94.80\% over a naive approach (no clustering, no
+prediction and no suppression) and up to 57.24\% when compared to approaches
+implementing temporal correlation, while RMSE remains roughly stable.
 
 \end{abstract}
 
@@ -427,13 +427,13 @@ clusters according to the Minimum Difference of Fractal Dimension (MDFD).
 \vspace*{-.3cm}
 
 Considering the Fractal Clustering (Algorithm \ref{alg:MDFD}), let $R_{new}$ be
-the new reading data to be treated by the sink; let $S_{R}$ be the sensor which
-report that ``novelties'' (i.e. new reading - $R_{new}$) to the sink node; let
-$C_i$ be the $i-th$ sensor cluster, formed by a CH and other cluster members (0
-or more sensors); let $D(C_i)$ be the data (sensor's data) of cluster $C_i$; let
-$D'(C_i)$ denote the data of cluster $C_i$ with the new reading data $R_{new}$
-(i.e. $D'(C_i) = D(C_i) \cup R_{new}$) and let $F_{d}(D(C_i))$ be the value of
-Fractal Dimension of the data of cluster $C_i$.
+the new reading data to be handled by the sink; let $S_{R}$ be the sensor
+responsible to report that ``novelties'' (i.e. new reading - $R_{new}$) to the
+sink node; let $C_i$ be the $i-th$ sensor cluster, formed by a CH and other
+cluster members (0 or more sensors); let $D(C_i)$ be the data (sensor's data) of
+cluster $C_i$; let $D'(C_i)$ denote the data of cluster $C_i$ with the new
+reading data $R_{new}$ (i.e. $D'(C_i) = D(C_i) \cup R_{new}$) and let
+$F_{d}(D(C_i))$ be the value of Fractal Dimension of the data of cluster $C_i$.
 \vspace*{-.6cm}
 
 In the phase of sensor node clustering (Step 2), the Fractal Dimension is 
@@ -447,8 +447,8 @@ MDFD strategy is as follows:
 whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a CH on
 a given cluster $C_j$, it calculates which cluster $C_i$ has the minimal
 \textit{fractal impact} with the addition of new data, i.e. the minimum absolute
-difference between the previous Fractal Dimension value (calculated before the
-new data arrives) ($F_d(D(C_i))$) and the new one ($F_d(D'(C_i))$), where:
+difference between the previous Fractal Dimension value (calculated before it
+gets the new data) ($F_d(D(C_i))$) and the new one ($F_d(D'(C_i))$), where:
 $D'(C_i) = D(C_i) \cup R_{new}, \forall i$.
 \vspace*{-.3cm}
 
@@ -511,21 +511,22 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 \section{Empirical Evaluation}
 \label{eval}
 
-In order to show the potentials of the proposed approach, simulations over real
-data have been conducted and the main results achieved so far are presented and
-discussed in this section. 
+For the purpose of showing the considerable potential of this approach,
+simulations over real data have been conducted and the main results achieved so
+far are presented and discussed in this section.
 
 \subsection{Implementation}
 \label{implementation}
 
-The simulation prototype has been implemented in Java, exploiting the facilities
-provided by Sinalgo \cite{Sinalgo2007}, a well-known framework for testing and
-validating network algorithms. The experiments have been executed on i7 computer
-with 8 GB RAM and Mac OS X as operating system.
-One of the main reasons for choosing Sinalgo is because it is very scalable in
-nature, allowing that experiments with up to several thousands of sensor nodes
-may be executed in a reasonable time. The data used for the simulation were
-extracted from the real data of experiment Intel Lab Data \cite{Intel2004}. 
+The simulation prototype, that was implemented in Java, have exploited the
+facilities provided by Sinalgo \cite{Sinalgo2007}, a well-known framework used
+for testing and validating network algorithms. The experiments have been
+performed by a i7 computer with 8 GB RAM and Mac OS X as operating system.
+One of the main reasons for choosing Sinalgo is because it is very scalable by
+nature and it allows that kind of experiments with up to several thousands of
+sensor nodes may be executed in a reasonable time. The data used for the
+simulation were taken from the real data of Intel Lab Data experiment
+\cite{Intel2004}.
 
 \subsection{Simulation Setup}
 \label{data-and-experiments}
@@ -535,11 +536,11 @@ was $5\%$, the same as the error threshold (t). The amount of initial data sensi
 (initial slot time) was 70 readings, used for the learning stage.
 \vspace*{-.3cm}
 
-The performance evaluation was done through different applications, which we used
+The performance evaluation was done through different applications, which was used
 to simulate and compare three approaches of a monitoring application. 
 This monitoring application simulates the gathering of two variables from the
 environment: ``temperature'' and ``humidity''.
-In the experiments, we have executed the following approaches: {\it
+In the experiments, it was executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, in which all nodes send their sensed
 data to the sink node;  {\it
   (ii)} Adaga-P* approach \cite{MaiaACR2013}, which
@@ -603,14 +604,14 @@ FC maximum sequential noise ($\mu$) &3 \\
 \subsection{Results and Discussion}
 \label{results-and-discussion}
 
-Firstly, we show and analyze the results for {\it temperature}. Since in Naive
-approach the RMSE is $0$, Table \ref{tab:rmse} presents the average (AVG),
+At first, it was showed and analyzed the results for {\it temperature}. Since in
+Naive approach the RMSE is $0$, Table \ref{tab:rmse} presents the average (AVG),
 standard deviation (STD), maximum (MAX) and minimum (MIN) value of RMSE only for
 Adaga-P* and BCWSN.
 \vspace*{-.3cm}
 
-Looking more closely to Tables \ref{tab:rmse} and \ref{tab:num-msg}, one can
-observe that BCWSN presents a RMSE with average $0.443$ and standard deviation
+Looking more carefully to Tables \ref{tab:rmse} and \ref{tab:num-msg}, it can be
+observed that BCWSN presents a RMSE with average $0.443$ and standard deviation
 $0.1028$. RMSE produced by BCWSN is $6.3\%$ higher in average than RMSE
 presented by Adaga-P*. Nevertheless, the average of the number of transmitted
 messages in BCWSN is $94.80\%$ smaller than the Naive approach (see Table
@@ -686,16 +687,16 @@ is always 0 (zero), because all sensors send all sensed data to the sink.
 \end{figure}
 \vspace*{-.3cm}
 
-In Figure \ref{fig:rmse}, there is a peak for the BCWSN curve. The reason for
-this is the fact that the first cluster formation is only an initialization step
-for this approach. Thus the BCWSN accuracy is jeopardized at the beginning.
-Nonetheless, BCWSN approach is able to dynamically adjust the accuracy by
-reducing the RMSE through the use of Fractal Clustering (FC).
+In Figure \ref{fig:rmse}, It can be identified a peak for the BCWSN curve. The
+reason for this is the fact that the first cluster formation is only an
+initialization step for this approach. Thus the BCWSN accuracy is jeopardized at
+the beginning. Nonetheless, BCWSN approach is able to dynamically adjust the
+accuracy by reducing the RMSE through the use of Fractal Clustering (FC).
 \vspace*{-.3cm}
 
 Figure \ref{fig:num-msg} depicts the number of transmitted messages
 per round. In the Naive approach, the number of messages is steady, since in
-each round all sensors send sensed data to the sink. It is important to observe
+each round all sensors send sensed data to the sink. Worth to be noted 
 that, in average, BCWSN transmits $57.24\%$ less messages than Adaga-P* (see Table
 \ref{tab:num-msg}). However, there are some peaks in BCWSN curve, which
 represent periods in time when clusters are being restructured (splitting or
