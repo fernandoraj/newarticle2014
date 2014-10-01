@@ -434,7 +434,7 @@ cluster members (0 or more sensors); let $D(C_i)$ be the data (sensor's data) of
 cluster $C_i$; let $D'(C_i)$ denote the data of cluster $C_i$ with the new
 reading data $R_{new}$ (i.e. $D'(C_i) = D(C_i) \cup R_{new}$) and let
 $F_{d}(D(C_i))$ be the value of Fractal Dimension of the data of cluster $C_i$.
-\vspace*{-.6cm}
+\vspace*{-.3cm}
 
 In the phase of sensor node clustering (Step 2), the Fractal Dimension is 
 calculated and stored for each initial cluster
@@ -689,7 +689,7 @@ is always 0 (zero), because all sensors send all sensed data to the sink.
 
 In Figure \ref{fig:rmse}, It can be identified a peak for the BCWSN curve. The
 reason for this is the fact that the first cluster formation is only an
-initialization step for this approach. Thus the BCWSN accuracy is jeopardized at
+initialization step for this approach. Thus, the BCWSN accuracy is jeopardized at
 the beginning. Nonetheless, BCWSN approach is able to dynamically adjust the
 accuracy by reducing the RMSE through the use of Fractal Clustering (FC).
 \vspace*{-.3cm}
@@ -721,9 +721,9 @@ BCWSN is much smaller compared to Adaga-P*, despite the wide variation in the
 number of messages sent per round in the former (Figure \ref{fig:num-msg}).
 \vspace*{-.3cm}
 
-Figure \ref{fig:num-clts} shows the variation in number of clusters from BCWSN 
-that demonstrates how our proposal is able to adapt to changes in the sensed 
-environment by changing the clusters to reflect such changes.
+Figure \ref{fig:num-clts} shows the variation in the number of clusters from
+BCWSN that demonstrates how our proposal is able to adapt to changes in the
+sensed environment by changing the clusters to reflect such changes.
 %\vspace*{-.3cm}
 
 \begin{figure}[!htb]
@@ -746,7 +746,7 @@ environment by changing the clusters to reflect such changes.
 \end{figure}
 %\vspace*{-.3cm}
 
-Next, we present the test results for ``humidity', to show the efficiency of the
+Next, we present the test results for {\it humidity}, to show the efficiency of the
 proposed proposal in a more general way.
 %\vspace*{-.3cm}
 
@@ -760,15 +760,15 @@ proposed proposal in a more general way.
 \end{figure}
 \vspace*{-.3cm}
 
-Figure \ref{fig:rmse-hum} shows that for 
-humidity, BCWSN's RMSE  starts higher than Adaga-P*. however from a certain 
-point in time (Round 320) on it drops lower than RMSE for Adaga-P*.
+Figure \ref{fig:rmse-hum} shows that, for humidity, BCWSN's RMSE starts higher
+than Adaga-P*. However, from a certain point in time (round 320) on, it drops
+lower than RMSE for Adaga-P*.
 \vspace*{-.3cm}
 
-In Figure \ref{fig:tot-num-msg-hum}, one can see that the total number of messages 
-in the case of BCWSN is also lower than the Adaga-P*. For the sake of clarity,
-we did not included the Naive curve for total number of messages, because it is
-too high w.r.t. the other two approaches.
+In Figure \ref{fig:tot-num-msg-hum}, it can be realized that the total number of
+messages in the case of BCWSN is also lower than the Adaga-P*. For the sake of
+clarity, we did not included the Naive curve for the total number of messages,
+because it is too high w.r.t. the other two approaches.
 %\vspace*{-.3cm}
 
 \begin{figure}[!htb]
@@ -784,7 +784,7 @@ too high w.r.t. the other two approaches.
 \section{Conclusion}
 \label{conclusion}
 
-In this paper, we have described a new approach for clustering sensors in WSNs
+In this paper, it was described a new approach for clustering sensors in WSNs
 based on the notion of Behavioral Correlation and Fractal Clustering.
 BCWSN identifies sensors with similar data reading patterns, among one or more
 (different) data type readings. Since behavioral correlation may vary in time,
@@ -798,7 +798,7 @@ of messages transmitted in the network (Figures \ref{fig:tot-num-msg} and
 \ref{fig:tot-num-msg-hum}), while assuring a low RMS Error. The results
 presented in Tables \ref{tab:rmse} and \ref{tab:num-msg} proves this assertion,
 since energy consumption (for sending messages) in Adaga-P* was $2.33$ times
-higher than the energy consumed to execute BCWSN for gathering ``temperature''
+higher than the energy consumed to execute BCWSN for gathering {\it temperature}
 (in $1000$ cycles, with threshold of $5\%$), for a RMSE difference of $0.026$.
 \vspace*{-.6cm}
 
