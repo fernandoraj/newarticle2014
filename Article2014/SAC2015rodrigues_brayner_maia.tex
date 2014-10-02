@@ -105,7 +105,7 @@ higher energy cost.
 Clustering sensor nodes in a WSN may reduce the number of messages flowing in a
 WSN. This is because Cluster Heads, which are responsible for a set of
 sensor nodes, coordinate the data flow (messaging) between sensors and the sink.
-By doing that, the Cluster Head (CH) forward to the sink node "important"
+By doing that, the Cluster Head (CH) forward to the sink node ``important''
 messages. Several approaches have been implemented to form clusters in WSNs,
 where most of them are based on spatial correlation of the sensors of the WSN.
 \vspace*{-.3cm}
@@ -143,11 +143,10 @@ applied as a criterion to cluster sensors in a WSN.
 \end{figure}
 \vspace*{-.3cm}
 
-
 For that reason, we propose a new approach for detecting data correlation among
 data produced by a WSN. The main goal of the proposed approach, called  {\it
 Behavioral Correlation}, is to identify similar patterns of sensor readings
-even in sensors geographically distant from each other. Behavioral Correlation
+even in sensors geographically distant from each other. Behavioral correlation
 is computed from the time series of sensor readings by applying {\it
 Similarity Measure} \cite{Liu2007}. This way, Behavioral Correlation is able to
 capture similarity in magnitude and trend of sensed data instead of using
@@ -156,19 +155,19 @@ spatial distance among sensors for identifying correlation among data.
 
 Based on the concept of Behavioral Correlation, this paper presents a new
 approach for clustering sensors in WSNs, called Behavioral Correlation in WSN
-(BCWSN). The idea is to apply Behavioral Correlation for defining an initial
+(BCWSN). The idea is to apply behavioral correlation for defining an initial
 cluster configuration in a WSN.
 \vspace*{-.3cm}
 
-Behavioral Correlation may vary in time, which can in turn impose modification
+Behavioral correlation may vary in time, which can in turn impose modification
 on the initial cluster configuration. Thus, for clusters maintenance, BCWSN
 implements the notion of Fractal Dimension to dynamically find the best
 configuration for clusters. The idea is to apply fractal dimension to verify if
-the Behavioral Correlation computed for defining the initial cluster
+the behavioral correlation computed for defining the initial cluster
 configuration is still valid. This method is triggered whenever new data arrives
 at the sink.
 The sink will analyze, through the Minimum Difference of Fractal Dimension,
-whether such data are just "noise" or actually they represent "novelties". 
+whether such data are just ``noise'' or actually they represent ``novelties''. 
 Nevertheless, in order to avoid that every sensed data be transmitted to the
 sink node, an in-network data prediction model is applied to compute data
 temporal correlation.
@@ -177,8 +176,8 @@ temporal correlation.
 The remainder of this document is organized as follows: Section
 \ref{related-work} describes related work and outlines the differences between
 our method and existing methods. In Section \ref{implementing-bcwsn}, the
-proposed Behavioral Correlation in WSN (BCWSN) method and the sensor-scheduling
-policy are presented and discussed. Simulations with a Sinalgo
+proposed Behavioral Correlation in WSN (BCWSN) method {\bf and the sensor-scheduling
+policy} are presented and discussed. Simulations with a Sinalgo
 \cite{Sinalgo2007} prototype executed over real sensor data are presented and
 discussed in Section \ref{eval}. Finally, Section \ref{conclusion} concludes the
 paper.
@@ -229,8 +228,8 @@ is proposed (BCWSN). In our case, sink uses Similarity Measure (see Step 2 in
 Section \ref{implementing-bcwsn}) in the initialization step to form initial
 clusters. For clusters maintenance, we implemented a ``special'' Fractal
 Clustering algorithm (see Step 5 in Section \ref{implementing-bcwsn}), which
-identifies whether data reading received by sink are just "noise" or actually
-they represent "novelties", and avoids a bulk of messages to receive the data
+identifies whether data reading received by sink are just ``noise'' or actually
+they represent ``novelties'', and avoids a bulk of messages to receive the data
 reading of all sensors at same clusters, since FC needs only ``real'' new data
 to work properly.
 \vspace*{-.3cm}
@@ -444,7 +443,7 @@ the slightest change in its Fractal Dimension.
 \vspace*{-.3cm}
 
 MDFD strategy is as follows:
-whenever the sink receives "novelties", i.e. new data ($R_{new}$), from a CH on
+whenever the sink receives ``novelties'', i.e. new data ($R_{new}$), from a CH on
 a given cluster $C_j$, it calculates which cluster $C_i$ has the minimal
 \textit{fractal impact} with the addition of new data, i.e. the minimum absolute
 difference between the previous Fractal Dimension value (calculated before it
@@ -707,7 +706,7 @@ deviation in Table \ref{tab:num-msg}.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.4]{BCWSN-NumMsgPerRoundxRound-PB.png}
+	\includegraphics[scale=0.28]{BCWSN-NumMsgPerRoundxRound-PB-Temp.png}
 	 \vspace*{-.6cm}
     \caption{Messages per round - Temperature}
 
@@ -728,7 +727,7 @@ sensed environment by changing the clusters to reflect such changes.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.40]{BCWSN-TotNumMsgxRound-PB-2Appr.png}
+	\includegraphics[scale=0.30]{BCWSN-TotNumMsgxRound-PB-Temp.png}
 	 \vspace*{-.6cm}
     \caption{Total number of messages - Temperature}
     \label{fig:tot-num-msg}
@@ -752,7 +751,7 @@ proposed proposal in a more general way.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.35]{BCWSN-RMSExRound-PB-Hum.png}
+	\includegraphics[scale=0.28]{BCWSN-RMSExRound-BW-Hum.png}
 	 \vspace*{-.6cm}
     \caption{RMSE per round - Humidity}
     \label{fig:rmse-hum}
@@ -773,7 +772,7 @@ because it is too high w.r.t. the other two approaches.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.4]{BCWSN-TotNumMsgxRound-PB-2Appr-Hum.png}
+	\includegraphics[scale=0.3]{BCWSN-TotNumMsgxRound-PB-Hum.png}
 	 \vspace*{-.6cm}
     \caption{Total number of messages - Humidity}
     \label{fig:tot-num-msg-hum}
