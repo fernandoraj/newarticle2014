@@ -143,8 +143,8 @@ applied as a criterion to cluster sensors in a WSN.
 \end{figure}
 \vspace*{-.3cm}
 
-For that reason, we propose a new approach for detecting data correlation among
-data produced by a WSN. The main goal of the proposed approach, called  {\it
+For that reason, we propose a new approach for detecting data correlation
+among data produced by a WSN. The main goal of the proposed approach, called  {\it
 Behavioral Correlation}, is to identify similar patterns of sensor readings in
 order to dynamically cluster that sensors even in sensors geographically distant
 from each other, with the minimal messaging. In this sense, we propose to use
@@ -162,8 +162,8 @@ identifying correlation among data.
 
 Based on the concept of Behavioral Correlation, this paper presents a new
 approach for clustering sensors in WSNs, called Behavioral Correlation in WSN
-(BCWSN). The idea is to apply behavioral correlation for handling the
-cluster configuration in a WSN.
+(BCWSN). The idea is to apply behavioral correlation for initialize and handling
+the best cluster configuration in a WSN.
 \vspace*{-.3cm}
 
 % Behavioral correlation may vary in time, which can in turn impose modification
@@ -214,11 +214,10 @@ cluster configuration in a WSN.
 The remainder of this document is organized as follows: Section
 \ref{related-work} describes related work and outlines the differences between
 our method and existing methods. In Section \ref{implementing-bcwsn}, the
-proposed Behavioral Correlation in WSN (BCWSN) method {\bf and the sensor-scheduling
-policy} are presented and discussed. Simulations with a Sinalgo
-\cite{Sinalgo2007} prototype executed over real sensor data are presented and
-discussed in Section \ref{eval}. Finally, Section \ref{conclusion} concludes the
-paper.
+proposed Behavioral Correlation in WSN (BCWSN) method is presented and
+discussed. Simulations with a Sinalgo \cite{Sinalgo2007} prototype executed over
+real sensor data are presented and discussed in Section \ref{eval}. Finally,
+Section \ref{conclusion} concludes the paper.
 
 
 \section{Related Work}
@@ -303,21 +302,21 @@ optimized way, reducing the message traffic on the network.
 In order to build an initial cluster configuration, BCWSN implements the idea of
 Similarity Measure, which is responsible for computing Behavioral Correlation.
 Behavioral Correlation may vary in time, which can in turn impose modification
-on the initial cluster configuration. For that reason, BCWSN implements the
-concept of Fractal Dimension. In our proposal, a sensor network consists of a
-sink node (a.k.a. base station or fusion center) and a set of sensor nodes
-scattered in a region.
+on the initial cluster configuration. For that reason, BCWSN also implements the
+concept of Fractal Clustering \cite{Barbara2000}. In our proposal, a sensor
+network consists of a sink node (a.k.a. base station or fusion center) and a set
+of sensor nodes scattered in a region.
 Thus, whenever new data arrive at the sink, it analyzes them, through the
 Minimum Difference of Fractal Dimension method (described below) for identifying
 if such data are just ``noise'' or ``novelties''. If the value of Minimum
-Difference of Fractal Dimension (MDFD) is above a certain threshold, or if a
-maximum number of ``noise'' for a given sensor node is reached, then it will
-trigger a split process.
-Otherwise, the sensor node (which sent the ``novelties'') will be relocated to
-the chosen cluster, i.e., one that has a smaller difference in Fractal Dimension
-with the inclusion of new data.
+Difference of Fractal Dimension (MDFD value) is above a certain split threshold
+($\sigma$) or a maximum number of ``noise'' for a given sensor node is reached,
+then it will trigger a split process. Else, if the MDFD value is above a noise
+threshold ($\tau$), the number of ``noise'' for that sensor node is
+incremented. Otherwise, the sensor node (which sent the ``novelties'') will be
+relocated to the chosen cluster, i.e., one that has a smaller difference in
+Fractal Dimension with the inclusion of new data.
 \vspace*{-.3cm}
-
 
 
 %\subsection{The BCWSN Mechanism}
