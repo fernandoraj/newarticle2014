@@ -143,16 +143,17 @@ applied as a criterion to cluster sensors in a WSN.
 \end{figure}
 \vspace*{-.3cm}
 
-For that reason, we propose a new approach for detecting data correlation
-among data produced by a WSN. The main goal of the proposed approach, called  {\it
-Behavioral Correlation}, is to identify similar patterns of sensor readings in
-order to dynamically cluster that sensors even in sensors geographically distant
-from each other, with the minimal messaging. In this sense, we propose to use
-the notion of Fractal Clustering, which can make clusters maintenance only with
-sensor ``novelties'', without need of other sensor readings from the same
-cluster. However, Fractal Clustering \cite{Barbara2000} is an incremental
-clustering technique using the fractal dimension calculation, hence it is unable
-to initialize sensor clusters from the beginning, requiring an initial cluster
+For that reason, we propose a new approach for detecting data correlation among
+data produced by a WSN. The main goal of the proposed approach, called  {\it
+Behavioral Correlation}, is to identify similar patterns of data readings in
+order to dynamically cluster sensors with the minimal number of messages, even
+when sensors are geographically distant from each other. In this sense, we
+propose to use the notion of Fractal Clustering, which can make clusters
+maintenance in sink only with ``novelties'' received, without need of other
+sensor readings.
+However, Fractal Clustering \cite{Barbara2000} is an incremental clustering
+technique using the fractal dimension calculation, hence it is unable to
+initialize sensor clusters from the beginning, requiring an initial cluster
 formation. This way, behavioral correlation is computed initially from the time
 series of sensor readings by applying {\it Similarity Measure} \cite{Liu2007}.
 Thus, behavioral correlation is able to capture similarity in magnitude and
@@ -160,9 +161,10 @@ trend of sensed data instead of using spatial distance among sensors for
 identifying correlation among data.
 \vspace*{-.3cm}
 
-Based on the concept of Behavioral Correlation, this paper presents a new
-approach for clustering sensors in WSNs, called Behavioral Correlation in WSN
-(BCWSN). The idea is to apply behavioral correlation for initialize and handling
+% Based on the concept of Behavioral Correlation, this paper presents a new
+% approach for clustering sensors in WSNs, called Behavioral Correlation in WSN
+% (BCWSN). 
+The idea is to apply behavioral correlation for initializing and handling
 the best cluster configuration in a WSN.
 \vspace*{-.3cm}
 
