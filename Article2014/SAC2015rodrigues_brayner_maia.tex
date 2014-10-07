@@ -144,9 +144,9 @@ applied as a criterion to cluster sensors in a WSN.
 \vspace*{-.3cm}
 
 For that reason, we propose a new approach for detecting data correlation among
-data produced by a WSN, based on the concept of Behavioral Correlation. The main
-goal of the proposed approach, called  {\it Behavioral Correlation in WSN}
-(BCWSN), is to identify similar patterns of data readings in order to
+data produced by a WSN, based on the concept of {\it behavioral correlation}.
+The main goal of the proposed approach, called  {\it Behavioral Correlation in
+WSN} (BCWSN), is to identify similar patterns of data readings in order to
 dynamically cluster sensors, with the minimal number of messages exchanged, even
 when sensors are geographically distant from each other. In this sense, we
 propose to use the notion of {\it Fractal Clustering} \cite{Barbara2000}, which
@@ -238,18 +238,19 @@ data values and {\it (iii)} geographical/euclidean distance between nodes
 The criterion of formation of clusters is based on the maximum threshold of
 dissimilarity (max\_dst) defined by a tuple (\textit{M}, \textit{T},
 $g_{max}dist$). It works as follows: $1)$ Initially, the sensed data by each
-node are sent in the form of a temporal series for the sink. $2)$ Then the sink
+node are sent in the form of a temporal series to the sink. $2)$ Then the sink
 stores all the data from the sensors and afterwards calculates the measure of
-dissimilarity for each pair of nodes of the network. $3)$
-With the calculated measures and the maximum threshold of dissimilarity
-(max\_dst), the sink divides the nodes into clusters.
-That work does not take into account the energy reserve of each node as a
-criterion for choosing representative nodes (it is used an algorithm that makes,
-simultaneously, the equitable scheduling - round robin - along with the random
-choice of representative nodes). In this work, we chose Cluster Heads according
-to the remaining energy level and the minimum distance to the sink. Moreover,
-unlike \cite{Liu2007}, we can take into account readings from multiple different
-data types by sensors.
+dissimilarity for each pair of nodes of the network. $3)$ With the calculated
+measures and the maximum threshold of dissimilarity (max\_dst), the sink divides
+the nodes into clusters. For each cluster, the sink makes, simultaneously, the
+equitable scheduling - round robin - along with the random choice of
+representative nodes, whose data readings will serve as the representatives for
+the whole cluster.
+However, that work does not take into account the energy reserve of each node as
+a criterion for choosing representative nodes. In this work, we chose Cluster
+Heads according to the remaining energy level and the minimum distance to the
+sink. Moreover, unlike \cite{Liu2007}, we can take into account readings from
+multiple different data types by sensors.
 \vspace*{-.3cm}
 
 Carvalho \textit{et al.} \cite{Carvalho2011} proposed applying Multivariate
@@ -332,8 +333,8 @@ BCWSN can be divided into five steps as described next.
 
 %\subsubsection{Learning Stage}
 {\bf Step 1 - Learning Stage}
-In this step, the sink node collects sensed data from all sensors belonging to
-the network in order to compute the initial cluster formation and the
+In this step, the sink node collects sensed data from all sensors {belonging to
+the network} in order to compute the initial cluster formation and the
 coefficients of the linear regression equation (see Step 3). Thus, the sink 
 node firstly sends a broadcast message to all
 nodes of the network, requesting the following data from sensors:
@@ -343,6 +344,7 @@ defined by the application expert (e.g. 70). Each sensor answers the broadcast
 message from sink in a batch mode, i.e., it makes all sensing tasks required and
 sends only one message response to sink node with all reading data.
 \vspace*{-.3cm}
+%{} = can be removed
 
 %\subsubsection{Clustering Sensor Nodes}
 {\bf Step 2 - Clustering Sensor Nodes}
@@ -497,16 +499,16 @@ $D'(C_i) = D(C_i) \cup R_{new}, \forall i$.
 
 Let {\it min}$\nabla$ be the minimal difference ($|F_d(D'(C_{\hat{\imath}})) -
 F_d(D(C_{\hat{\imath}}))|$, where $\hat{\imath} = min(|F_d(D'(C_i)) - F_d(D(C_i))|),
-\forall i$). If {\it min}$\nabla$ is greater than a certain threshold ($\tau$) -
-defined by the application expert (e.g. $\tau = 0.03$), then this new data
-$R_{new}$ will simply be rejected as noise and a sequential noise counter
-(NoiseCount) is incremented for the current sensor.
-\vspace*{-.3cm}
-
-Otherwise, if {\it min}$\nabla$ is greater than a split threshold ($\sigma$)
+\forall i$). If {\it min}$\nabla$ is greater than a split threshold ($\sigma$)
 (e.g. $\sigma = 0.1$) or if the NoiseCount is greater than a maximum number of
 sequential noise ($\mu$) (defined by the application expert - e.g. $\mu$ = 3),
 then a split process is triggered.
+\vspace*{-.3cm}
+
+Otherwise, if {\it min}$\nabla$ is greater than a certain threshold ($\tau$) -
+defined by the application expert (e.g. $\tau = 0.03$), then this new data
+$R_{new}$ will simply be rejected as noise and a sequential noise counter
+(NoiseCount) is incremented for the current sensor.
 \vspace*{-.3cm}
 
 On the other hand, if the chosen cluster $C_i$ is the same $C_j$ (i.e.
@@ -561,7 +563,7 @@ far are presented and discussed in this section.
 \subsection{Implementation}
 \label{implementation}
 
-The simulation prototype, that was implemented in Java, have exploited the
+The simulation prototype, that was implemented in Java language, have exploited the
 facilities provided by Sinalgo \cite{Sinalgo2007}, a well-known framework used
 for testing and validating network algorithms. The experiments have been
 performed by a i7 computer with 8 GB RAM and Mac OS X as operating system.
@@ -599,7 +601,8 @@ deployed: 1) The Root Mean Square Error (RMSE) to verify the accuracy of
 approach, and; 2) The Number of Messages injected into the network, which is a
 critical factor to measure energy consumption of the network. The RMSE is
 calculated by reference to the naive approach filtered values.
-The simulation parameters are presented in Table \ref{tab:parameters}.
+The simulation parameters and their corresponding values are presented in Table
+\ref{tab:parameters}.
 
 \begin{table}[h!]
 \tiny 
@@ -650,8 +653,8 @@ FC maximum sequential noise ($\mu$) &3 \\
 At first, it was showed and analyzed the results for {\it temperature}. Since in
 Naive approach the RMSE is $0$, Table \ref{tab:rmse} presents the average (AVG),
 standard deviation (STD), maximum (MAX) and minimum (MIN) value of RMSE only for
-Adaga-P* and BCWSN.
-\vspace*{-.3cm}
+Adaga-P* and BCWSN considering the first 1000 cycles.
+\vspace*{-.6cm}
 
 Looking more carefully to Tables \ref{tab:rmse} and \ref{tab:num-msg}, it can be
 observed that BCWSN presents a RMSE with average $0.443$ and standard deviation
@@ -718,7 +721,7 @@ provides an efficient compromise between accuracy and reduction in energy
 consumption, since it reduces the communication activity (see Table
 \ref{tab:num-msg}). It is important to note that in the Naive approach the RMSE
 is always 0 (zero), because all sensors send all sensed data to the sink.
-%\vspace*{-.3cm}
+\vspace*{-.3cm}
 
 \begin{figure}[!htb]
 \begin{center}
@@ -791,7 +794,7 @@ sensed environment by changing the clusters to reflect such changes.
 
 Next, we present the test results for {\it humidity}, to show the efficiency of the
 proposed proposal in a more general way.
-%\vspace*{-.3cm}
+\vspace*{-.3cm}
 
 \begin{figure}[!htb]
 \begin{center}
@@ -801,10 +804,10 @@ proposed proposal in a more general way.
     \label{fig:rmse-hum}
 \end{center}
 \end{figure}
-\vspace*{-.3cm}
+% \vspace*{-.3cm}
 
 Figure \ref{fig:rmse-hum} shows that, for humidity, BCWSN's RMSE starts higher
-than Adaga-P*. However, from a certain point in time (round 320) on, it drops
+than Adaga-P*. However, from a certain point in time (rnd 320) on, it drops
 lower than RMSE for Adaga-P*.
 \vspace*{-.3cm}
 
@@ -812,7 +815,7 @@ In Figure \ref{fig:tot-num-msg-hum}, it can be realized that the total number of
 messages in the case of BCWSN is also lower than the Adaga-P*. For the sake of
 clarity, we did not included the Naive curve for the total number of messages,
 because it is too high w.r.t. the other two approaches.
-%\vspace*{-.3cm}
+\vspace*{-.3cm}
 
 \begin{figure}[!htb]
 \begin{center}
