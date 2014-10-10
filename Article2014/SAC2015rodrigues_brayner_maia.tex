@@ -52,14 +52,14 @@ flowing in a Wireless Sensor Network (WSN) and thereby reducing the energy
 consumption. This paper presents a new approach to cluster sensors in WSNs,
 called Behavioral Correlation in WSN (BCWSN), which is based on the behavior of
 recent historical data collected by sensors. Instead of using spatial distance
-among sensors, the proposed approach uses the concepts of difference in
-magnitude and trend of sensed data. For clusters maintenance, BCWSN implements
-the notion of Fractal Clustering to dynamically find the best configuration for
-clusters. In order to validate our approach, simulations have been conducted
-over real data. The results show that BCWSN can reduce the number of messages
-injected into the network up to 94.80\% over a naive approach (no clustering, no
-prediction and no suppression) and up to 57.24\% when compared to approaches
-implementing temporal correlation, while RMSE remains roughly stable.
+among sensors, the proposed approach initializes clusters using the concepts of
+similarity in magnitude and trend of sensed data. For clusters maintenance,
+BCWSN implements the notion of Fractal Clustering to dynamically find the best
+configuration for clusters. In order to validate our approach, simulations have
+been conducted over real data. The results show that BCWSN can reduce the number
+of messages injected into the network up to 94.80\% over a naive approach (no
+clustering, no prediction and no suppression) and up to 57.24\% when compared to
+approaches implementing temporal correlation, while RMSE remains roughly stable.
 
 \end{abstract}
 
@@ -77,16 +77,15 @@ Temporal correlation, Energy efficiency}
 \section{Introduction}
 % no \IEEEPARstart
 
-Advances in wireless communication have enabled the development of massive-scale
+Advances in wireless technology have enabled the development of massive-scale
 wireless sensor networks (WSNs). Sensors nodes are devices used to measure
 physical phenomena from the environment. They are limited in power,
 computational capacity, and memory. In a WSN, sensors are usually scattered in
 the network and use low-power communication channels to disseminate collected
-data to a base station, from which the information (query) was originally
-requested. Due to these characteristics, WSNs have been widely used for
-environmental monitoring (e.g., habitat), industrial sensing and
-diagnostics (e.g., factory, supply chains), infrastructure protection (e.g.,
-water distribution), battlefield awareness (e.g., multi-target tracking) and
+data to a base station. Due to these characteristics, WSNs have been widely used
+for environmental monitoring (e.g., habitat), industrial sensing and diagnostics
+(e.g., factory, supply chains), infrastructure protection (e.g., water
+distribution), battlefield awareness (e.g., multi-target tracking) and
 context-aware computing (e.g., intelligent home) applications
 \cite{MaiaACR2013}.
 \vspace*{-.3cm}
@@ -103,14 +102,15 @@ higher energy cost.
 \vspace*{-.3cm}
 
 Clustering sensor nodes in a WSN may reduce the number of messages flowing in a
-WSN. This is because Cluster Heads, which are responsible for a set of
-sensor nodes, coordinate the data flow (messaging) between sensors and the sink.
+WSN. This is because Cluster Heads, which are responsible for a set of sensor
+nodes, coordinate the data flow (messaging) between sensors and the sink.
 By doing that, the Cluster Head (CH) forward to the sink node ``important''
 messages. Several approaches have been implemented to form clusters in WSNs,
-where most of them are based on spatial correlation of the sensors of the WSN.
+where most of them are based on spatial correlation of the data sensors of the
+WSN.
 \vspace*{-.3cm}
 
-So far, it is well known that data collected by WSNs is spatially or temporally
+So far, it is well known that data collected by WSNs are spatially or temporally
 correlated \cite{Chu2006, Villas2012, Yoon2005}. Temporal correlation states
 that it is very likely that readings sensed in a lapse of time by a given node
 have very nearly values (temporal locality). This property makes possible to
@@ -130,7 +130,7 @@ small forest fires. Figure \ref{fig:contour_lines} depicts possible temperature
 contour lines for this situation. Observe in Figure \ref{fig:contour_lines} that
 there are several closed regions, which represents fields with forest fire areas.
 The temperature measurements sensed by sensors in those spatially separated
-regions present high correlation. In such cases, traditional spatial data
+regions may present high correlation. In such cases, traditional spatial data
 correlation techniques, using physical distance among sensors, are not efficient
 to detect spatial correlation. Consequently, it is not adequate for being
 applied as a criterion to cluster sensors in a WSN.
@@ -296,13 +296,13 @@ to work properly.
 % reading of all sensors \sout{from the same involved clusters, since FC needs only
 % ``real'' new data}.
 
-Adaga-P* \cite{MaiaACR2013} constructs sensor-field models which
-implicitly implements spatial correlation to cluster sensors. Furthermore, it
-defines and uses an in-network data prediction model to reduce the number of
-messages injected into the network. Notwithstanding the above, it is unable
-to cluster sensors based on the behavior of sensor data (or ``data reading
-pattern''). Thus, in some situations, BCWSN groups sensors in a more
-optimized way, reducing the message traffic on the network.
+Adaga-P* \cite{MaiaACR2013} constructs sensor-field models which implicitly
+implements spatial correlation to cluster sensors. Furthermore, it defines and
+uses an in-network data prediction model to reduce the number of messages
+injected into the network. Notwithstanding the above, it is unable to cluster
+sensors based on the behavior of sensor data (or ``data reading pattern'').
+Thus, in some situations, BCWSN groups sensors in a more optimized way, reducing
+the message traffic on the network.
 
 \section{Implementing Behavioral Correlation in WSNs}
 \label{implementing-bcwsn}
@@ -344,7 +344,7 @@ defined by the application expert (e.g. 70). Each sensor answers the broadcast
 message from sink in a batch mode, i.e., it makes all sensing tasks required and
 sends only one message response to sink node with all reading data.
 \vspace*{-.3cm}
-%{} = can be removed
+%{} = CanBeRemoved
 
 %\subsubsection{Clustering Sensor Nodes}
 {\bf Step 2 - Clustering Sensor Nodes}
@@ -556,9 +556,9 @@ The Algorithm \ref{alg:MDFD} outlines this strategy.
 \section{Empirical Evaluation}
 \label{eval}
 
-For the purpose of showing the considerable potential of this approach,
-simulations over real data have been conducted and the main results achieved so
-far are presented and discussed in this section.
+For the purpose of showing the potential of this approach, simulations over real
+data have been conducted and the main results achieved so far are presented and
+discussed in this section.
 
 \subsection{Implementation}
 \label{implementation}
@@ -567,11 +567,12 @@ The simulation prototype, that was implemented in Java language, have exploited 
 facilities provided by Sinalgo \cite{Sinalgo2007}, a well-known framework used
 for testing and validating network algorithms. The experiments have been
 performed by a i7 computer with 8 GB RAM and Mac OS X as operating system.
-One of the main reasons for choosing Sinalgo is because it is very scalable by
+{One of the main reasons for choosing Sinalgo is because it is very scalable by
 nature and it allows that kind of experiments with up to several thousands of
-sensor nodes may be executed in a reasonable time. The data used for the
+sensor nodes may be executed in a reasonable time.} The data used for the
 simulation were taken from the real data of Intel Lab Data experiment
 \cite{Intel2004}.
+%{} = CanBeRemoved
 
 \subsection{Simulation Setup}
 \label{data-and-experiments}
@@ -588,8 +589,7 @@ environment: ``temperature'' and ``humidity''.
 In the experiments, it was executed the following approaches: {\it
   (i)} Naive approach \cite{Madden2005}, in which all nodes send their sensed
 data to the sink node;  {\it
-  (ii)} Adaga-P* approach \cite{MaiaACR2013}, which
-implicitly implements spatial correlation to cluster sensors and exploits the
+  (ii)} Adaga-P* approach \cite{MaiaACR2013}, which exploits the
 benefits of using a linear regression model to reduce the number of messages
 injected into the network, and;  {\it 
   (iii)} BCWSN approach, which implements Behavioral Correlation, with the
@@ -650,11 +650,12 @@ FC maximum sequential noise ($\mu$) &3 \\
 \subsection{Results and Discussion}
 \label{results-and-discussion}
 
-At first, it was showed and analyzed the results for {\it temperature}. Since in
-Naive approach the RMSE is $0$, Table \ref{tab:rmse} presents the average (AVG),
-standard deviation (STD), maximum (MAX) and minimum (MIN) value of RMSE only for
-Adaga-P* and BCWSN considering the first 1000 cycles.
-\vspace*{-.6cm}
+At first, it will be shown and analyzed the results for {\it temperature}. Table
+\ref{tab:rmse} presents the average (AVG), standard deviation (STD), maximum
+(MAX) and minimum (MIN) value of RMSE only for Adaga-P* and BCWSN considering
+the first 1000 cycles. The RMSE is calculated by reference to the naive approach
+filtered values.
+\vspace*{-.3cm}
 
 Looking more carefully to Tables \ref{tab:rmse} and \ref{tab:num-msg}, it can be
 observed that BCWSN presents a RMSE with average $0.443$ and standard deviation
@@ -720,7 +721,7 @@ while the BCWSN stabilizes at about $0.39$ at the same moment. Thus, BCWSN
 provides an efficient compromise between accuracy and reduction in energy
 consumption, since it reduces the communication activity (see Table
 \ref{tab:num-msg}). It is important to note that in the Naive approach the RMSE
-is always 0 (zero), because all sensors send all sensed data to the sink.
+is virtually 0 (zero), because all sensors send all sensed data to the sink.
 \vspace*{-.3cm}
 
 \begin{figure}[!htb]
@@ -733,23 +734,22 @@ is always 0 (zero), because all sensors send all sensed data to the sink.
 \end{figure}
 \vspace*{-.3cm}
 
-In Figure \ref{fig:rmse}, It can be identified a peak for the BCWSN curve. The
+In Figure \ref{fig:rmse}, it can be identified a peak for the BCWSN curve. The
 reason for this is the fact that the first cluster formation is only an
 initialization step for this approach. Thus, the BCWSN accuracy is jeopardized at
 the beginning. Nonetheless, BCWSN approach is able to dynamically adjust the
 accuracy by reducing the RMSE through the use of Fractal Clustering (FC).
 \vspace*{-.3cm}
 
-Figure \ref{fig:num-msg} depicts the number of transmitted messages
-per round. In the Naive approach, the number of messages is steady, since in
-each round all sensors send sensed data to the sink. Worth to be noted 
-that, in average, BCWSN transmits $57.24\%$ less messages than Adaga-P* (see Table
-\ref{tab:num-msg}). However, there are some peaks in BCWSN curve, which
-represent periods in time when clusters are being restructured (splitting or
-merging). Recall that BCWSN dynamically updates the cluster configuration. Such
-a characteristic of the proposed approach is responsible for the high standard
-deviation in Table \ref{tab:num-msg}.
+Figure \ref{fig:num-msg} depicts the number of transmitted messages per round.
+In the Naive approach, the number of messages is constant, since in each round
+all sensors send sensed data to the sink. Worth to be noted that, there are some
+peaks in BCWSN curve, which represent periods in time when clusters are being
+restructured (splitting or merging). {Recall that BCWSN dynamically updates the
+cluster configuration.} Such a characteristic of the proposed approach is
+responsible for the high standard deviation in Table \ref{tab:num-msg}.
 \vspace*{-.3cm}
+%{} = CanBeRemoved
 
 \begin{figure}[!htb]
 \begin{center}
@@ -763,8 +763,9 @@ deviation in Table \ref{tab:num-msg}.
 \vspace*{-.6cm}
 
 In Figure \ref{fig:tot-num-msg}, the total number of messages sent by sensors in
-BCWSN is much smaller compared to Adaga-P*, despite the wide variation in the
-number of messages sent per round in the former (Figure \ref{fig:num-msg}).
+BCWSN is much smaller compared to Adaga-P*{, despite the wide variation in the
+number of messages sent per round in the former (Figure \ref{fig:num-msg})}.
+%{} = CanBeRemoved
 \vspace*{-.3cm}
 
 Figure \ref{fig:num-clts} shows the variation in the number of clusters from
@@ -793,7 +794,7 @@ sensed environment by changing the clusters to reflect such changes.
 %\vspace*{-.3cm}
 
 Next, we present the test results for {\it humidity}, to show the efficiency of the
-proposed proposal in a more general way.
+proposed approach with another sensed data type.
 \vspace*{-.3cm}
 
 \begin{figure}[!htb]
@@ -807,15 +808,16 @@ proposed proposal in a more general way.
 % \vspace*{-.3cm}
 
 Figure \ref{fig:rmse-hum} shows that, for humidity, BCWSN's RMSE starts higher
-than Adaga-P*. However, from a certain point in time (rnd 320) on, it drops
+than Adaga-P*. However, from a certain point in time (round 320) on, it drops
 lower than RMSE for Adaga-P*.
 \vspace*{-.3cm}
 
 In Figure \ref{fig:tot-num-msg-hum}, it can be realized that the total number of
-messages in the case of BCWSN is also lower than the Adaga-P*. For the sake of
+messages in the case of BCWSN is also lower than the Adaga-P*. {For the sake of
 clarity, we did not included the Naive curve for the total number of messages,
-because it is too high w.r.t. the other two approaches.
-\vspace*{-.3cm}
+because it is too high w.r.t. the other two approaches.}
+%\vspace*{-.3cm}
+%{} = CanBeRemoved
 
 \begin{figure}[!htb]
 \begin{center}
@@ -825,7 +827,7 @@ because it is too high w.r.t. the other two approaches.
     \label{fig:tot-num-msg-hum}
 \end{center}
 \end{figure}
-\vspace*{-.3cm}
+%\vspace*{-.3cm}
 
 \section{Conclusion}
 \label{conclusion}
