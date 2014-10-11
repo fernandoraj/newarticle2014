@@ -108,7 +108,7 @@ By doing that, the Cluster Head (CH) forward to the sink node ``important''
 messages. Several approaches have been implemented to form clusters in WSNs,
 where most of them are based on spatial correlation of the data sensors of the
 WSN.
-\vspace*{-.3cm}
+\vspace*{-.6cm}
 
 So far, it is well known that data collected by WSNs are spatially or temporally
 correlated \cite{Chu2006, Villas2012, Yoon2005}. Temporal correlation states
@@ -605,7 +605,7 @@ The simulation parameters and their corresponding values are presented in Table
 \ref{tab:parameters}.
 
 \begin{table}[h!]
-\tiny 
+\small 
 \caption{Simulation parameters}
 \label{tab:parameters}
 \begin{center}
@@ -726,13 +726,13 @@ is virtually 0 (zero), because all sensors send all sensed data to the sink.
 
 \begin{figure}[!htb]
 \begin{center}
-	\includegraphics[scale=0.4]{BCWSN-RMSExRound-PB-Temp.png}
+	\includegraphics[scale=0.4]{BCWSN-RMSExRound-BW-Temp.png}
 	 \vspace*{-.5cm}
     \caption{RMSE per round - Temperature}
     \label{fig:rmse}
 \end{center}
 \end{figure}
-\vspace*{-.3cm}
+%\vspace*{-.3cm}
 
 In Figure \ref{fig:rmse}, it can be identified a peak for the BCWSN curve. The
 reason for this is the fact that the first cluster formation is only an
@@ -847,8 +847,9 @@ of messages transmitted in the network (Figures \ref{fig:tot-num-msg} and
 presented in Tables \ref{tab:rmse} and \ref{tab:num-msg} proves this assertion,
 since energy consumption (for sending messages) in Adaga-P* was $2.33$ times
 higher than the energy consumed to execute BCWSN for gathering {\it temperature}
-(in $1000$ cycles, with threshold of $5\%$), for a RMSE difference of $0.026$.
-\vspace*{-.6cm}
+(in $1000$ cycles, with threshold of $5\%$), for a RMSE difference of $0.026$
+on average.
+\vspace*{-.3cm}
 
 Finally, we emphasize the applicability and the effectiveness of BCWSN for a
 variety of applications which consume data produced by WSNs.
