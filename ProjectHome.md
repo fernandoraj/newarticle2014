@@ -1,0 +1,1 @@
+This project would contain an article (paper) - in latex article format - about the implementation using a simulator of WSN's (called SinalGo) of a proposal from a WSN with sensors clustering using Similarity Measures for initializing and Fractal Dimensions for maintenance of sensor clusters, with the objective of minimizing the energy consumption of the network.
